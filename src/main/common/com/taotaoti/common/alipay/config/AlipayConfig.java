@@ -1,6 +1,8 @@
 package com.taotaoti.common.alipay.config;
 
 
+
+
 /* *
  *类名：AlipayConfig
  *功能：基础配置类
