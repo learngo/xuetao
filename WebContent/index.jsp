@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/web/css/common-content.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/web/css/index-content.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/css/index-scrollpic.css"/>" />
+
 <div class="row first-row">
     <div class="col-lg-12">
       <div id="carousel-example-generic" class="carousel slide">
@@ -19,7 +20,7 @@
             <img src="resources/web/images/index/youyika_index_1.jpg" alt="">
             <div class="carousel-caption">
               <h3>Caption 1</h3>
-              <p>scotch, scothity, scotch, scotch</p>
+              <p>scotch, test pull</p>
             </div>
           </div>
           <div class="item">
