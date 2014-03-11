@@ -1,6 +1,5 @@
 @CHARSET "UTF-8";
 .bottom_box {
-	height: 200px;
 	background: #E9E8E8;
 	position: relative;
 	margin-bottom: 0px;
@@ -8,7 +7,6 @@
 
 .bottom {
 	margin: 0 auto;
-	height: 160px;
 	padding-top: 10px;
 }
 

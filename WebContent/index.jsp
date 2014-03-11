@@ -47,10 +47,6 @@
           <span class="icon-next"></span>
         </a>
       </div><!-- carousel end //-->
-    
-    
-    <input id="button" class="button_buy" type="button" name="buy"
-			value="">
     </div>
     
   </div>
@@ -58,3 +54,42 @@
 <script>
 $('.carousel').carousel();
 </script>
+
+
+
+
+<div class="row well mt40">
+  <div class="container">
+     <div class="col-lg-4">
+      <div class="thumbnail">
+        <img src="http://placekitten.com/500/200" alt="" />
+        <div class="caption">
+          <h3>Thumbnail Label</h3>
+          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn btn-default">Action</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="thumbnail">
+        <img src="http://placekitten.com/500/200" alt="" />
+        <div class="caption">
+          <h3>Thumbnail Label</h3>
+          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn btn-default">Action</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="thumbnail">
+        <img src="http://placekitten.com/500/200" alt="" />
+        <div class="caption">
+          <h3>Thumbnail Label</h3>
+          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn btn-default">Action</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  

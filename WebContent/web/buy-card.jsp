@@ -9,7 +9,7 @@
 	<div class="container">
 		<ul class="breadcrumb">
 			<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-			<li class="active"><a href="#">买卡</a></li>
+			<li class="active"><a href="#">活动详情</a></li>
 		</ul>
 	</div>
 </div>
@@ -31,100 +31,15 @@
 			condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
 			felis in faucibus.
 		</div>
-		<div class="list-group">
-			<a href="#" class="list-group-item active">类型</a> <a href="#"
-				class="list-group-item">电子卡</a> <a href="#" class="list-group-item">充值卡</a>
-			<a href="#" class="list-group-item">积分卡</a> <a href="#"
-				class="list-group-item">物理卡</a>
-		</div>
-
 	</div>
 	<div class="col-md-9 content">
 		<div class="leading">
 			<h2>
-				买卡哟 <a data-toggle="tooltip" title="bottom tooltip"
+				参加成员 <a data-toggle="tooltip" title="bottom tooltip"
 					data-placement="right" id="tooltip-right"><small>帮助中心</small></a>
 			</h2>
 		</div>
-		<div class="row-fluid">
-			<div class="input-group">
-				<input type="text" class="form-control" />
-				<div class="input-group-btn">
-					<button type="button" class="btn btn-primary dropdown-toggle"
-						data-toggle="dropdown" id="drop2">
-						Action <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-						<li role="menuitem"><a tabindex="-1" href="#">Action</a></li>
-						<li role="menuitem"><a tabindex="-1" href="#">Link</a></li>
-						<li role="menuitem"><a tabindex="-1" href="#">Link</a></li>
-						<li role="menuitem" class="divider"></li>
-						<li role="menuitem"><a tabindex="-1" href="#">Link</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="row-fluid">
-			<div class="brand-index visible-desktop">
-				<span>Brand Index:</span> <a class="brand-index-item, "
-					rel="nofollow" href="/buy-gift-cards?starts_with=number">#</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=A">A</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=B">B</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=C">C</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=D">D</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=E">E</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=F">F</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=G">G</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=H">H</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=I">I</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=J">J</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=K">K</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=L">L</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=M">M</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=N">N</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=O">O</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=P">P</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=Q">Q</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=R">R</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=S">S</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=T">T</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=U">U</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=V">V</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=W">W</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=X">X</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=Y">Y</a> <a
-					class="brand-index-item, " rel="nofollow"
-					href="/buy-gift-cards?starts_with=Z">Z</a>
-			</div>
-		</div>
-
+		
 
 
 		<div class="row-fluid">

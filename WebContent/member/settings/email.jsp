@@ -16,14 +16,10 @@
 		<div class="list-group">
 			<a href="settings.jsp" class="list-group-item active"> <span
 				class="glyphicon glyphicon-cog"></span> 基本信息
-			</a> <a href="avatar.jsp" class="list-group-item"> <span
-				class="glyphicon glyphicon-picture"></span> 头像设置
 			</a> <a href="password.jsp" class="list-group-item"> <span
 				class="glyphicon glyphicon-lock"></span> 密码修改
 			</a> <a href="email.jsp" class="list-group-item"> <span
 				class="glyphicon glyphicon-envelope"></span> 邮箱设置
-			</a> <a href="binds.jsp" class="list-group-item"> <span
-				class="glyphicon glyphicon-circle-arrow-right"></span> 第三方登陆
 			</a>
 		</div>
 	</div>
