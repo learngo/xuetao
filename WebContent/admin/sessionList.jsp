@@ -40,7 +40,7 @@
 												<td>${session.onlineTime}</td>
 												</tr>
 										   </c:forEach>
-								   </c:if>
+								      </c:if>
 									</tbody>
 									</table>  
 							</div>

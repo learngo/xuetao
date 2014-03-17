@@ -20,7 +20,7 @@ public class Party extends BaseObject<Integer>{
 	@Column(value=PartyColumns.endTime)
 	private Timestamp endTime ;
 	@Column(value=PartyColumns.state)
-	private String state = "state";
+	private Integer state;
 	@Column(value=PartyColumns.createTime)
 	private Timestamp createTime ;
 	@Column(value=PartyColumns.updateTime)
@@ -48,7 +48,7 @@ public class Party extends BaseObject<Integer>{
 
 
 	public Party(Integer memberId, String title, String description,
-			Timestamp startTime, Timestamp endTime, String state,
+			Timestamp startTime, Timestamp endTime, Integer state,
 			Timestamp createTime, Timestamp updateTime, String icon,
 			String schoolIds, Integer joinSum, Integer maxSum, Integer ponit,
 			String joinMemberIds) {
@@ -142,14 +142,14 @@ public class Party extends BaseObject<Integer>{
 
 
 
-	public String getState() {
+	public Integer getState() {
 		return state;
 	}
 
 
 
 
-	public void setState(String state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

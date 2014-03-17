@@ -1,11 +1,17 @@
 package com.taotaoti.party.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import com.taotaoti.common.dao.AbstractDao;
+import com.taotaoti.common.generic.dao.operator.Match;
+import com.taotaoti.common.generic.dao.operator.Order;
 import com.taotaoti.party.bo.Party;
+import com.taotaoti.party.bo.PartyColumns;
 import com.taotaoti.party.dao.PartyDao;
 
 @Repository
@@ -22,7 +28,19 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 	@Override
 	public int counts() {
 		// TODO Auto-generated method stub
-		return this.counts();
+		return this.count(match(PartyColumns.state, 0));
+	}
+
+	@Override
+	public List<Party> findIndexPary(int curPage,
+			 int pageSize) {
+		// TODO Auto-generated method stub
+		List<Match> matchs=new ArrayList<Match>();
+		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(PartyColumns.partyId, false));
+		matchs.add(match(PartyColumns.state, 0));
+		return this.page(matchs,orders, curPage,
+				pageSize);
 	}
 	
 }
