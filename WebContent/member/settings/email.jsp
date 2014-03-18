@@ -59,11 +59,6 @@
 							</div>
 							<div class="col-md-8 controls">
 								<span class="control-text"> sb@126.com
-									<p class="help-block mtm">
-										邮箱地址尚未验证， <a id="send-verify-email"
-											class="btn btn-info btn-sm" href="javascript:;"
-											data-url="/settings/email/verify">去验证</a>
-									</p>
 								</span>
 							</div>
 						</div>

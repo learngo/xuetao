@@ -3,6 +3,7 @@ package com.taotaoti.common.web.member.controller;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
+import com.taotaoti.common.utils.HttpUtils;
 import com.taotaoti.common.utils.MD5;
+import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
+import com.taotaoti.member.facade.MemberFacade;
+import com.taotaoti.member.vo.AcountInfo;
 
 @Controller
 public class LoginController extends BaseController {
@@ -28,6 +33,9 @@ public class LoginController extends BaseController {
 	@Resource
 	private RedisCacheManager redisCacheMgr;
 	
+	@Resource
+	private MemberFacade memberFacade;
+	
 	@RequestMapping(value = "/register")
 	public String register(HttpServletRequest request,
 			HttpServletResponse response,
@@ -36,15 +44,14 @@ public class LoginController extends BaseController {
 			@RequestParam("password") String password,
 			ModelMap model){
 		String dbPassword=MD5.getMd5(password);
-		//ExUser exUser=exAccountService.registerCommonExUser(email, username, dbPassword);
+		AcountInfo acountInfo=   memberFacade.registerMember(email, dbPassword, username, "");
 		LOG.info("register");
-//		if(exUser!=null){
-//			initVisterSessionAndRedis(request,response,exUser);
-//			return LoginConstant.getACCOUNT_SETTINGS_URL();
-//		}else {
-//			return this.buildParamError(model, LoginConstant.getERROR(), "index", "用户已经存在");
-//		}  
-		return null;
+		if(acountInfo!=null){
+			initVisterSessionAndRedis(request,response,acountInfo);
+			return LoginConstant.getACCOUNT_SETTINGS_URL();
+		}else {
+			return this.buildParamError(model, LoginConstant.getERROR(), "index", "用户已经存在");
+		}  
 	}
 	@RequestMapping(value = "/memberLogin", method = RequestMethod.POST)
 	public String login(HttpServletRequest request,
@@ -53,20 +60,22 @@ public class LoginController extends BaseController {
 			@RequestParam("password") String password,
 			ModelMap model){
 		    errors=new HashMap<String, Object>();
-//		if(validatorUser(email, password)){
-//	    	String dbPassword=MD5.getMd5(password);
-//	    	ExUser exUser=memberDao.loginExUser(email, dbPassword);
-//			if(exUser!=null){
-//				initVisterSessionAndRedis(request,response,exUser);
-//				return LoginConstant.getACCOUNT_HOME_URL();
-//			}else {
-//				return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "用户不存在");
-//			}
-//	    }else{
-//	    	
-//	    	return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "用户不存在");
-//	    }
-	    	return "";
+		 LOG.info("email="+email+" login ");
+		if(validatorUser(email, password)){
+	    	String dbPassword=MD5.getMd5(password);
+	    	AcountInfo acountInfo=   memberFacade.getMemberByEmailAndPassword(email, dbPassword);
+			if(acountInfo!=null){
+				initVisterSessionAndRedis(request,response,acountInfo);
+				 LOG.info("to "+LoginConstant.getACCOUNT_HOME_URL());
+				return LoginConstant.getACCOUNT_HOME_URL();
+			}else {
+				LOG.info("用户不存在");
+				return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "用户不存在");
+			}
+	    }else{
+	    	LOG.info("参数错误！");
+	    	return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "参数错误！");
+	    }	
 	}
 	
 	
@@ -81,6 +90,40 @@ public class LoginController extends BaseController {
 		}else
 		     this.errors.put("validatorError", "参数不能为空");
 		return false;
+	}
+	
+   public void initVisterSessionAndRedis(HttpServletRequest request,HttpServletResponse response,AcountInfo member){
+		
+		String userId=""+member.getId();
+		Cookie cookieUserId = new Cookie(LoginConstant.TAOTAOTI_COOKIE_USERID, userId);  
+		cookieUserId.setMaxAge(24 * 60 * 60 * 30);
+		response.addCookie(cookieUserId);
+		
+		String taotaotiId=MD5.getMd5("TAOTAOTI"+member.getId());
+		Cookie cookie = new Cookie(LoginConstant.TAOTAOTI_COOKIE_NAME, taotaotiId);  
+		cookie.setMaxAge(24 * 60 * 60 * 30);
+		response.addCookie(cookie);
+		
+		Cookie cookieEmail = new Cookie(LoginConstant.TAOTAOTI_COOKIE_EMAIL, member.getEmail());  
+		cookieEmail.setMaxAge(24 * 60 * 60 * 30);
+		response.addCookie(cookieEmail);
+		
+		Cookie cookiePassword = new Cookie(LoginConstant.TAOTAOTI_COOKIE_PASSWORD, member.getPassword());  
+		cookiePassword.setMaxAge(24 * 60 * 60 * 30);
+        response.addCookie(cookiePassword);
+        
+        visitor = new Visitor();
+        visitor.setTaotaotiId(taotaotiId);
+        visitor.setUserid(member.getId());
+        visitor.setUsername(member.getName());
+        visitor.setIp(HttpUtils.getHttpForwardIp(request));
+        visitor.setEmail(member.getEmail());
+        visitor.setAuthArr(member.getAuthArr());
+        visitor.setRoleArr(member.getRoleArr());
+		session.setAttributeAsVisitor(request, visitor);
+		
+		//redisCacheMgr.put(taotaotiId + UserWebConstant.USER_KEY, LoginConstant.SESSION_EXPIRE_TIME, visitor);
+		
 	}
 	
 	public SessionProvider getSession() {

@@ -112,6 +112,13 @@ public class MemberMgrImpl implements MemberMgr {
 		member.setName(nickName);
 		member.setPassword(dbpassword);
 		member.setRoleid(MemberConstant.ROLE_BAO_MEMBER);
+		member.setPoints(0);
+		member.setSuccessSum(0);
+		member.setFailSum(0);
+		member.setSchoolId(1);
+		member.setPartyJoinSum(0);
+		member.setPartyCreateSum(0);
+		member.setReputation(0);
 		member=memberDao.create(member);
 		return getAcountInfoByMemberId(member.getId());
 	}

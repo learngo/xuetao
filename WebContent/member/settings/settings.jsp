@@ -72,13 +72,7 @@
 							</div>
 						</div>
 
-						<div class="help-block approval">
-							<label class="col-md-2 control-label"></label>
-							<p class="text-warning">
-								您尚未实名认证，<strong><a href="/settings/approval/submit">点此认证</a>。
-								</strong>
-							</p>
-						</div>
+			
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">

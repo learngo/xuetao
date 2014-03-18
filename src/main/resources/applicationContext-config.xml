@@ -21,7 +21,17 @@
     </bean>
      -->
     <context:property-placeholder location="classpath*:applicationContext.properties" ignore-unresolvable="true"  /> 
-     
+      <bean class="com.taotaoti.common.web.member.controller.LoginConstant">
+		<property name="UC_LOGIN_URL" value="${UC_LOGIN_URL}" />	
+		<property name="UC_LOGOUT_URL" value="${UC_LOGOUT_URL}" />
+		<property name="UC_JUMP_URL" value="${UC_JUMP_URL}" />
+		<property name="ERROR" value="${ERROR}" />
+		<property name="ERROR_404" value="${ERROR_404}" />
+		<property name="SYSERROR" value="${SYSERROR}" />
+		<property name="ACCOUNT_SETTINGS_URL" value="${ACCOUNT_SETTINGS_URL}" />
+		<property name="ACCOUNT_PROFILE_URL" value="${ACCOUNT_PROFILE_URL}" />
+		<property name="ACCOUNT_HOME_URL" value="${ACCOUNT_HOME_URL}" />
+	</bean>
     <bean class="com.taotaoti.constants.GlobalConstant">
 		<property name="UC_LOGIN_URL" value="${UC_LOGIN_URL}" />	
 		<property name="UC_LOGOUT_URL" value="${UC_LOGOUT_URL}" />
