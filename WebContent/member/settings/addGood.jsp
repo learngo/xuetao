@@ -7,7 +7,7 @@
 	<div class="container">
 		<ul class="breadcrumb">
 			<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-			<li class="active"><a href="#">设置</a></li>
+			<li class="active"><a href="#">添加商品</a></li>
 		</ul>
 	</div>
 </div>
@@ -48,22 +48,12 @@
 	<div class="col-md-9 content">
 		<div class="row-fluid">
 			<div class="panel panel-default panel-col">
-			     <div class="panel-heading">基础信息</div>
+			     <div class="panel-heading">添加商品信息</div>
 			     <div class="panel-body">
 					<form id="user-profile-form" class="form-horizontal" method="post">
 
-
 						<div class="form-group">
-							<label class="col-md-2 control-label">昵称</label>
-							<div class="col-md-7 controls">
-								<div class="control-text">
-									sbsb <a href="nickname.jsp">修改</a>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-2 control-label" for="profile_truename">姓名</label>
+							<label class="col-md-2 control-label" for="profile_truename">商品名称：</label>
 							<div class="col-md-7 controls">
 
 								<input type="text" id="profile_truename"
@@ -72,43 +62,57 @@
 							</div>
 						</div>
 
-						<div class="help-block approval">
-							<label class="col-md-2 control-label"></label>
-							<p class="text-warning">
-								您尚未实名认证，<strong><a href="/settings/approval/submit">点此认证</a>。
-								</strong>
-							</p>
-						</div>
-
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label class="required">性别</label>
+								<label class="required">分类：</label>
+							</div>
+							<div class="col-md-7 controls radios">
+								<div id="profile_gender">
+									<select>
+									  <option>鼠标</option>
+									  <option>计算机</option>
+									  <option>图书</option>
+									  <option>自行车</option>
+									  <option>洗衣机</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 control-label">
+								<label class="required">成色：</label>
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
 									<input type="radio" id="profile_gender_0"
-										name="profile[gender]" required="required" value="male" /><label
-										for="profile_gender_0" class="required">男</label><input
+										name="profile[gender]" required="required" value="brand new" /><label
+										for="profile_gender_0" class="required">brand new</label>
+										<input
 										type="radio" id="profile_gender_1" name="profile[gender]"
-										required="required" value="female" /><label
-										for="profile_gender_1" class="required">女</label>
+										required="required" value="barely used" /><label
+										for="profile_gender_1" class="required">barely used</label>
+										<input
+										type="radio" id="profile_gender_1" name="profile[gender]"
+										required="required" value=" used" />
+										<label
+										for="profile_gender_1" class="required"> used</label>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">公司</label>
+								<label for="profile_company">首页图片</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_company" name="profile[company]"
+								<input type="file" id="file" name="logo"
 									class="form-control" />
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_job">职业</label>
+								<label for="profile_job">价格</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="text" id="profile_job" name="profile[job]"
@@ -116,29 +120,11 @@
 							</div>
 						</div>
 
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_title">头衔</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_title" name="profile[title]"
-									class="form-control" />
-							</div>
-						</div>
+						
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_signature">个人签名</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_signature"
-									name="profile[signature]" class="form-control" />
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_about">自我介绍</label>
+								<label for="profile_about">描述：</label>
 							</div>
 							<div class="col-md-7 controls">
 								<textarea id="profile_about" name="profile[about]"
@@ -146,35 +132,9 @@
 							</div>
 						</div>
 
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_site">个人主页</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_site" name="profile[site]"
-									class="form-control" />
-							</div>
-						</div>
+					
 
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_weibo">微博</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_weibo" name="profile[weibo]"
-									class="form-control" />
-							</div>
-						</div>
 
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_weixin">微信</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_weixin" name="profile[weixin]"
-									class="form-control" />
-							</div>
-						</div>
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
@@ -185,17 +145,6 @@
 									class="form-control" />
 							</div>
 						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_mobile">手机</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_mobile" name="profile[mobile]"
-									class="form-control" />
-							</div>
-						</div>
-
 						<div class="row">
 							<div class="col-md-7 col-md-offset-2">
 								<input type="hidden" id="profile__token" name="profile[_token]"

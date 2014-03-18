@@ -6,7 +6,7 @@
      <div id="header_main" class="container_wrap container_wrap_logo">
          <div class="container">
 			<strong class="logo"> <a href="<c:url value="/index"/>""> <img
-					src="<c:url value="/resources/web/images/Logo_youyika.png"/>" alt=""></a></strong>
+					src="<c:url value="/resources/web/images/Logo_youyika.png"/>" alt="Whoopes"></a></strong>
 			<div class="top_nav">
                  <ul>
                      <li><a href="<c:url value="/web/partys"/>">活&nbsp;&nbsp;动</a></li>

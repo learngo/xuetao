@@ -42,7 +42,7 @@ public class WebController extends BaseController {
 			HttpServletResponse response,
 			ModelMap model){
         List<MatchMap> listMaps=new ArrayList<MatchMap>();
-	 	MatchMap partys=new MatchMap("partys", partyDao.findIndexPary(0,3));
+	 	MatchMap partys=new MatchMap("partys", partyDao.findIndexPary(0,4));
 		listMaps.add(partys);
 		return this.buildSuccess(model, "/index", listMaps);
 	}
@@ -81,6 +81,17 @@ public class WebController extends BaseController {
 		listMaps.add(categorys);
 		
 		return this.buildSuccess(model, "/web/goods", listMaps);
+	}
+	@RequestMapping(value = "/web/goodDetail")
+	public String goodDetail(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="goodId") Integer goodId,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		MatchMap good=new MatchMap("good", goodDao.get(goodId));
+		listMaps.add(good);
+		
+		return this.buildSuccess(model, "/web/goodDetail", listMaps);
 	}
 	
 	@RequestMapping(value = "/web/page/partys")

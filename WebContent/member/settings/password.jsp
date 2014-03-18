@@ -27,7 +27,22 @@
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   邮箱设置
 			</a> 
-			
+			<a href="addGood.jsp" class="list-group-item">
+			  <span class="glyphicon glyphicon-envelope"></span>
+			   添加商品
+			</a> 
+			<a href="browseGood.jsp" class="list-group-item">
+			  <span class="glyphicon glyphicon-envelope"></span>
+			   浏览商品
+			</a> 
+			<a href="addParty.jsp" class="list-group-item">
+			  <span class="glyphicon glyphicon-envelope"></span>
+			   添加活动
+			</a> 
+			<a href="browseParty.jsp" class="list-group-item">
+			  <span class="glyphicon glyphicon-envelope"></span>
+			   浏览活动
+			</a> 
 		</div>
 	</div>
 	<div class="col-md-9 content">

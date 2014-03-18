@@ -14,6 +14,7 @@
 <div class="container">
 	<div class="col-md-3">
 		<div class="list-group">
+			<div class="list-group">
 			<a href="settings.jsp" class="list-group-item active">
 			  <span class="glyphicon glyphicon-cog"></span>
 			   基本信息
@@ -43,6 +44,7 @@
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   浏览活动
 			</a> 
+		</div>
 		</div>
 	</div>
 	<div class="col-md-9 content">

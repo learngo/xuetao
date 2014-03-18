@@ -49,7 +49,7 @@
 					<c:forEach var="good" varStatus="status" items="${goods}">
 						<tr>
 							<td><span class="img"> <a
-									href="<c:url value="${good.logo }"/>">
+									href="<c:url value="/web/goodDetail?goodId=${good.id}"/>">
 										<img width="69" height="43"
 										src="<c:url value="${good.logo}"/>"
 										alt="${good.name}">

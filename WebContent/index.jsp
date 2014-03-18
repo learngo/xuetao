@@ -8,44 +8,21 @@
     <div class="col-lg-12">
       <div id="carousel-example-generic" class="carousel slide">
         <!-- Indicators //-->
-        <ol class="carousel-indicators">
-          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-        </ol>
-
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
           <div class="item active">
-            <img src="resources/web/images/index/youyika_index_1.jpg" alt="">
+            <img src="resources/img/hero.jpg" alt="">
             <div class="carousel-caption">
-              <h3>Caption 1</h3>
-              <p>scotch, test pull</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="resources/web/images/index/youyika_index_2.jpg" alt="">
-            <div class="carousel-caption">
-              <h3>Caption 2</h3>
-              <p>scotch, scothity, scotch, scotch</p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="resources/web/images/index/youyika_index_1.jpg" alt="">
-            <div class="carousel-caption">
-              <h3>Caption 3</h3>
-              <p>scotch, scothity, scotch, scotch</p>
-            </div>
+            <div class="col-md-6">
+              <div class="row">
+				<h1>Buy and Sell Gift Cards on Raise</h1>
+				<p class="lead tl">Turn unused gift cards into cash and shop for discounted gift cards on our marketplace.</p>
+				</div>
+              <a href="/signup" class="btn btn-xlarge btn-primary">Join Raise</a>
+              </div>
+              </div>
           </div>
         </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-          <span class="icon-prev"></span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-          <span class="icon-next"></span>
-        </a>
       </div><!-- carousel end //-->
     </div>
     
@@ -58,7 +35,7 @@ $('.carousel').carousel();
 
 
 
-<div class="row mt40">
+<div class="row mt90" style="padding-top: 20px;">
   <div class="container">
 		<c:if test="${partys!= null}">
 			<c:forEach var="party" varStatus="status" items="${partys}">
@@ -69,8 +46,7 @@ $('.carousel').carousel();
 							<h3>${party.title}</h3>
 							<p>${party.description}</p>
 							<p>
-								<a href="#" class="btn btn-primary">join</a> <a href="#"
-									class="btn btn-default">flow</a>
+							 <a href="${party.id}" class="btn btn-primary">join</a>
 							</p>
 						</div>
 					</div>
