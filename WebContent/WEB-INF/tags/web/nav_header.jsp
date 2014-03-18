@@ -88,30 +88,30 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">学淘注册</h4>
             </div>
-            <form class="form-horizontal" action="#apppp">
+            <form class="form-horizontal" action="<c:url value="/register"/>" method="post">
 				<div class="modal-body">
 
 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">邮箱：</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="邮箱" />
+							<input type="text" class="form-control" placeholder="邮箱"  name="email"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-2 control-label">nickName：</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" placeholder="user name"  name="username"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">密码：</label>
 						<div class="col-lg-10">
 							<input type="password" class="form-control"
-								placeholder="密码" />
+								placeholder="密码"  name="password"/>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">密码：</label>
-						<div class="col-lg-10">
-							<input type="password" class="form-control"
-								placeholder="密码" />
-						</div>
-					</div>
+				
 				</div>
 				<div class="modal-footer">
 	              <button type="button" class="btn btn-default " data-dismiss="modal">取消</button>

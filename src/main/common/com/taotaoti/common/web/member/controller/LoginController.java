@@ -44,8 +44,11 @@ public class LoginController extends BaseController {
 			@RequestParam("password") String password,
 			ModelMap model){
 		String dbPassword=MD5.getMd5(password);
-		AcountInfo acountInfo=   memberFacade.registerMember(email, dbPassword, username, "");
+		
 		LOG.info("register");
+		if(memberFacade.isRegisterMember(email, "")) 
+			return LoginConstant.getUC_LOGIN_URL();
+		AcountInfo acountInfo=   memberFacade.registerMember(email, dbPassword, username, "");
 		if(acountInfo!=null){
 			initVisterSessionAndRedis(request,response,acountInfo);
 			return LoginConstant.getACCOUNT_SETTINGS_URL();
