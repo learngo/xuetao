@@ -15,10 +15,12 @@
 	<div class="col-md-3">
       <div class="list-group">
         <a href="#" class="list-group-item active">类型</a>
-        <a href="#" class="list-group-item">乐器</a>
-        <a href="#" class="list-group-item">图书</a>
-        <a href="#" class="list-group-item">衣服</a>
-        <a href="#" class="list-group-item">自行车</a>
+        <c:if test="${categorys!=null }">
+          <c:forEach var="category" varStatus="status" items="${categorys}">
+						 <a href="<c:url value="/web/goods"/>?categoryId=${category.id}" class="list-group-item">${category.name}</a>
+		  </c:forEach>
+        </c:if>
+        
       </div>
     </div>
     <div class="col-md-9 content">
@@ -71,8 +73,8 @@
 		</div>
 		<div class="row">
 			<ul class="pager">
-				<li class="previous"><a href="<c:url value="/web/goods"/>?curPage=${curPage-1}&pageSize=12">&larr; 上一页</a></li>
-				<li class="next"><a href="<c:url value="/web/goods"/>?curPage=${curPage+1}&pageSize=12"">下一页 &rarr;</a></li>
+				<li class="previous"><a href="<c:url value="/web/goods"/>?curPage=${curPage-1}&pageSize=12&categoryId=${categoryId}">&larr; pre</a></li>
+				<li class="next"><a href="<c:url value="/web/goods"/>?curPage=${curPage+1}&pageSize=12&categoryId=${categoryId}">next &rarr;</a></li>
 			</ul>
 		</div>
 

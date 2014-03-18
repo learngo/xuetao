@@ -12,16 +12,7 @@
 		</div>
 	</div>
 <div class="container">
-	<div class="col-md-3">
-      <div class="list-group">
-        <a href="#" class="list-group-item active">类型</a>
-        <a href="#" class="list-group-item">科技比赛</a>
-        <a href="#" class="list-group-item">交友活动</a>
-        <a href="#" class="list-group-item">旅游活动</a>
-        <a href="#" class="list-group-item">社团活动</a>
-      </div>
-    </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12">
        <div class="leading">
         <h2>活动中心
         <a data-toggle="tooltip" title="bottom tooltip" data-placement="right" 
@@ -36,7 +27,7 @@
 				
 			   <c:if test="${partys!= null}">
 					<c:forEach var="party" varStatus="status" items="${partys}">
-						<li class="product-source"><a href="buy-card.jsp">
+						<li class="product-source"><a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
 								<span class="img thumbnail"> 
 							    <img src="<c:url value="${party.icon}"/>" alt="${party.title}" width="160" height="98"/>
 							</span> <span class="name">${party.title}</span> <span class="info">参加人数（${party.joinSum}）</span>

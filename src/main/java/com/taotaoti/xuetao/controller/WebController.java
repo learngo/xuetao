@@ -14,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.taotaoti.category.bo.Category;
+import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.vo.MatchMap;
@@ -30,6 +32,8 @@ public class WebController extends BaseController {
 	private PartyDao partyDao;
 	@Resource
 	private GoodDao goodDao;
+	@Resource
+	private CategoryDao categoryDao;
 	@Resource
 	private RedisCacheManager redisCacheMgr;
 	
@@ -60,12 +64,22 @@ public class WebController extends BaseController {
 			HttpServletResponse response,
 			@RequestParam(value="curPage",required=false) Integer curPage,
 			@RequestParam(value="pageSize",required=false) Integer pageSize,
+			@RequestParam(value="categoryId",required=false) Integer categoryId,
 			ModelMap model){
         List<MatchMap> listMaps=new ArrayList<MatchMap>();
 	 	if(curPage==null||curPage<0) curPage=0;
 	 	if(pageSize==null) pageSize=12;
-        MatchMap goods=new MatchMap("goods", goodDao.findIndexGood(curPage,pageSize));
-		listMaps.add(goods);
+	 	if(categoryId==null){
+         MatchMap goods=new MatchMap("goods", goodDao.findIndexGood(curPage,pageSize));
+		 listMaps.add(goods);
+		}else{
+			MatchMap goods=new MatchMap("goods", goodDao.findIndexGood(curPage,pageSize,categoryId));
+			listMaps.add(goods);
+			listMaps.add(new MatchMap("categoryId",categoryId));
+		}
+		MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
+		listMaps.add(categorys);
+		
 		return this.buildSuccess(model, "/web/goods", listMaps);
 	}
 	
@@ -80,7 +94,18 @@ public class WebController extends BaseController {
 		if(pageSize==null) pageSize=12;
 		MatchMap partys=new MatchMap("partys", partyDao.findIndexPary(curPage,pageSize));
 		listMaps.add(partys);
+		
 		return this.buildSuccess(model, "/web/partys", listMaps);
+	}
+	@RequestMapping(value = "/web/partyDetail")
+	public String partyDetail(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="partyId") Integer partyId,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		MatchMap party=new MatchMap("party", partyDao.get(partyId));
+		listMaps.add(party);
+		return this.buildSuccess(model, "/web/partyDetail", listMaps);
 	}
 	
 	public SessionProvider getSession() {

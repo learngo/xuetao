@@ -32,13 +32,14 @@ public class CategoryDaoTest extends BaseTestCase {
 	}
 	@Test
 	public void testSaveCategory(){
-		Category category=new Category();
-		category.setName("liulxiang");
-		category.setOrderId(1);
-		category.setParentId(0);
-		category.setStatu(0);
-		Category m=categorDao.create(category);
-		System.out.println(m.getName());
+//		Category category=new Category();
+//		category.setName("自行车");
+//		category.setOrderId(1);
+//		category.setParentId(0);
+//		category.setStatu(0);
+//		Category m=categorDao.create(category);
+	  List<Category>	a=categorDao.findAll();
+		System.out.println(a.size());
 	}
 	
 }
