@@ -28,7 +28,7 @@
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   邮箱设置
 			</a> 
-			<a href="addGood.jsp" class="list-group-item">
+			<a href="addGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加商品
 			</a> 

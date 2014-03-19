@@ -27,7 +27,7 @@
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   邮箱设置
 			</a> 
-			<a href="addGood.jsp" class="list-group-item">
+			<a href="addGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加商品
 			</a> 
@@ -68,13 +68,13 @@
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
-									<select>
-									  <option>鼠标</option>
-									  <option>计算机</option>
-									  <option>图书</option>
-									  <option>自行车</option>
-									  <option>洗衣机</option>
-									</select>
+									<select name="categoryId">
+									 <c:if test="${categorys!=null }">
+							          <c:forEach var="category" varStatus="status" items="${categorys}">
+									     <option value="${category.id}">${category.name}</option>
+									  </c:forEach>
+							        </c:if>
+							        </select>
 								</div>
 							</div>
 						</div>
@@ -128,7 +128,7 @@
 							</div>
 							<div class="col-md-7 controls">
 								<textarea id="profile_about" name="profile[about]"
-									class="form-control"></textarea>
+									class="form-control" rows="20"></textarea>
 							</div>
 						</div>
 
@@ -136,19 +136,8 @@
 
 
 
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_qq">QQ</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_qq" name="profile[qq]"
-									class="form-control" />
-							</div>
-						</div>
 						<div class="row">
 							<div class="col-md-7 col-md-offset-2">
-								<input type="hidden" id="profile__token" name="profile[_token]"
-									value="a038bb52643745355e903084ae4e70558d3761c7" />
 								<button type="submit" class="btn btn-primary">保存</button>
 							</div>
 						</div>

@@ -34,7 +34,8 @@ public class MemberController extends BaseController {
 	private SessionProvider session;
 	@Resource
 	private MemberDao memberDao;
-	
+	@Resource
+	private CategoryDao categoryDao;
 	@Resource
 	private RedisCacheManager redisCacheMgr;
 	
@@ -47,7 +48,16 @@ public class MemberController extends BaseController {
 	 	MatchMap member=new MatchMap("member", memberDao.get(v.getUserid()));
 		listMaps.add(member);
 		listMaps.add(new MatchMap("v", v));
-		return this.buildSuccess(model, "/member//settings/settings", listMaps);
+		return this.buildSuccess(model, "/member/settings/settings", listMaps);
+	}
+	@RequestMapping(value = "/settings/addGood")
+	public String addGood(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
+		listMaps.add(categorys);
+		return this.buildSuccess(model, "/member/settings/addGood", listMaps);
 	}
 	
 	public SessionProvider getSession() {

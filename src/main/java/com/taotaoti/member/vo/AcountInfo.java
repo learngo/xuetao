@@ -19,6 +19,7 @@ public class AcountInfo extends Member {
 		this.setPassword(member.getPassword());
 		this.setRoleid(member.getRoleid());
 		this.setUpdateTime(member.getUpdateTime());
+		this.setSchoolId(member.getSchoolId());
 	}
 	public String[] getAuthArr() {
 		return authArr;

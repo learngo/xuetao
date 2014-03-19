@@ -23,7 +23,14 @@ public class Visitor extends BaseObject<Integer> implements Serializable {
 	private String email;
 	
 	private boolean isTeacher;
+	private String schoolName;
 	
+	public String getSchoolName() {
+		return schoolName;
+	}
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
 	private Date loginTime;
 	
 	public boolean isTeacher() {

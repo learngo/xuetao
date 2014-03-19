@@ -47,6 +47,16 @@
 				</property>
 			</bean>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/member/**" />
+			<bean parent="excludeCreativeFileUploadPath" class="com.taotaoti.common.web.interceptor.LoginInterceptor">
+				<property name="notInterceptPathList">
+					<list>
+						<value>/member/login</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
    <!-- 
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />

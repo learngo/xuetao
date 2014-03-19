@@ -7,7 +7,7 @@
 	<div class="container">
 		<ul class="breadcrumb">
 			<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-			<li class="active"><a href="#">设置</a></li>
+			<li class="active"><a href="<c:url value="/member/settings/settings"/>">设置</a></li>
 		</ul>
 	</div>
 </div>
@@ -27,7 +27,7 @@
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   邮箱设置
 			</a> 
-			<a href="addGood.jsp" class="list-group-item">
+			<a href="addGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加商品
 			</a> 
@@ -52,23 +52,17 @@
 			     <div class="panel-body">
 					<form id="user-profile-form" class="form-horizontal" method="post">
 
-
 						<div class="form-group">
-							<label class="col-md-2 control-label">昵称</label>
+							<label class="col-md-2 control-label" for="profile_truename">头像</label>
 							<div class="col-md-7 controls">
-								<div class="control-text">
-									sbsb <a href="nickname.jsp">修改</a>
-								</div>
+								<img src="<c:url value="${member.photo}"/>" alt="${party.title}" />
 							</div>
 						</div>
-
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="profile_truename">姓名</label>
 							<div class="col-md-7 controls">
-
 								<input type="text" id="profile_truename"
-									name="profile[truename]" class="form-control" />
-
+									name="name" class="form-control" value="${member.name }"/>
 							</div>
 						</div>
 
@@ -80,126 +74,82 @@
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
-									<input type="radio" id="profile_gender_0"
-										name="profile[gender]" required="required" value="male" /><label
-										for="profile_gender_0" class="required">男</label><input
-										type="radio" id="profile_gender_1" name="profile[gender]"
-										required="required" value="female" /><label
-										for="profile_gender_1" class="required">女</label>
+									
+								  <c:if test="${member.sex == '男' }">
+								   <input type="radio" 
+										name="sex"  value="男" checked="checked"/>
+									<label>男</label>
+								  <input
+										type="radio"  name="sex" value="女" />
+								  <label>女</label>
+								  </c:if>
+								  <c:if test="${member.sex == '女' }">
+								   <input type="radio" 
+										name="sex"  value="男" />
+									<label>男</label>
+								  <input
+										type="radio"  name="sex" value="女" checked="checked"/>
+								  <label>女</label>
+								  </c:if>
+								  
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">公司</label>
+								<label for="profile_company">学校</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_company" name="profile[company]"
-									class="form-control" />
+								<input type="text" id="profile_job" name="schoolName"
+									class="form-control" value="${v.schoolName }" readonly="readonly"/>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_job">职业</label>
+								<label for="profile_job">专业</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_job" name="profile[job]"
-									class="form-control" />
+								<input type="text" id="profile_job" name="major"
+									class="form-control" value="${member.major }"/>
 							</div>
 						</div>
-
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_title">头衔</label>
+								<label for="profile_weixin">电话</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_title" name="profile[title]"
-									class="form-control" />
+								<input type="text" id="profile_site" name="phone"
+									class="form-control" value="${member.phone }"/>
 							</div>
 						</div>
-
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_signature">个人签名</label>
+								<label for="profile_weixin">邮箱</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_signature"
-									name="profile[signature]" class="form-control" />
+								<input type="text" id="profile_site" name="email"
+									class="form-control" value="${member.email }"/>
 							</div>
 						</div>
-
+						
 						<div class="form-group">
 							<div class="col-md-2 control-label">
 								<label for="profile_about">自我介绍</label>
 							</div>
 							<div class="col-md-7 controls">
-								<textarea id="profile_about" name="profile[about]"
-									class="form-control"></textarea>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_site">个人主页</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_site" name="profile[site]"
-									class="form-control" />
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_weibo">微博</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_weibo" name="profile[weibo]"
-									class="form-control" />
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_weixin">微信</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_weixin" name="profile[weixin]"
-									class="form-control" />
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_qq">QQ</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_qq" name="profile[qq]"
-									class="form-control" />
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_mobile">手机</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_mobile" name="profile[mobile]"
-									class="form-control" />
+								<textarea id="profile_about" name="description"
+									class="form-control" rows="20">${member.description }</textarea>
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-md-7 col-md-offset-2">
-								<input type="hidden" id="profile__token" name="profile[_token]"
-									value="a038bb52643745355e903084ae4e70558d3761c7" />
 								<button type="submit" class="btn btn-primary">保存</button>
 							</div>
 						</div>
 
-						<input type="hidden" name="_csrf_token"
-							value="5ecd77f7b2416b573faa519e6622362a87b0ecd8">
 					</form>
 
 

@@ -23,6 +23,8 @@ import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
 import com.taotaoti.member.facade.MemberFacade;
 import com.taotaoti.member.vo.AcountInfo;
+import com.taotaoti.school.bo.School;
+import com.taotaoti.school.dao.SchoolDao;
 
 @Controller
 public class LoginController extends BaseController {
@@ -35,6 +37,8 @@ public class LoginController extends BaseController {
 	
 	@Resource
 	private MemberFacade memberFacade;
+	@Resource
+	private SchoolDao schoolDao;
 	
 	@RequestMapping(value = "/register")
 	public String register(HttpServletRequest request,
@@ -63,8 +67,8 @@ public class LoginController extends BaseController {
 			@RequestParam("password") String password,
 			ModelMap model){
 		    errors=new HashMap<String, Object>();
-		 LOG.info("email="+email+" login ");
-		if(validatorUser(email, password)){
+		   LOG.info("email="+email+" login ");
+		   if(validatorUser(email, password)){
 	    	String dbPassword=MD5.getMd5(password);
 	    	AcountInfo acountInfo=   memberFacade.getMemberByEmailAndPassword(email, dbPassword);
 			if(acountInfo!=null){
@@ -123,6 +127,11 @@ public class LoginController extends BaseController {
         visitor.setEmail(member.getEmail());
         visitor.setAuthArr(member.getAuthArr());
         visitor.setRoleArr(member.getRoleArr());
+        School school=schoolDao.get(member.getSchoolId());
+        if(school!=null){
+        	visitor.setSchoolName(school.getName());
+        }
+        
 		session.setAttributeAsVisitor(request, visitor);
 		
 		//redisCacheMgr.put(taotaotiId + UserWebConstant.USER_KEY, LoginConstant.SESSION_EXPIRE_TIME, visitor);
