@@ -14,32 +14,32 @@
 <div class="container">
 	<div class="col-md-3">
 		<div class="list-group">
-			<a href="settings.jsp" class="list-group-item active">
+			<a href="settings" class="list-group-item ">
 			  <span class="glyphicon glyphicon-cog"></span>
 			   基本信息
 			</a> 
 			
-			<a href="password.jsp" class="list-group-item">
+			<a href="password" class="list-group-item">
 			  <span class="glyphicon glyphicon-lock"></span>
 			   密码修改
 			</a> 
-			<a href="email.jsp" class="list-group-item">
+			<a href="email" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   邮箱设置
 			</a> 
-			<a href="addGood" class="list-group-item">
+			<a href="addGood" class="list-group-item active">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加商品
 			</a> 
-			<a href="browseGood.jsp" class="list-group-item">
+			<a href="browseGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   浏览商品
 			</a> 
-			<a href="addParty.jsp" class="list-group-item">
+			<a href="party" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加活动
 			</a> 
-			<a href="browseParty.jsp" class="list-group-item">
+			<a href="browseParty" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   浏览活动
 			</a> 

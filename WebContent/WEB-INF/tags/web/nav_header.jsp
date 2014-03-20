@@ -73,8 +73,6 @@
 	              <button type="submit" class="btn btn-primary" >登陆</button>
             	</div>
           </form>   
-            
-            
           </div><!-- /.modal-content //-->
         </div><!-- /.modal-dialog //-->
   
@@ -126,3 +124,20 @@
  
   
 </div><!-- /.modal -->
+
+<c:if test="${requestScope.status !=null}">
+<c:if test="${requestScope.status !=0}">
+ <div class="alert  alert-block navbar-fixed-top container">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <p>${requestScope.message}</p>
+</div>
+</c:if>
+</c:if>
+<c:if test="${param.status !=null}">
+<c:if test="${param.status !=0}">
+ <div class="alert  alert-block navbar-fixed-top container">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <p>${param.message}</p>
+</div>
+</c:if>
+</c:if>

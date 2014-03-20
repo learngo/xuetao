@@ -43,6 +43,16 @@ public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
 				pageSize);
 	}
 	@Override
+	public List<Good> findGoodByMemberId(int memberId,int curPage, int pageSize) {
+		List<Match> matchs=new ArrayList<Match>();
+		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(GoodColumns.goodId, false));
+		matchs.add(match(GoodColumns.statu, 0));
+		matchs.add(match(GoodColumns.memberId, memberId));
+		return this.page(matchs,orders, curPage,
+				pageSize);
+	}
+	@Override
 	public List<Good> findIndexGood(int curPage, int pageSize,int categoryId) {
 		// TODO Auto-generated method stub
 		List<Match> matchs=new ArrayList<Match>();

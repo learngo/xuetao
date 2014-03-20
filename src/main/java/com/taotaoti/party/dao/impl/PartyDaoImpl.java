@@ -42,5 +42,17 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 		return this.page(matchs,orders, curPage,
 				pageSize);
 	}
+
+	@Override
+	public List<Party> findParyByMemberId(int memberId, int curPage,
+			int pageSize) {
+		List<Match> matchs=new ArrayList<Match>();
+		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(PartyColumns.partyId, false));
+		matchs.add(match(PartyColumns.state, 0));
+		matchs.add(match(PartyColumns.memberId, memberId));
+		return this.page(matchs,orders, curPage,
+				pageSize);
+	}
 	
 }

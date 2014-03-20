@@ -16,6 +16,8 @@ public interface GoodDao extends BaseDao<Integer, Good> {
 	public int counts();
 	public List<Good> findIndexGood( int curPage,
 			int pageSize);
+	public List<Good> findGoodByMemberId(int memberId, int curPage,
+			int pageSize);
 
-	List<Good> findIndexGood(int curPage, int pageSize, int categoryId);
+	public List<Good> findIndexGood(int curPage, int pageSize, int categoryId);
 }

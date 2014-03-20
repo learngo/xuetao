@@ -15,16 +15,16 @@
 	<div class="col-md-3">
 		<div class="list-group">
 			<div class="list-group">
-			<a href="settings.jsp" class="list-group-item active">
+			<a href="settings" class="list-group-item ">
 			  <span class="glyphicon glyphicon-cog"></span>
 			   基本信息
 			</a> 
 			
-			<a href="password.jsp" class="list-group-item">
+			<a href="password" class="list-group-item">
 			  <span class="glyphicon glyphicon-lock"></span>
 			   密码修改
 			</a> 
-			<a href="email.jsp" class="list-group-item">
+			<a href="email" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   邮箱设置
 			</a> 
@@ -32,15 +32,15 @@
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加商品
 			</a> 
-			<a href="browseGood.jsp" class="list-group-item">
+			<a href="browseGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   浏览商品
 			</a> 
-			<a href="addParty.jsp" class="list-group-item">
+			<a href="party" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加活动
 			</a> 
-			<a href="browseParty.jsp" class="list-group-item">
+			<a href="browseParty" class="list-group-item active">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   浏览活动
 			</a> 
@@ -65,42 +65,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>ipad</td>
-            <td>12.3</td>
-            <td>2</td>
-            <td>2</td>
-            <td>ing</td>
+        <c:if test="${partys!=null }">
+            <c:forEach var="party" varStatus="status" items="${partys}">
+           <tr>
+            <td>${party.id }</td>
+            <td>${party.title }</td>
+            <td>${party.joinSum }</td>
+            <td>${party.state }</td>
+            <td>${party.updateTime }</td>
             <td><a href="@">delte</a> <a href="#">view</a></td>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>ipad</td>
-            <td>12.3</td>
-            <td>2</td>
-            <td>2</td>
-            <td>ing</td>
-            <td><a href="@">delte</a> <a href="#">view</a></td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>ipad</td>
-            <td>12.3</td>
-            <td>2</td>
-            <td>2</td>
-            <td>ing</td>
-            <td><a href="@">delte</a> <a href="#">view</a></td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>ipad</td>
-            <td>12.3</td>
-            <td>2</td>
-            <td>2</td>
-            <td>ing</td>
-            <td><a href="@">delte</a> <a href="#">view</a></td>
-          </tr>
+		   </c:forEach>
+        </c:if>
          
          
         </tbody>

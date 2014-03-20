@@ -14,16 +14,16 @@
 <div class="container">
 	<div class="col-md-3">
 		<div class="list-group">
-			<a href="settings.jsp" class="list-group-item active">
+			<a href="settings" class="list-group-item ">
 			  <span class="glyphicon glyphicon-cog"></span>
 			   基本信息
 			</a> 
 			
-			<a href="password.jsp" class="list-group-item">
+			<a href="password" class="list-group-item">
 			  <span class="glyphicon glyphicon-lock"></span>
 			   密码修改
 			</a> 
-			<a href="email.jsp" class="list-group-item">
+			<a href="email" class="list-group-item active">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   邮箱设置
 			</a> 
@@ -31,15 +31,15 @@
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加商品
 			</a> 
-			<a href="browseGood.jsp" class="list-group-item">
+			<a href="browseGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   浏览商品
 			</a> 
-			<a href="addParty.jsp" class="list-group-item">
+			<a href="party" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   添加活动
 			</a> 
-			<a href="browseParty.jsp" class="list-group-item">
+			<a href="browseParty" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   浏览活动
 			</a> 
@@ -50,7 +50,7 @@
 			<div class="panel panel-default panel-col">
 				<div class="panel-heading">邮箱设置</div>
 				<div class="panel-body">
-					<form id="setting-email-form" class="form-horizontal" method="post">
+					<form id="setting-email-form" class="form-horizontal" method="post" action="modifyEmail">
 
 
 						<div class="form-group">
@@ -58,8 +58,9 @@
 								<label>当前登录邮箱</label>
 							</div>
 							<div class="col-md-8 controls">
-								<span class="control-text"> sb@126.com
-								</span>
+								<c:if test="${sessionScope.UserConstant_VISITOR != null}">
+								  <input type="text"  class="form-control"  value="${sessionScope.UserConstant_VISITOR.email}" readonly="readonly"/>
+				                 </c:if>
 							</div>
 						</div>
 
@@ -68,7 +69,7 @@
 								<label for="form_password" class="required">网站登录密码</label>
 							</div>
 							<div class="col-md-8 controls">
-								<input type="password" id="form_password" name="form[password]"
+								<input type="password" name="password"
 									required="required" class="form-control" />
 								<p class="help-block">设置新的登录邮箱，需要校验当前的网站登录密码</p>
 							</div>
@@ -79,7 +80,7 @@
 								<label for="form_email" class="required">新登录邮箱</label>
 							</div>
 							<div class="col-md-8 controls">
-								<input type="text" id="form_email" name="form[email]"
+								<input type="text"  name="newEmail"
 									required="required" class="form-control" />
 							</div>
 						</div>
@@ -87,14 +88,9 @@
 						<div class="form-group">
 							<div class="col-md-2 control-label"></div>
 							<div class="col-md-8 controls">
-								<input type="hidden" id="form__token" name="form[_token]"
-									value="a038bb52643745355e903084ae4e70558d3761c7" />
 								<button type="submit" class="btn btn-primary">提交</button>
 							</div>
 						</div>
-
-						<input type="hidden" name="_csrf_token"
-							value="5ecd77f7b2416b573faa519e6622362a87b0ecd8">
 					</form>
 
 
