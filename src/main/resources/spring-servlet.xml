@@ -49,7 +49,8 @@
 	<mvc:view-controller path="/member/settings/addParty" view-name="forward:/member/settings/addParty.jsp"/>
 	<mvc:view-controller path="/other/error"/>
 	
-	<mvc:view-controller path="/admin/login" view-name="redirect:/admin/login.jsp"/> 
+	<mvc:view-controller path="/admin/login" view-name="forward:/admin/login.jsp"/> 
+	<mvc:view-controller path="/admin/index" view-name="forward:/admin/index.jsp"/> 
 	
 	<mvc:view-controller path="404" view-name="forward:/web/404Page.jsp"/>
 	<mvc:view-controller path="403" view-name="forward:/web/404Page.jsp"/>

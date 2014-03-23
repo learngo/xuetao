@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet"
 	href="<c:url value="/resources/web/css/common-content.css"/>" />
-
+<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-datetimepicker.min.css"/>" />
 <div class="breadcrumbrow">
 	<div class="container">
 		<ul class="breadcrumb">
 			<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-			<li class="active"><a href="#">添加商品</a></li>
+			<li class="active"><a href="<c:url value="/member/settings/addParty"/>">add party </a></li>
 		</ul>
 	</div>
 </div>
@@ -50,7 +50,7 @@
 			<div class="panel panel-default panel-col">
 			     <div class="panel-heading">添加活动</div>
 			     <div class="panel-body">
-					<form id="user-profile-form" class="form-horizontal" method="post">
+					<form  class="form-horizontal" enctype="multipart/form-data" method="post" action="submitParty">
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
@@ -58,21 +58,21 @@
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
-									<select>
-									  <option>鼠标</option>
-									  <option>计算机</option>
-									  <option>图书</option>
-									  <option>自行车</option>
-									  <option>洗衣机</option>
-									</select>
+								  <select name="schoolId">
+									 <c:if test="${schooles!=null }">
+							          <c:forEach var="school" varStatus="status" items="${schooles}">
+									     <option value="${ school.id}">${school.name}</option>
+									  </c:forEach>
+							        </c:if>
+							        </select>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="profile_truename">活动标题：</label>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_truename"
-									name="profile[truename]" class="form-control" />
+								<input type="text"
+									name="title" class="form-control" />
 							</div>
 						</div>
 
@@ -82,39 +82,35 @@
 								<label for="profile_company">图片</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="file" id="file" name="logo"
+								<input type="file" id="file" name="file"
 									class="form-control" />
 							</div>
 						</div>
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_job">开始时间</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_job" name="startTime"
-									class="form-control" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_job">结束时间</label>
-							</div>
-							<div class="col-md-7 controls">
-								<input type="text" id="profile_job" name="endTime"
-									class="form-control" />
-							</div>
-						</div>
-
-						
-
+				       <div class="form-group">
+				              <label for="startTime" class="col-md-2 control-label">开始时间</label>
+				              <div class="input-group date form_datetime col-md-5"  data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="startTime">
+				                  <input class="form-control" size="16" type="text" value="" readonly>
+				                  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				              </div>
+						<input type="hidden" class="input-sm form-control" name="startTime" id="startTime" />
+				       </div>
+				       <div class="form-group">
+				              <label for="dtp_input1" class="col-md-2 control-label">结束时间</label>
+				              <div class="input-group date form_datetime col-md-5"  data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="endTime">
+				                  <input class="form-control" size="16" type="text" value="" readonly>
+				                  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				              </div>
+						<input type="hidden" class="input-sm form-control" name="endTime" id="endTime" />
+				       </div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
 								<label for="profile_about">描述：</label>
 							</div>
 							<div class="col-md-7 controls">
-								<textarea id="profile_about" name="profile[about]"
-									class="form-control"></textarea>
+								<textarea id="profile_about" name="description"
+									class="form-control" rows="10"></textarea>
 							</div>
 						</div>
 
@@ -123,14 +119,9 @@
 
 						<div class="row">
 							<div class="col-md-7 col-md-offset-2">
-								<input type="hidden" id="profile__token" name="profile[_token]"
-									value="a038bb52643745355e903084ae4e70558d3761c7" />
 								<button type="submit" class="btn btn-primary">保存</button>
 							</div>
 						</div>
-
-						<input type="hidden" name="_csrf_token"
-							value="5ecd77f7b2416b573faa519e6622362a87b0ecd8">
 					</form>
 
 
@@ -142,10 +133,19 @@
 
 
 </div>
-
-
-
-
-<script>
+<script src="<c:url value="/resources/js/bootstrap-datetimepicker.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/resources/js/locales/bootstrap-datetimepicker.zh-CN.js"/>" type="text/javascript"></script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
 	$('#tooltip-right').tooltip();
-</script>
+</script> 
+

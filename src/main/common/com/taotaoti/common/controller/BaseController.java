@@ -42,19 +42,13 @@ public class BaseController implements ApplicationContextAware {
 	protected <T>String buildSuccessOnlyUrl(String pageUrl){
 		return pageUrl;
 	}
-	/**
-	 * @param pageUrl "other/syserror.jsp"
-	 * @return
-	 */
+	
 	protected <T>ModelAndView buildSuccessByRedirectOnlyUrl(String pageUrl){
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("redirect:"+pageUrl);
 		return modelAndView;
 	}
-	/**
-	 * @param pageUrl "other/syserror.jsp"
-	 * @return  othter/syserror.jsp?add=b
-	 */
+	
 	protected <T>ModelAndView buildSuccessByRedirectAndParam(String pageUrl,ModelMap model,String key,T value){
 		model.addAttribute(key, value);
 		ModelAndView modelAndView=new ModelAndView();
@@ -66,6 +60,36 @@ public class BaseController implements ApplicationContextAware {
 			for(MatchMap m:listMaps){
 				model.addAttribute(m.getKey(), m.getValue());
 		}
+		ModelAndView modelAndView=new ModelAndView();
+		modelAndView.setViewName("redirect:"+pageUrl);
+		return modelAndView;
+	}
+	protected <T>ModelAndView buildErrorByRedirectOnlyUrl(String pageUrl){
+		ModelAndView modelAndView=new ModelAndView();
+		modelAndView.setViewName("redirect:"+pageUrl);
+		return modelAndView;
+	}
+	
+	protected <T>ModelAndView buildErrorByRedirectAndParam(String pageUrl,ModelMap model,T value){
+		model.addAttribute("message", value);
+		ModelAndView modelAndView=new ModelAndView();
+		model.addAttribute("status", WebResponseConstant.RESPONSE_STATUS_BUSINESS_ERROR);
+		modelAndView.setViewName("redirect:"+pageUrl);
+		return modelAndView;
+	}
+	protected <T>ModelAndView buildErrorByRedirectAndParam(String pageUrl,ModelMap model,String key,T value){
+		model.addAttribute(key, value);
+		ModelAndView modelAndView=new ModelAndView();
+		model.addAttribute("status", WebResponseConstant.RESPONSE_STATUS_BUSINESS_ERROR);
+		modelAndView.setViewName("redirect:"+pageUrl);
+		return modelAndView;
+	}
+	protected <T>ModelAndView buildErrorByRedirectAndParam(String pageUrl,ModelMap model, List<MatchMap> listMaps){
+		if(listMaps!=null&&listMaps.size()>0)
+			for(MatchMap m:listMaps){
+				model.addAttribute(m.getKey(), m.getValue());
+			}
+		model.addAttribute("status", WebResponseConstant.RESPONSE_STATUS_BUSINESS_ERROR);
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("redirect:"+pageUrl);
 		return modelAndView;

@@ -127,6 +127,7 @@ public class LoginController extends BaseController {
         visitor.setEmail(member.getEmail());
         visitor.setAuthArr(member.getAuthArr());
         visitor.setRoleArr(member.getRoleArr());
+        visitor.setTeacher(false);
         School school=schoolDao.get(member.getSchoolId());
         if(school!=null){
         	visitor.setSchoolName(school.getName());

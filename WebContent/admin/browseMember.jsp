@@ -4,12 +4,6 @@
 	
 			<div id="content-header">
 				<h1>在线列表</h1>
-				<div class="btn-group">
-					<a class="btn btn-large tip-bottom" title="Manage Files"><i class="icon-file"></i></a>
-					<a class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i></a>
-					<a class="btn btn-large tip-bottom" title="Manage Comments"><i class="icon-comment"></i><span class="label label-important">5</span></a>
-					<a class="btn btn-large tip-bottom" title="Manage Orders"><i class="icon-shopping-cart"></i></a>
-				</div>
 			</div>
 			<div id="breadcrumb">
 				<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
@@ -26,18 +20,18 @@
 								<table class="table table-bordered data-table">
 									<thead>
 									<tr>
-									<th>访问Session</th>
-									<th>访问IP</th>
-									<th>访问时间</th>
+									<th>id</th>
+									<th>name</th>
+									<th>email</th>
 									</tr>
 									</thead>
 									<tbody>
-									 <c:if test="${sessions!= null}">
-											<c:forEach var="session" varStatus="status" items="${sessions}">
+									 <c:if test="${members!= null}">
+											<c:forEach var="member" varStatus="status" items="${members}">
 												<tr class="gradeX">
-												<td>${session.sessionId}</td>
-												<td>${session.ip}</td>
-												<td>${session.onlineTime}</td>
+												<td>${member.id}</td>
+												<td>${member.name}</td>
+												<td>${member.email}</td>
 												</tr>
 										   </c:forEach>
 								      </c:if>

@@ -47,4 +47,5 @@ public class AppCache {
 	public ITreeCache<Integer, Category> getCategoryCache() {
 		return categoryCache;
 	}
+	
 }

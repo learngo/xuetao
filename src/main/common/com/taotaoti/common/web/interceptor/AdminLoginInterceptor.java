@@ -55,7 +55,7 @@ public class AdminLoginInterceptor extends WebCommonInterceptor {
 		 */
 		// 判断session中是否有visitor
 		Visitor visitor =session.getSessionVisitor(request);
-		if(visitor!=null){
+		if(visitor!=null&&visitor.isTeacher()){
 			System.out.println("---------------------");
 			session.setAttributeAsVisitor(request, visitor);
 			return true;

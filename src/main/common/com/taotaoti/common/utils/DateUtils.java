@@ -1031,6 +1031,8 @@ public class DateUtils {
 		content= content.replace("月", "-");
 		content= content.replace("日", "");
 		System.out.println(DateUtils.str_ToDate(content));
+		
+		System.out.println(DateUtils.parseDate("2014-03-23 17:28:18", "yyyy-MM-dd HH:mm:ss"));
 	}
 
 }

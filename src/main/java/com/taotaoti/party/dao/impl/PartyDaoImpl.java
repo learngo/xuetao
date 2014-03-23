@@ -42,6 +42,11 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 		return this.page(matchs,orders, curPage,
 				pageSize);
 	}
+	@Override
+	public List<Party> findAll(int curPage,
+			int pageSize) {
+		return this.findAllPage(curPage, pageSize);
+	}
 
 	@Override
 	public List<Party> findParyByMemberId(int memberId, int curPage,
@@ -53,6 +58,12 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 		matchs.add(match(PartyColumns.memberId, memberId));
 		return this.page(matchs,orders, curPage,
 				pageSize);
+	}
+
+	@Override
+	public Party findPartyByMemberIdAndPartyId(int memberId, int partyId) {
+		// TODO Auto-generated method stub
+		return findOne(match(PartyColumns.memberId,memberId),match(PartyColumns.partyId, partyId));
 	}
 	
 }

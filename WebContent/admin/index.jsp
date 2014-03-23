@@ -1,20 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="content-header">
-	<h1>时光胶囊</h1>
-	<div class="btn-group">
-		<a class="btn btn-large tip-bottom" title="Manage Files"><i
-			class="icon-file"></i></a> <a class="btn btn-large tip-bottom"
-			title="Manage Users"><i class="icon-user"></i></a> <a
-			class="btn btn-large tip-bottom" title="Manage Comments"><i
-			class="icon-comment"></i><span class="label label-important">5</span></a>
-		<a class="btn btn-large tip-bottom" title="Manage Orders"><i
-			class="icon-shopping-cart"></i></a>
-	</div>
+	<h1>后台管理</h1>
 </div>
 <div id="breadcrumb">
 	<a href="<c:url value="/admin/index.jsp"/>" title="Go to Home" class="tip-bottom"><i
-		class="icon-home"></i> Home</a> <a href="#" class="current">时光胶囊</a>
+		class="icon-home"></i> Home</a> <a href="#" class="current">后台管理</a>
 </div>
 <div class="container-fluid">
 	<div class="row-fluid">
@@ -99,19 +90,7 @@
 			
 		</div>
 	</div>
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="widget-box widget-calendar">
-				<div class="widget-title">
-					<span class="icon"><i class="icon-calendar"></i></span>
-					<h5>Calendar</h5>
-				</div>
-				<div class="widget-content nopadding">
-					<div class="calendar"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 </div>	
 
 <script src="<c:url value="/resources/admin/js/unicorn.dashboard.js"/>"></script>

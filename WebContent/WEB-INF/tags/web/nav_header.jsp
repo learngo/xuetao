@@ -20,7 +20,7 @@
                      <li><a href="#registerModal" data-toggle="modal">注&nbsp;&nbsp;册</a></li>
                  </c:if>
                     <c:if test="${sessionScope.UserConstant_VISITOR != null}">
-                     <li class="color_f63">${sessionScope.UserConstant_VISITOR.username }</li>
+                      <li class="color_f63"><a href="#">${sessionScope.UserConstant_VISITOR.username }</a></li>
 					  <li><a href="<c:url value="/member/settings/settings"/>"><i
 									class="glyphicon glyphicon-cog"></i> 帐号设置</a></li>
 					 

@@ -63,5 +63,11 @@ public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
 		return this.page(matchs,orders, curPage,
 				pageSize);
 	}
+
+	@Override
+	public Good findGoodByMemberIdAndGoodId(int memberId, int goodId) {
+		
+		return this.findOne(match(GoodColumns.memberId, memberId),match(GoodColumns.goodId, goodId));
+	}
 	
 }

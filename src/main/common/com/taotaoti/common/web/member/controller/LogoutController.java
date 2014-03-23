@@ -10,20 +10,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.utils.CookieUtils;
 import com.taotaoti.common.web.member.controller.loginValidate.AccountLoginValidator;
 
 @Controller
-public class LogoutController {
+public class LogoutController extends BaseController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LogoutController.class);
 	@Resource
 	private RedisCacheManager redisCacheMgr;
 	
 	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		// redis中移除visitor
 		String taotaotiId = CookieUtils.getCookieValue(request, LoginConstant.TAOTAOTI_COOKIE_NAME);
 //		if(taotaotiId != null){
@@ -37,7 +39,7 @@ public class LogoutController {
 		LOG.info(taotaotiId+"logout");
 		AccountLoginValidator validator = AccountLoginValidator.getInstance();
 		validator.logout(request);
-		return LoginConstant.getUC_LOGOUT_URL();
+		return this.buildErrorByRedirectOnlyUrl(LoginConstant.getUC_LOGOUT_URL());
 	}
 
 	public RedisCacheManager getRedisCacheMgr() {

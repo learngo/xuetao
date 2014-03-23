@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet"
 	href="<c:url value="/resources/web/css/common-content.css"/>" />
 
@@ -56,11 +57,11 @@
         <thead>
           <tr>
             <th>id</th>
+            <th>icon</th>
             <th>title</th>
             <th>startTime</th>
             <th>endTime</th>
             <th>join sum</th>
-            <th>state</th>
             <th>manager</th>
           </tr>
         </thead>
@@ -69,11 +70,17 @@
             <c:forEach var="party" varStatus="status" items="${partys}">
            <tr>
             <td>${party.id }</td>
+            <td>
+             <img alt="${party.title }" src="<c:url value="${party.icon}"></c:url>" width="120px" height="60px">
+            </td>
             <td>${party.title }</td>
-            <td>${party.joinSum }</td>
-            <td>${party.state }</td>
-            <td>${party.updateTime }</td>
-            <td><a href="@">delte</a> <a href="#">view</a></td>
+            <td>
+             <fmt:formatDate value="${party.startTime }" pattern="yyyy-MM-dd HH:mm"/>
+            </td>
+            <td><fmt:formatDate value="${party.endTime }" pattern="yyyy-MM-dd HH:mm"/></td>
+            <td>${party.joinSum}</td>
+            <td><a href="deleteParty?partyId=${party.id}">delete</a> 
+            <a href="party?partyId=${party.id}">view</a></td>
           </tr>
 		   </c:forEach>
         </c:if>

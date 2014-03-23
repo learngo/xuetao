@@ -50,15 +50,13 @@
 			<div class="panel panel-default panel-col">
 			     <div class="panel-heading">添加商品信息</div>
 			     <div class="panel-body">
-					<form id="user-profile-form" class="form-horizontal" method="post">
+					<form  class="form-horizontal" enctype="multipart/form-data" method="post" action="submitGood">
 
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="profile_truename">商品名称：</label>
 							<div class="col-md-7 controls">
-
 								<input type="text" id="profile_truename"
-									name="profile[truename]" class="form-control" />
-
+									name="name" class="form-control" />
 							</div>
 						</div>
 
@@ -84,16 +82,17 @@
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
-									<input type="radio" id="profile_gender_0"
-										name="profile[gender]" required="required" value="brand new" /><label
-										for="profile_gender_0" class="required">brand new</label>
+									<input type="radio" 
+										name="level" required="required" value="1" />
+										<label 
+										 class="required">brand new</label>
 										<input
-										type="radio" id="profile_gender_1" name="profile[gender]"
-										required="required" value="barely used" /><label
-										for="profile_gender_1" class="required">barely used</label>
+										type="radio"  name="level"
+										required="required" value="2" />
+										<label class="required">barely used</label>
 										<input
-										type="radio" id="profile_gender_1" name="profile[gender]"
-										required="required" value=" used" />
+										type="radio"  name="level"
+										required="required" value="3" />
 										<label
 										for="profile_gender_1" class="required"> used</label>
 								</div>
@@ -105,7 +104,7 @@
 								<label for="profile_company">首页图片</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="file" id="file" name="logo"
+								<input type="file"  name="file"
 									class="form-control" />
 							</div>
 						</div>
@@ -115,7 +114,16 @@
 								<label for="profile_job">价格</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_job" name="profile[job]"
+								<input type="text" name="price"
+									class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 control-label">
+								<label for="profile_job">标题</label>
+							</div>
+							<div class="col-md-7 controls">
+								<input type="text" name="title"
 									class="form-control" />
 							</div>
 						</div>
@@ -127,7 +135,7 @@
 								<label for="profile_about">描述：</label>
 							</div>
 							<div class="col-md-7 controls">
-								<textarea id="profile_about" name="profile[about]"
+								<textarea  name="description"
 									class="form-control" rows="20"></textarea>
 							</div>
 						</div>
@@ -141,9 +149,6 @@
 								<button type="submit" class="btn btn-primary">保存</button>
 							</div>
 						</div>
-
-						<input type="hidden" name="_csrf_token"
-							value="5ecd77f7b2416b573faa519e6622362a87b0ecd8">
 					</form>
 
 

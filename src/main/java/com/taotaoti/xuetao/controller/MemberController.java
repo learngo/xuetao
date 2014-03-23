@@ -1,6 +1,10 @@
 package com.taotaoti.xuetao.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,21 +15,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
+import com.taotaoti.common.utils.DateUtils;
 import com.taotaoti.common.utils.MD5;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
-import com.taotaoti.good.dao.GoodDao;
+import com.taotaoti.good.bo.Good;
+import com.taotaoti.good.constant.GoodConstant;
 import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.member.bo.Member;
 import com.taotaoti.member.dao.MemberDao;
+import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.service.PartyMgr;
+import com.taotaoti.school.bo.School;
+import com.taotaoti.school.dao.SchoolDao;
 
 @Controller
 @RequestMapping(value="/member")
@@ -41,6 +54,8 @@ public class MemberController extends BaseController {
 	private PartyMgr partyMgr;
 	@Resource
 	private GoodMgr goodMgr;
+	@Resource
+	private SchoolDao schoolDao;
 	
 	@Resource
 	private RedisCacheManager redisCacheMgr;
@@ -59,11 +74,52 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/settings/addGood")
 	public String addGood(HttpServletRequest request,
 			HttpServletResponse response,
+			@RequestParam(value="goodId",required=false) Integer goodId,
 			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
 		MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
 		listMaps.add(categorys);
+		if(goodId!=null){
+			listMaps.add(new MatchMap("goodView", goodMgr.getGoodViewByGoodId(v.getUserid(),goodId)));
+			return this.buildSuccess(model, "/member/settings/viewGood", listMaps);
+		}
 		return this.buildSuccess(model, "/member/settings/addGood", listMaps);
+	}
+	@RequestMapping(value = "/settings/submitGood")
+	public ModelAndView submitGood(HttpServletRequest request,
+			HttpServletResponse response,
+			Good good,
+			ModelMap model){
+		// 转型为MultipartHttpRequest
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		// 根据前台的name名称得到上传的文件
+		MultipartFile file = multipartRequest.getFile("file");
+		// 获得文件名：
+		String realFileName = file.getOriginalFilename();
+		// 获取路径
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")
+				+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"good"+ File.separator;
+		// 创建文件
+		File dirPath = new File(ctxPath);
+		if (!dirPath.exists()) {
+			dirPath.mkdir();
+		}
+		System.out.println(file.getName());
+		Visitor v=this.session.getSessionVisitor(request);
+		if(!realFileName.endsWith(".jpg"))
+		    return this.buildErrorByRedirectAndParam("/member/settings/addGood", model, "图片格式不对！");
+	    
+		realFileName=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
+		File uploadFile = new File(ctxPath + realFileName);
+		try {
+			FileCopyUtils.copy(file.getBytes(), uploadFile);
+			good.setLogo("/resources/upload/good/"+realFileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		goodMgr.submitGood(good.getCategoryId(),good.getName(),good.getTitle(), good.getDescription(), good.getLogo(),v.getUserid(),good.getLevel(),good.getPrice());
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
 	}
 	@RequestMapping(value = "/settings/browseGood")
 	public String browseGood(HttpServletRequest request,
@@ -79,23 +135,98 @@ public class MemberController extends BaseController {
 		listMaps.add(goods);
 		return this.buildSuccess(model, "/member/settings/browseGood", listMaps);
 	}
+	@RequestMapping(value = "/settings/deleteGood")
+	public ModelAndView deleteGood(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="goodId") Integer goodId,
+			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
+		goodMgr.modifyGoodStatu(v.getUserid(), goodId, GoodConstant.GOOD_STATU_DELETE);
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
+	}
+	
+	
 	@RequestMapping(value = "/settings/party")
 	public String party(HttpServletRequest request,
 			HttpServletResponse response,
+			@RequestParam(value="partyId",required=false) Integer partyId,
 			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
-		MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
-		listMaps.add(categorys);
+		MatchMap schooles=new MatchMap("schooles",schoolDao.findAll());
+		listMaps.add(schooles);
+		if(partyId!=null){
+			Party party=partyMgr.findPartyByMemberIdAndPartyId(v.getUserid(), partyId);
+			String schoolids=party.getSchoolIds();
+			if(schoolids.length()>0&&!schooles.equals("")){
+				String[] schIds=schoolids.split(",");
+				if(schIds.length>0){
+					School school=schoolDao.get(Integer.valueOf(schIds[0]));
+					listMaps.add(new MatchMap("school",school));
+				}
+			}
+			listMaps.add(new MatchMap("party",party));
+			return this.buildSuccess(model, "/member/settings/viewParty", listMaps);
+		}
+		
 		return this.buildSuccess(model, "/member/settings/addParty", listMaps);
 	}
-	@RequestMapping(value = "/settings/addParty")
-	public String addParty(HttpServletRequest request,
+	@RequestMapping(value = "/settings/submitParty")
+	public ModelAndView addParty(HttpServletRequest request,
 			HttpServletResponse response,
+			@RequestParam(value="schoolId",required=true) Integer schoolId,
+			@RequestParam(value="title",required=true) String title,
+			@RequestParam(value="description",required=true) String description,
+			@RequestParam(value="startTime",required=true) String start,
+			@RequestParam(value="endTime",required=true) String end,
 			ModelMap model){
-		List<MatchMap> listMaps=new ArrayList<MatchMap>();
-		MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
-		listMaps.add(categorys);
-		return this.buildSuccess(model, "/member/settings/addParty", listMaps);
+		String icon="";
+		// 转型为MultipartHttpRequest
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		// 根据前台的name名称得到上传的文件
+		MultipartFile file = multipartRequest.getFile("file");
+		// 获得文件名：
+		String realFileName = file.getOriginalFilename();
+		// 获取路径
+		String ctxPath = request.getSession().getServletContext().getRealPath("/")
+				+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"party"+ File.separator;
+		// 创建文件
+		File dirPath = new File(ctxPath);
+		if (!dirPath.exists()) {
+			dirPath.mkdir();
+		}
+		Visitor v=this.session.getSessionVisitor(request);
+		if(!realFileName.endsWith(".jpg"))
+		    return this.buildErrorByRedirectAndParam("/member/settings/party", model, "图片格式不对！");
+	    
+		realFileName=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
+		File uploadFile = new File(ctxPath + realFileName);
+		try {
+			LOG.info(ctxPath);
+			FileCopyUtils.copy(file.getBytes(), uploadFile);
+			icon=("/resources/upload/party/"+realFileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//Timestamp startTime=new Timestamp(DateUtils.parseDate("2014-01-22 17:06", "yyyy-MM-dd HH:mm").getTime());
+		System.out.println(start);
+		System.out.println(end);
+		Timestamp startTime;
+		Timestamp endTime;
+		if(start!=null)
+			startTime=new Timestamp(DateUtils.parseDate(start, "yyyy-MM-dd HH:mm:ss").getTime());
+		else
+			startTime=new Timestamp(System.currentTimeMillis());
+		if(end!=null) 
+			endTime=new Timestamp(DateUtils.parseDate(end, "yyyy-MM-dd HH:mm:ss").getTime());
+		else{
+			Date date=new Date(startTime.getTime());
+			endTime=new Timestamp(DateUtils.getNextDay(date, 30l).getTime());
+		}
+		
+		
+		partyMgr.submitParty(v.getUserid(), icon, title, description, startTime, endTime);
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseParty");
 	}
 	@RequestMapping(value = "/settings/browseParty")
 	public String browseParty(HttpServletRequest request,
@@ -110,6 +241,15 @@ public class MemberController extends BaseController {
 		MatchMap partys=new MatchMap("partys", partyMgr.findParyByMemberId(v.getUserid(), curPage, pageSize));
 		listMaps.add(partys);
 		return this.buildSuccess(model, "/member/settings/browseParty", listMaps);
+	}
+	@RequestMapping(value = "/settings/deleteParty")
+	public ModelAndView deleteParty(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="partyId") Integer partyId,
+			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
+		partyMgr.modifyPartyStatu(v.getUserid(), partyId, 1);
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseParty");
 	}
 	@RequestMapping(value = "/settings/modifyPassword")
 	public String modifyPassword(HttpServletRequest request,

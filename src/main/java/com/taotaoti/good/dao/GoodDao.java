@@ -5,11 +5,12 @@ import java.util.List;
 
 import com.taotaoti.common.generic.dao.BaseDao;
 import com.taotaoti.good.bo.Good;
-import com.taotaoti.party.bo.Party;
 
 public interface GoodDao extends BaseDao<Integer, Good> {
 
 	public List<Good> findAll();
+	public List<Good> findAllPage(int curPage,
+			int pageSize);
 	
 	public Good createGood(Good good);
 
@@ -20,4 +21,6 @@ public interface GoodDao extends BaseDao<Integer, Good> {
 			int pageSize);
 
 	public List<Good> findIndexGood(int curPage, int pageSize, int categoryId);
+	
+	public Good findGoodByMemberIdAndGoodId(int memberId,int goodId);
 }

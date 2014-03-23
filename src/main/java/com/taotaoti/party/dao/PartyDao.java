@@ -12,8 +12,11 @@ public interface PartyDao extends BaseDao<Integer, Party> {
 	
 	public Party createParty(Party party);
 	public int counts();
+	public List<Party> findAll(int curPage,
+			int pageSize);
 	public List<Party> findIndexPary( int curPage,
 			int pageSize);
 	public List<Party> findParyByMemberId(int memberId, int curPage,
 			int pageSize);
+	public Party findPartyByMemberIdAndPartyId(int memberId,int partyId);
 }
