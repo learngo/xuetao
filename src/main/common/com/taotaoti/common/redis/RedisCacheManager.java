@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class RedisCacheManager {
 	
+	
 	 private static final Log LOG = LogFactory.getLog(RedisCacheManager.class);
 
 
@@ -365,6 +366,7 @@ public class RedisCacheManager {
 	public List<RedisClient> getClientList() {
 		return clientList;
 	}
+	
 	
 	public List<RedisClient> getClients(Object key) {
 		return getClientList();

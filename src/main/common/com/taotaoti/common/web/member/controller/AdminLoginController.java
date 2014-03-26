@@ -32,14 +32,15 @@ import com.taotaoti.school.dao.SchoolDao;
 @RequestMapping(value="/admin")
 public class AdminLoginController extends BaseController {
 	private static final Logger LOG = LoggerFactory.getLogger(AdminLoginController.class);
-	@Resource 
-	private SessionProvider session;
+	@Resource(name="sessionProvider")
+	private SessionProvider sessionProvider;
 	
-	@Resource
+	@Resource(name="redisCacheMgr")
 	private RedisCacheManager redisCacheMgr;
 	
 	@Resource
 	private MemberFacade memberFacade;
+	
 	@Resource
 	private SchoolDao schoolDao;
 	
@@ -116,18 +117,12 @@ public class AdminLoginController extends BaseController {
         	visitor.setSchoolName(school.getName());
         }
         
-		session.setAttributeAsVisitor(request, visitor);
+        sessionProvider.setAttributeAsVisitor(request, visitor);
 		
 		//redisCacheMgr.put(taotaotiId + UserWebConstant.USER_KEY, LoginConstant.SESSION_EXPIRE_TIME, visitor);
 		
 	}
 	
-	public SessionProvider getSession() {
-		return session;
-	}
-	public void setSession(SessionProvider session) {
-		this.session = session;
-	}
 	public RedisCacheManager getRedisCacheMgr() {
 		return redisCacheMgr;
 	}
