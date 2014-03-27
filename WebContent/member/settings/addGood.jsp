@@ -6,8 +6,8 @@
 <div class="breadcrumbrow">
 	<div class="container">
 		<ul class="breadcrumb">
-			<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-			<li class="active"><a href="#">添加商品</a></li>
+			<li><a href='<c:url value="/"></c:url>'>home</a></li>
+			<li class="active"><a href="addGood">add good</a></li>
 		</ul>
 	</div>
 </div>
@@ -16,44 +16,44 @@
 		<div class="list-group">
 			<a href="settings" class="list-group-item ">
 			  <span class="glyphicon glyphicon-cog"></span>
-			   基本信息
+			   member base info
 			</a> 
 			
 			<a href="password" class="list-group-item">
 			  <span class="glyphicon glyphicon-lock"></span>
-			   密码修改
+			 modify  password 
 			</a> 
 			<a href="email" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   邮箱设置
+			  set  email
 			</a> 
 			<a href="addGood" class="list-group-item active">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加商品
+			   add good
 			</a> 
 			<a href="browseGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览商品
+			   browse goods
 			</a> 
 			<a href="party" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加活动
+			   add party
 			</a> 
 			<a href="browseParty" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览活动
+			     browse partys
 			</a> 
 		</div>
 	</div>
 	<div class="col-md-9 content">
 		<div class="row-fluid">
 			<div class="panel panel-default panel-col">
-			     <div class="panel-heading">添加商品信息</div>
+			     <div class="panel-heading">Add Good</div>
 			     <div class="panel-body">
 					<form  class="form-horizontal" enctype="multipart/form-data" method="post" action="submitGood">
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="profile_truename">商品名称：</label>
+							<label class="col-md-2 control-label" for="profile_truename">Good Name：</label>
 							<div class="col-md-7 controls">
 								<input type="text" id="profile_truename"
 									name="name" class="form-control" required="required"/>
@@ -62,7 +62,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label class="required">分类：</label>
+								<label class="required">Category：</label>
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
@@ -78,7 +78,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label class="required">成色：</label>
+								<label class="required">Color：</label>
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
@@ -101,7 +101,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">首页图片</label>
+								<label for="profile_company">Good Logo</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="file"  name="file"
@@ -110,7 +110,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">图片1</label>
+								<label for="profile_company">IMG 1</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="file"  name="file1"
@@ -119,7 +119,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">图片2</label>
+								<label for="profile_company">IMG2</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="file"  name="file2"
@@ -128,7 +128,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">图片3</label>
+								<label for="profile_company">IMG 3</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="file"  name="file3"
@@ -138,7 +138,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_job">价格</label>
+								<label for="profile_job">Price</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="text" name="price"
@@ -147,7 +147,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_job">标题</label>
+								<label for="profile_job">Title:</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="text" name="title"
@@ -159,7 +159,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_about">描述：</label>
+								<label for="profile_about">DES：</label>
 							</div>
 							<div class="col-md-7 controls">
 								<textarea  name="description"
@@ -173,7 +173,7 @@
 
 						<div class="row">
 							<div class="col-md-7 col-md-offset-2">
-								<button type="submit" class="btn btn-primary">保存</button>
+								<button type="submit" class="btn btn-primary">Save</button>
 							</div>
 						</div>
 					</form>

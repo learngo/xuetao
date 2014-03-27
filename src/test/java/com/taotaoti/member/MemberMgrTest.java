@@ -31,10 +31,10 @@ public class MemberMgrTest extends BaseTestCase {
 	@Test
 	public void testModifyEmail(){
 	}
-	@Test
-	public void testSaveMember(){
-		memberMgr.registerMember("nickName@chuancheng.cn", "111111111111", "nickName", "18610625648");
-	}
+//	@Test
+//	public void testSaveMember(){
+//		memberMgr.registerMember("nickName@chuancheng.cn", "111111111111", "nickName", "18610625648");
+//	}
 	
 	
 }

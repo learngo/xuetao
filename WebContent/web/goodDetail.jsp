@@ -8,8 +8,8 @@
 <div class="breadcrumbrow">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-				<li class="active"><a href="#">活动</a></li>
+				<li><a href='<c:url value="/"></c:url>'>Home</a></li>
+				<li class="active"><a href="goods">Good</a></li>
 			</ul>
 		</div>
 	</div>
@@ -19,17 +19,17 @@
       <div class="col-md-4">
         <h5>${good.title }</h5>
         <p>${good.name}</p>
-        <h5>About Project</h5>
+        <h5>About Good</h5>
         <p>${good.description } </p>
-        <h5>create time:</h5>
+        <h5>Add time:</h5>
         <p>${good.createTime }</p>
         </div>
       <div class="col-md-8">
         <ul class="portfolio_showcase">
-          <li> <img src="../resources/web/img/1.png" alt="Image" /></li>
-          <li> <img src="../resources/web/img/2.png" alt="Image" /></li>
-          <li> <img src="../resources/web/img/3.png" alt="Image" /></li>
-          <li> <img src="../resources/web/img/4.png" alt="Image" /></li>
+          <li> <img src="<c:url value="${good.logo}"/>" alt="Image" style="height: 400px;width: 750px"/></li>
+          <c:forEach var="pic" items="${goodPics}" varStatus="statu">
+            <li> <img src="<c:url value="${pic.path}"/>" alt="Image" style="height: 400px;width: 750px"/></li>
+          </c:forEach>
         </ul>
         <div id="number" class="work-pagination"> </div>
       </div>
@@ -59,9 +59,9 @@
             </div>
           </div>
            -->
-          <label for="message"> Message</label>
+          <label for="message"> Message：</label>
           <textarea name="message" id="message" cols="40" rows="10"></textarea>
-          <input type="submit" id="send-message" value="Send" class="btn btn-success mt20" />
+          <input type="submit" id="send-message" value="Send" class="btn btn-success mt20 mb20" />
         </form>
       </div>
     </div>

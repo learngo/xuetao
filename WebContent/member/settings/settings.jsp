@@ -6,8 +6,8 @@
 <div class="breadcrumbrow">
 	<div class="container">
 		<ul class="breadcrumb">
-			<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-			<li class="active"><a href="<c:url value="/member/settings/settings"/>">设置</a></li>
+			<li><a href='<c:url value="/"></c:url>'>Home</a></li>
+			<li class="active"><a href="<c:url value="/member/settings/settings"/>">Setting</a></li>
 		</ul>
 	</div>
 </div>
@@ -16,137 +16,137 @@
 		<div class="list-group">
 			<a href="settings" class="list-group-item active">
 			  <span class="glyphicon glyphicon-cog"></span>
-			   基本信息
+			   member base info
 			</a> 
 			
 			<a href="password" class="list-group-item">
 			  <span class="glyphicon glyphicon-lock"></span>
-			   密码修改
+			 modify  password 
 			</a> 
 			<a href="email" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   邮箱设置
+			  set  email
 			</a> 
 			<a href="addGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加商品
+			   add good
 			</a> 
 			<a href="browseGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览商品
+			   browse goods
 			</a> 
 			<a href="party" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加活动
+			   add party
 			</a> 
 			<a href="browseParty" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览活动
+			     browse partys
 			</a> 
 		</div>
 	</div>
 	<div class="col-md-9 content">
 		<div class="row-fluid">
 			<div class="panel panel-default panel-col">
-			     <div class="panel-heading">基础信息</div>
+			     <div class="panel-heading">Base infomation</div>
 			     <div class="panel-body">
-					<form id="user-profile-form" class="form-horizontal" method="post">
+					<form id="user-profile-form" class="form-horizontal" method="post" action="modifyMemberInfo">
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="profile_truename">头像</label>
+							<label class="col-md-2 control-label">photo</label>
 							<div class="col-md-7 controls">
-								<img src="<c:url value="${member.photo}"/>" alt="${party.title}" />
+								<img src="<c:url value="${member.photo}"/>" alt="${party.title}"  width="180px" height="240px"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="profile_truename">姓名</label>
+							<label class="col-md-2 control-label" for="profile_truename">Nick Name</label>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_truename"
-									name="name" class="form-control" value="${member.name }"/>
+								<input type="text"
+									name="username" class="form-control" value="${member.name }" required="required"/>
 							</div>
 						</div>
 
-			
+			<!-- 
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label class="required">性别</label>
+								<label class="required">Sex</label>
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
 									
-								  <c:if test="${member.sex == '男' }">
+								  <c:if test="${member.sex == 'man' }">
 								   <input type="radio" 
-										name="sex"  value="男" checked="checked"/>
-									<label>男</label>
+										name="sex"  value="man" checked="checked"/>
+									<label>man</label>
 								  <input
-										type="radio"  name="sex" value="女" />
-								  <label>女</label>
+										type="radio"  name="sex" value="woman" />
+								  <label>woman</label>
 								  </c:if>
-								  <c:if test="${member.sex == '女' }">
+								  <c:if test="${member.sex == 'woman' }">
 								   <input type="radio" 
-										name="sex"  value="男" />
-									<label>男</label>
+										name="sex"  value="man" />
+									<label>nan</label>
 								  <input
-										type="radio"  name="sex" value="女" checked="checked"/>
-								  <label>女</label>
+										type="radio"  name="sex" value="woman" checked="checked"/>
+								  <label>woman</label>
 								  </c:if>
 								  
 								</div>
 							</div>
 						</div>
-
+ -->
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">学校</label>
+								<label for="profile_company">School</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_job" name="schoolName"
+								<input type="text" 
 									class="form-control" value="${v.schoolName }" readonly="readonly"/>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_job">专业</label>
+								<label for="profile_job">Major</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_job" name="major"
-									class="form-control" value="${member.major }"/>
+								<input type="text" name="major"
+									class="form-control" value="${member.major }" required="required"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_weixin">电话</label>
+								<label for="profile_weixin">phone</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_site" name="phone"
-									class="form-control" value="${member.phone }"/>
+								<input type="text" name="phone"
+									class="form-control" value="${member.phone }" required="required"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_weixin">邮箱</label>
+								<label for="profile_weixin">email</label>
 							</div>
 							<div class="col-md-7 controls">
-								<input type="text" id="profile_site" name="email"
-									class="form-control" value="${member.email }"/>
+								<input type="text" 
+									class="form-control" value="${member.email }" readonly="readonly"/>
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_about">自我介绍</label>
+								<label for="profile_about">Introduce</label>
 							</div>
 							<div class="col-md-7 controls">
 								<textarea id="profile_about" name="description"
-									class="form-control" rows="20">${member.description }</textarea>
+									class="form-control" rows="20" required="required">${member.description }</textarea>
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-md-7 col-md-offset-2">
-								<button type="submit" class="btn btn-primary">保存</button>
+								<button type="submit" class="btn btn-primary">Save</button>
 							</div>
 						</div>
 

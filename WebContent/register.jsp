@@ -11,7 +11,7 @@
       </a>
     </div>
     <div class="col-lg-6 fr">
-         <form class="form-horizontal" action="<c:url value="/register"/>" method="post">
+         <form class="form-horizontal" action="<c:url value="/register"/>" method="post" enctype="multipart/form-data">
           <div id="output" class="alert tc"> register member </div>
              <div class="form-meta clearfix">
           			<div class="form-group">
@@ -67,7 +67,6 @@
 					</div>
 					
 				<div class="modal-footer">
-	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
 	              <button type="submit" class="btn btn-primary" >submit</button>
             	</div>
             </div>

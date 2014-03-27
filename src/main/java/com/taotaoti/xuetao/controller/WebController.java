@@ -21,6 +21,10 @@ import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.web.session.SessionProvider;
 import com.taotaoti.good.dao.GoodDao;
+import com.taotaoti.good.dao.GoodPicDao;
+import com.taotaoti.member.service.MemberMgr;
+import com.taotaoti.member.vo.AcountInfo;
+import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.dao.PartyDao;
 
 @Controller
@@ -33,9 +37,13 @@ public class WebController extends BaseController {
 	@Resource
 	private GoodDao goodDao;
 	@Resource
+	private GoodPicDao goodPicDao;
+	@Resource
 	private CategoryDao categoryDao;
 	@Resource
 	private RedisCacheManager redisCacheMgr;
+	@Resource
+	private MemberMgr memberMgr;
 	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request,
@@ -90,7 +98,8 @@ public class WebController extends BaseController {
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
 		MatchMap good=new MatchMap("good", goodDao.get(goodId));
 		listMaps.add(good);
-		
+		MatchMap goodPices=new MatchMap("goodPics", goodPicDao.findAllByGoodId(goodId));
+		listMaps.add(goodPices);
 		return this.buildSuccess(model, "/web/goodDetail", listMaps);
 	}
 	
@@ -114,8 +123,20 @@ public class WebController extends BaseController {
 			@RequestParam(value="partyId") Integer partyId,
 			ModelMap model){
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
-		MatchMap party=new MatchMap("party", partyDao.get(partyId));
-		listMaps.add(party);
+		Party party=partyDao.get(partyId);
+		MatchMap partyMatch=new MatchMap("party", party);
+		listMaps.add(partyMatch);
+		ArrayList<AcountInfo> listAcountInfos=new ArrayList<AcountInfo>();
+		if(party!=null){
+			String []ids=party.getJoinMemberIds().split(",");
+			if(ids.length>0){
+				for(int i=0;i<ids.length;i++){
+					int memberId=Integer.valueOf(ids[i]);
+					listAcountInfos.add(memberMgr.getAcountInfoByMemberId(memberId));
+				}
+			}
+		}
+		listMaps.add(new MatchMap("acountInfos", listAcountInfos));
 		return this.buildSuccess(model, "/web/partyDetail", listMaps);
 	}
 	

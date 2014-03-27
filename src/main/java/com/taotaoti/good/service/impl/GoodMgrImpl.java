@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 import com.taotaoti.cache.AppCache;
 import com.taotaoti.category.bo.Category;
 import com.taotaoti.good.bo.Good;
+import com.taotaoti.good.bo.GoodPic;
 import com.taotaoti.good.dao.GoodDao;
+import com.taotaoti.good.dao.GoodPicDao;
 import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.good.vo.GoodView;
 @Component
@@ -19,6 +21,8 @@ public class GoodMgrImpl implements GoodMgr {
     
 	@Resource
 	public GoodDao goodDao;
+	@Resource
+	public GoodPicDao goodPicDao;
 	@Resource
 	public AppCache appCache;
 
@@ -35,11 +39,11 @@ public class GoodMgrImpl implements GoodMgr {
 	}
 
 	@Override
-	public void submitGood(int caregoryId,String name,String title,String description,String logo,int memberId,int level,int price) {
+	public Good submitGood(int caregoryId,String name,String title,String description,String logo,int memberId,int level,int price) {
 		Good good=new Good(null, 1, name, title, description, 
 				new Timestamp(System.currentTimeMillis()),  new Timestamp(System.currentTimeMillis()), 
 				0, logo, 0, memberId, price, level);
-		goodDao.create(good);
+		return goodDao.create(good);
 	}
 
 	@Override
@@ -106,6 +110,17 @@ public class GoodMgrImpl implements GoodMgr {
 			goodViews.add(goodView);
 		}
 		return goodViews;
+	}
+
+	@Override
+	public boolean submitGoodPic(int goodId, String path) {
+		GoodPic goodPic=new  GoodPic();
+		goodPic.setDescription(null);
+		goodPic.setGoodId(goodId);
+		goodPic.setPath(path);
+		goodPic.setStatu(0);
+		goodPicDao.create(goodPic);
+		return false;
 	}
 	
 

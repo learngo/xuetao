@@ -32,8 +32,8 @@ public class MemberFacadeImpl implements MemberFacade {
 
 	@Override
 	public AcountInfo registerMember(String email, String dbpassword,
-			String nickName, String phone) {
-		return memberMgr.registerMember(email, dbpassword, nickName, phone);
+			String nickName, String phone,int schoolId,String photo,String major) {
+		return memberMgr.registerMember(email, dbpassword, nickName, phone,schoolId,photo,major);
 	}
 
 	@Override

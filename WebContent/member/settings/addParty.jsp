@@ -6,7 +6,7 @@
 <div class="breadcrumbrow">
 	<div class="container">
 		<ul class="breadcrumb">
-			<li><a href='<c:url value="/"></c:url>'>首页</a></li>
+			<li><a href='<c:url value="/"></c:url>'>Home</a></li>
 			<li class="active"><a href="<c:url value="/member/settings/addParty"/>">add party </a></li>
 		</ul>
 	</div>
@@ -16,45 +16,45 @@
 		<div class="list-group">
 			<a href="settings" class="list-group-item ">
 			  <span class="glyphicon glyphicon-cog"></span>
-			   基本信息
+			   member base info
 			</a> 
 			
 			<a href="password" class="list-group-item">
 			  <span class="glyphicon glyphicon-lock"></span>
-			   密码修改
+			 modify  password 
 			</a> 
 			<a href="email" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   邮箱设置
+			  set  email
 			</a> 
-			<a href="addGood" class="list-group-item">
+			<a href="addGood" class="list-group-item ">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加商品
+			   add good
 			</a> 
 			<a href="browseGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览商品
+			   browse goods
 			</a> 
 			<a href="party" class="list-group-item active">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加活动
+			   add party
 			</a> 
 			<a href="browseParty" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览活动
+			     browse partys
 			</a> 
 		</div>
 	</div>
 	<div class="col-md-9 content">
 		<div class="row-fluid">
 			<div class="panel panel-default panel-col">
-			     <div class="panel-heading">添加活动</div>
+			     <div class="panel-heading">add Party</div>
 			     <div class="panel-body">
 					<form  class="form-horizontal" enctype="multipart/form-data" method="post" action="submitParty">
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label class="required">学校：</label>
+								<label class="required">School：</label>
 							</div>
 							<div class="col-md-7 controls radios">
 								<div id="profile_gender">
@@ -69,7 +69,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="profile_truename">活动标题：</label>
+							<label class="col-md-2 control-label" for="profile_truename">Title：</label>
 							<div class="col-md-7 controls">
 								<input type="text"
 									name="title" class="form-control" />
@@ -79,7 +79,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">图片</label>
+								<label for="profile_company">IMG</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="file" id="file" name="file"
@@ -87,7 +87,7 @@
 							</div>
 						</div>
 				       <div class="form-group">
-				              <label for="startTime" class="col-md-2 control-label">开始时间</label>
+				              <label for="startTime" class="col-md-2 control-label">Start Time</label>
 				              <div class="input-group date form_datetime col-md-5"  data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="startTime">
 				                  <input class="form-control" size="16" type="text" value="" readonly>
 				                  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -96,7 +96,7 @@
 						<input type="hidden" class="input-sm form-control" name="startTime" id="startTime" />
 				       </div>
 				       <div class="form-group">
-				              <label for="dtp_input1" class="col-md-2 control-label">结束时间</label>
+				              <label for="dtp_input1" class="col-md-2 control-label">End Time</label>
 				              <div class="input-group date form_datetime col-md-5"  data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="endTime">
 				                  <input class="form-control" size="16" type="text" value="" readonly>
 				                  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -106,7 +106,7 @@
 				       </div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_about">描述：</label>
+								<label for="profile_about">DES：</label>
 							</div>
 							<div class="col-md-7 controls">
 								<textarea id="profile_about" name="description"
@@ -119,7 +119,7 @@
 
 						<div class="row">
 							<div class="col-md-7 col-md-offset-2">
-								<button type="submit" class="btn btn-primary">保存</button>
+								<button type="submit" class="btn btn-primary">Save</button>
 							</div>
 						</div>
 					</form>

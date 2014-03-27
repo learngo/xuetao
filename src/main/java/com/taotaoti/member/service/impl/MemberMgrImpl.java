@@ -22,6 +22,8 @@ import com.taotaoti.member.dao.RoleAuthDao;
 import com.taotaoti.member.dao.RoleDao;
 import com.taotaoti.member.service.MemberMgr;
 import com.taotaoti.member.vo.AcountInfo;
+import com.taotaoti.school.bo.School;
+import com.taotaoti.school.dao.SchoolDao;
 @Component
 public class MemberMgrImpl implements MemberMgr {
 	protected final static Log LOG = LogFactory.getLog(MemberMgrImpl.class);
@@ -33,6 +35,8 @@ public class MemberMgrImpl implements MemberMgr {
 	RoleAuthDao roleAuthDao;
 	@Resource 
 	AuthDao authDao;
+	@Resource
+	SchoolDao schoolDao;
 	
 	@Override
 	public AcountInfo getAcountInfoByMemberId(int memberId) {
@@ -56,6 +60,12 @@ public class MemberMgrImpl implements MemberMgr {
 					authArr[i]=auths.get(i).getAuthcode();
 				}
 				acountInfo.setAuthArr(authArr);
+				if(member.getSchoolId()!=null){
+					School school=schoolDao.get(member.getSchoolId());
+					if(school!=null)
+						acountInfo.setSchoolName(school.getName());
+				}
+				
 				return acountInfo;
 			}
 			return null;
@@ -105,17 +115,21 @@ public class MemberMgrImpl implements MemberMgr {
 	@Override
 	@Transactional
 	public AcountInfo registerMember(String email, String dbpassword,
-			String nickName, String phone) {
+			String nickName, String phone,int schoolId,String photo,String major) {
 		Member member=new Member();
 		member.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		member.setEmail(email);
 		member.setName(nickName);
 		member.setPassword(dbpassword);
+		member.setPhoto(photo);
+		member.setMajor(major);
+		member.setSchoolId(schoolId);
+		
+		
 		member.setRoleid(MemberConstant.ROLE_BAO_MEMBER);
 		member.setPoints(0);
 		member.setSuccessSum(0);
 		member.setFailSum(0);
-		member.setSchoolId(1);
 		member.setPartyJoinSum(0);
 		member.setPartyCreateSum(0);
 		member.setReputation(0);

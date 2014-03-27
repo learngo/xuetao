@@ -6,6 +6,7 @@ public class AcountInfo extends Member {
 	private static final long serialVersionUID = 4089458387116208127L;
 	private String[] authArr = new String[]{};
 	private String[] roleArr = new String[]{};
+	private String schoolName;
 	
 	public AcountInfo() {
      super();
@@ -32,6 +33,12 @@ public class AcountInfo extends Member {
 	}
 	public void setRoleArr(String[] roleArr) {
 		this.roleArr = roleArr;
+	}
+	public String getSchoolName() {
+		return schoolName;
+	}
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
 	}
 
 }

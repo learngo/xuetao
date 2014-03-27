@@ -16,44 +16,44 @@
 		<div class="list-group">
 			<a href="settings" class="list-group-item ">
 			  <span class="glyphicon glyphicon-cog"></span>
-			   基本信息
+			   member base info
 			</a> 
 			
 			<a href="password" class="list-group-item">
 			  <span class="glyphicon glyphicon-lock"></span>
-			   密码修改
+			 modify  password 
 			</a> 
 			<a href="email" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   邮箱设置
+			  set  email
 			</a> 
-			<a href="addGood" class="list-group-item ">
+			<a href="addGood" class="list-group-item active">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加商品
+			   add good
 			</a> 
 			<a href="browseGood" class="list-group-item active">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览商品
+			   browse goods
 			</a> 
 			<a href="party" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   添加活动
+			   add party
 			</a> 
 			<a href="browseParty" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
-			   浏览活动
+			     browse partys
 			</a> 
 		</div>
 	</div>
 	<div class="col-md-9 content">
 		<div class="row-fluid">
 			<div class="panel panel-default panel-col">
-			     <div class="panel-heading">预览商品信息</div>
+			     <div class="panel-heading">View Good info</div>
 			     <div class="panel-body">
 					<form  class="form-horizontal" enctype="multipart/form-data" method="post" action="submitGood">
 
 						<div class="form-group">
-							<label class="col-md-2 control-label" for="profile_truename">商品名称：</label>
+							<label class="col-md-2 control-label" for="profile_truename">Good Name：</label>
 							<div class="col-md-7 controls">
 								<input type="text" class="form-control" value="${goodView.name }" readonly="readonly">
 							</div>
@@ -61,7 +61,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label class="required">分类：</label>
+								<label class="required">Category：</label>
 							</div>
 							<div class="col-md-7 controls radios">
 								<input type="text" class="form-control" value="${goodView.category }" readonly="readonly">
@@ -69,7 +69,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label class="required">成色：</label>
+								<label class="required">Color：</label>
 							</div>
 							<div class="col-md-7 controls radios">
 								
@@ -79,7 +79,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_company">首页图片</label>
+								<label for="profile_company">Logo:</label>
 							</div>
 							<div class="col-md-7 controls">
 								<img alt="" src="<c:url value="${goodView.logo }"></c:url>">
@@ -88,7 +88,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_job">价格</label>
+								<label for="profile_job">Price:</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="text" class="form-control" value="${goodView.price }" readonly="readonly">
@@ -96,7 +96,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_job">标题</label>
+								<label for="profile_job">Title:</label>
 							</div>
 							<div class="col-md-7 controls">
 								<input type="text" class="form-control" value="${goodView.title }" readonly="readonly">
@@ -107,7 +107,7 @@
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
-								<label for="profile_about">描述：</label>
+								<label for="profile_about">Description：</label>
 							</div>
 							<div class="col-md-7 controls">
 								<textarea  name="description"

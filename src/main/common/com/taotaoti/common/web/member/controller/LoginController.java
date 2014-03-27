@@ -1,5 +1,7 @@
 package com.taotaoti.common.web.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,9 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
@@ -44,25 +50,62 @@ public class LoginController extends BaseController {
 	private SchoolDao schoolDao;
 	
 	@RequestMapping(value = "/register")
-	public String register(HttpServletRequest request,
+	public ModelAndView register(HttpServletRequest request,
 			HttpServletResponse response,
+			@RequestParam("schoolId") Integer schoolId, 
+			@RequestParam("major") String major, 
 			@RequestParam("email") String email, 
+			@RequestParam("phone") String phone, 
 			@RequestParam("username") String username, 
 			@RequestParam("password") String password,
 			ModelMap model){
-		String dbPassword=MD5.getMd5(password);
+			String dbPassword=MD5.getMd5(password);
+			LOG.info("register");
+			if(memberFacade.isRegisterMember(email, "")) 
+			 return this.buildErrorByRedirectAndParam("/preRegister", model, "用户已经存在！");
 		
-		LOG.info("register");
-		if(memberFacade.isRegisterMember(email, "")) 
-			return LoginConstant.getUC_LOGIN_URL();
-		AcountInfo acountInfo=   memberFacade.registerMember(email, dbPassword, username, "");
+		   // 转型为MultipartHttpRequest
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			// 根据前台的name名称得到上传的文件
+			MultipartFile file = multipartRequest.getFile("file");
+			// 获得文件名：
+			String realFileName = file.getOriginalFilename();
+			// 获取路径
+			String ctxPath = request.getSession().getServletContext().getRealPath("/")
+					+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"photo"+ File.separator;
+			// 创建文件
+			File dirPath = new File(ctxPath);
+			if (!dirPath.exists()) {
+				dirPath.mkdir();
+			}
+			System.out.println(file.getName());
+			if(!realFileName.endsWith(".jpg"))
+			    return this.buildErrorByRedirectAndParam("/preRegister", model, "图片格式不对！");
+		    
+			realFileName=System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
+			File uploadFile = new File(ctxPath + realFileName);
+			String photo=null;
+			try {
+				FileCopyUtils.copy(file.getBytes(), uploadFile);
+				photo=("/resources/upload/photo/"+realFileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		if(schoolId==null)
+			    return this.buildErrorByRedirectAndParam("/preRegister", model, "学校不能为空");
+		
+		if(phone==null)
+			return this.buildErrorByRedirectAndParam("/preRegister", model, "学校不能为空");
+		
+		 AcountInfo acountInfo=   memberFacade.registerMember(email, dbPassword, username, phone,schoolId,photo,major);
 		if(acountInfo!=null){
 			initVisterSessionAndRedis(request,response,acountInfo);
-			return LoginConstant.getACCOUNT_SETTINGS_URL();
+			 return this.buildSuccessByRedirectOnlyUrl("/index");
 		}else {
-			return this.buildParamError(model, LoginConstant.getERROR(), "index", "用户已经存在");
+			 return this.buildErrorByRedirectAndParam("/preRegister", model, "用户已经存在！");
 		}  
 	}
+	
 	@RequestMapping(value = "/preRegister")
 	public String preRegister(HttpServletRequest request,
 			HttpServletResponse response,
@@ -71,6 +114,7 @@ public class LoginController extends BaseController {
 			MatchMap schools=new MatchMap("schools", schoolDao.findAll());
 			listMaps.add(schools);
 			LOG.info("preGegister!");
+			
 			return this.buildSuccess(model, "/register", listMaps);
 	}
 	@RequestMapping(value = "/memberLogin", method = RequestMethod.POST)

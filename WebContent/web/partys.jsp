@@ -6,17 +6,16 @@
 <div class="breadcrumbrow">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-				<li class="active"><a href="#">活动</a></li>
+				<li><a href='<c:url value="/"></c:url>'>Home</a></li>
+				<li class="active"><a href="partys">Party</a></li>
 			</ul>
 		</div>
 	</div>
 <div class="container">
     <div class="col-md-12">
        <div class="leading">
-        <h2>活动中心
-        <a data-toggle="tooltip" title="bottom tooltip" data-placement="right" 
-           id="tooltip-right"><small>帮助中心</small></a></h2>
+        <h2>
+           </h2>
       </div>
   
       
@@ -30,7 +29,7 @@
 						<li class="product-source"><a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
 								<span class="img thumbnail"> 
 							    <img src="<c:url value="${party.icon}"/>" alt="${party.title}" width="160" height="98"/>
-							</span> <span class="name">${party.title}</span> <span class="info">参加人数（${party.joinSum}）</span>
+							</span> <span class="name">${party.title}</span> <span class="info">Sum in Party（${party.joinSum}）</span>
 						</a>
 						</li>
 					</c:forEach>

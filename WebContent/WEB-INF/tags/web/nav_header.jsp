@@ -9,23 +9,20 @@
 					src="<c:url value="/resources/web/images/Logo_youyika.png"/>" alt="Whoopes"></a></strong>
 			<div class="top_nav">
                  <ul>
-                     <li><a href="<c:url value="/web/partys"/>">活&nbsp;&nbsp;动</a></li>
-                     <li><a href="<c:url value="/web/goods"/>">信&nbsp;&nbsp;息</a></li>
+                     <li><a href="<c:url value="/web/partys"/>">Party&nbsp;&nbsp;</a></li>
+                     <li><a href="<c:url value="/web/goods"/>">Good&nbsp;&nbsp;</a></li>
 				</ul>
              </div>
              <div class="top_about">
                  <ul>
                  <c:if test="${sessionScope.UserConstant_VISITOR == null}">
-                     <li><a href="#loginModal" data-toggle="modal">登&nbsp;&nbsp;陆</a></li>
-                     <li><a href="<c:url value="/preRegister"/>">注&nbsp;&nbsp;册</a></li>
+                     <li><a href="#loginModal" data-toggle="modal">Login&nbsp;&nbsp;</a></li>
+                     <li><a href="<c:url value="/preRegister"/>">register&nbsp;&nbsp;</a></li>
                  </c:if>
                     <c:if test="${sessionScope.UserConstant_VISITOR != null}">
-                      <li class="color_f63"><a href="#">${sessionScope.UserConstant_VISITOR.username }</a></li>
-					  <li><a href="<c:url value="/member/settings/settings"/>"><i
-									class="glyphicon glyphicon-cog"></i> 帐号设置</a></li>
-					 
-					   <li><a href="<c:url value="/logout"/>"><i class="glyphicon glyphicon-off"></i>
-									退出</a></li>
+                      <li class="color_f63"><a href="<c:url value="/member/settings/settings"/>">${sessionScope.UserConstant_VISITOR.username }</a></li>
+					   <li><a href="<c:url value="/logout"/>" title="logout "><i class="glyphicon glyphicon-off"></i>
+									logout</a></li>
 					</c:if>
                  </ul>
                  
@@ -48,7 +45,7 @@
           <div class="modal-content">
             <div class="modal-header panel-heading">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">学淘登陆</h4>
+              <h4 class="modal-title">login</h4>
             </div>
             <form class="form-horizontal" action='<c:url value="/memberLogin"/>' method="post">
 				<div class="modal-body">
@@ -67,17 +64,10 @@
 								placeholder="password"  name="password" required="required"/>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">password：</label>
-						<div class="col-lg-10">
-							<input type="password" class="form-control"
-								placeholder="password"  name="password" required="required"/>
-						</div>
-					</div>
 				</div>
 				<div class="modal-footer">
-	              <button type="button" class="btn btn-default " data-dismiss="modal">取消</button>
-	              <button type="submit" class="btn btn-primary" >登陆</button>
+	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
+	              <button type="submit" class="btn btn-primary" >login</button>
             	</div>
           </form>   
           </div><!-- /.modal-content //-->

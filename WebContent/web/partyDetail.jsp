@@ -29,7 +29,7 @@
 	<div class="col-md-9 content">
 		<div class="leading mb20">
 			<h2>
-				参加成员 <button class="btn btn-success fr mb20">Join</button>
+				Member of Join <button class="btn btn-success fr mb20">Join</button>
 			</h2>
 		</div>
 		<div class="row-fluid">
@@ -37,56 +37,28 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<td>Doe</td>
-							<th class="tr">Username</th>
+							<th>name </th>
+							<th>school</th>
+							<th class="tr">View</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><span class="img"> <a itemprop="url"
-									href="<c:url value="/resources/web/images/buy/lands-end.png"/>">
-										<img width="69" height="43"
-										src="<c:url value="/resources/web/images/buy/lands-end.png"/>"
-										itemprop="image"
-										data-src="https://s3.amazonaws.com/assets.coupontrade.com/assets/product-sources/269/thumb/lands-end.png?1370009162"
-										alt="Buy Lands' End Gift Card">
-								</a>
-							</span></td>
-							<td>John</td>
-							<td>Smith</td>
-							<td>Doe</td>
-							<td class="tr"><button class="btn btn-success">Success</button></td>
-						</tr>
-						<tr>
-							<td><span class="img"> <a itemprop="url"
-									href="<c:url value="/resources/web/images/buy/lands-end.png"/>">
-										<img width="69" height="43"
-										src="<c:url value="/resources/web/images/buy/lands-end.png"/>"
-										itemprop="image"
-										data-src="https://s3.amazonaws.com/assets.coupontrade.com/assets/product-sources/269/thumb/lands-end.png?1370009162"
-										alt="Buy Lands' End Gift Card">
-								</a>
-							</span></td>
-							<td>John</td>
-							<td>Smith</td>
-							<td>Doe</td>
-							<td class="tr"><button class="btn btn-success">Success</button></td>
-						</tr>
-						<tr>
+					<c:if test="${acountInfos!=null }">
+					  <c:forEach var="acountInfo" items="${acountInfos }" varStatus="statu">
+					     <tr>
 							<td><span class="img"> <a 
-									href="<c:url value="/resources/web/images/buy/lands-end.png"/>">
+									href="<c:url value="${acountInfo.photo }"/>">
 										<img width="69" height="43"
-										src="<c:url value="/resources/web/images/buy/lands-end.png"/>"
-										alt="Buy Lands' End Gift Card">
+										src="<c:url value="${acountInfo.photo }"/>"
+										alt="${acountInfo.name }">
 								</a>
 							</span></td>
-							<td>John</td>
-							<td>Smith</td>
-							<td>Doe</td>
-							<td class="tr"><button class="btn btn-success">Success</button></td>
+							<td>${acountInfo.name }</td>
+							<td>${acountInfo.schoolName }</td>
+							<td class="tr"><button class="btn btn-success">View</button></td>
 						</tr>
+					  </c:forEach>
+					</c:if>
 					</tbody>
 				</table>
 		</div>

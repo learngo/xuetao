@@ -35,6 +35,7 @@ import com.taotaoti.good.constant.GoodConstant;
 import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.member.bo.Member;
 import com.taotaoti.member.dao.MemberDao;
+import com.taotaoti.member.service.MemberMgr;
 import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.service.PartyMgr;
 import com.taotaoti.school.bo.School;
@@ -48,6 +49,8 @@ public class MemberController extends BaseController {
 	private SessionProvider session;
 	@Resource
 	private MemberDao memberDao;
+	@Resource
+	private MemberMgr memberMgr;
 	@Resource
 	private CategoryDao categoryDao;
 	@Resource
@@ -91,22 +94,18 @@ public class MemberController extends BaseController {
 			HttpServletResponse response,
 			Good good,
 			ModelMap model){
-		// 转型为MultipartHttpRequest
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		// 根据前台的name名称得到上传的文件
 		MultipartFile file = multipartRequest.getFile("file");
-		// 获得文件名：
 		String realFileName = file.getOriginalFilename();
-		// 获取路径
 		String ctxPath = request.getSession().getServletContext().getRealPath("/")
 				+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"good"+ File.separator;
-		// 创建文件
 		File dirPath = new File(ctxPath);
 		if (!dirPath.exists()) {
 			dirPath.mkdir();
 		}
 		System.out.println(file.getName());
 		Visitor v=this.session.getSessionVisitor(request);
+		
 		if(!realFileName.endsWith(".jpg"))
 		    return this.buildErrorByRedirectAndParam("/member/settings/addGood", model, "图片格式不对！");
 	    
@@ -118,7 +117,53 @@ public class MemberController extends BaseController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		goodMgr.submitGood(good.getCategoryId(),good.getName(),good.getTitle(), good.getDescription(), good.getLogo(),v.getUserid(),good.getLevel(),good.getPrice());
+		Good goodOk=goodMgr.submitGood(good.getCategoryId(),good.getName(),good.getTitle(), good.getDescription(), good.getLogo(),v.getUserid(),good.getLevel(),good.getPrice());
+		
+		LOG.info(""+goodOk.getId());
+		LOG.info(""+goodOk.getGoodId());
+		MultipartFile file1 = multipartRequest.getFile("file1");
+		String fileName1 = file1.getOriginalFilename();
+		if(fileName1!=null&&realFileName.endsWith(".jpg")){
+			fileName1=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(fileName1)+".jpg";
+			File uploadFile1 = new File(ctxPath + fileName1);
+			try {
+				FileCopyUtils.copy(file.getBytes(), uploadFile1);
+				goodMgr.submitGoodPic(goodOk.getId(), "/resources/upload/good/"+fileName1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		MultipartFile file2 = multipartRequest.getFile("file2");
+		String fileName2 = file2.getOriginalFilename();
+		if(fileName1!=null&&realFileName.endsWith(".jpg")){
+			fileName2=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(fileName2)+".jpg";
+			File uploadFile2 = new File(ctxPath + fileName2);
+			try {
+				FileCopyUtils.copy(file.getBytes(), uploadFile2);
+				goodMgr.submitGoodPic(goodOk.getId(), "/resources/upload/good/"+fileName2);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		MultipartFile file3 = multipartRequest.getFile("file3");
+		String fileName3 = file3.getOriginalFilename();
+		if(fileName1!=null&&realFileName.endsWith(".jpg")){
+			fileName3=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(fileName3)+".jpg";
+			File uploadFile3 = new File(ctxPath + fileName3);
+			try {
+				FileCopyUtils.copy(file.getBytes(), uploadFile3);
+				goodMgr.submitGoodPic(goodOk.getId(), "/resources/upload/good/"+fileName3);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		
+		
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
 	}
 	@RequestMapping(value = "/settings/browseGood")
@@ -171,6 +216,9 @@ public class MemberController extends BaseController {
 		
 		return this.buildSuccess(model, "/member/settings/addParty", listMaps);
 	}
+	
+	
+	
 	@RequestMapping(value = "/settings/submitParty")
 	public ModelAndView addParty(HttpServletRequest request,
 			HttpServletResponse response,
@@ -252,7 +300,7 @@ public class MemberController extends BaseController {
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseParty");
 	}
 	@RequestMapping(value = "/settings/modifyPassword")
-	public String modifyPassword(HttpServletRequest request,
+	public ModelAndView modifyPassword(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="oldPassword") String oldPassword,
 			@RequestParam(value="newPassword") String newPassword,
@@ -261,19 +309,19 @@ public class MemberController extends BaseController {
 		Visitor v=this.session.getSessionVisitor(request);
 		if(!newPassword.equals(newPassword2)){
 			LOG.error("新密码与确认密码不一致");
-			return this.buildBusinessError(model, "/member/settings/password", "新密码与确认密码不一致！");
+			return this.buildErrorByRedirectAndParam("/member/settings/password", model, "新密码与确认密码不一致！");
 		}
 		Member member=memberDao.get(v.getUserid());
 		if(!member.getPassword().equals(MD5.getMd5(newPassword))){
 			LOG.error("旧密码不正确！");
-			return this.buildBusinessError(model, "/member/settings/password", "旧密码不正确！");
+			return this.buildErrorByRedirectAndParam( "/member/settings/password",model, "旧密码不正确！");
 		}
 		memberDao.modifyPassword(v.getUserid(), MD5.getMd5(newPassword));
-		return this.buildSuccessOnlyUrl("/member/settings/settings");
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
 	}
 	
 	@RequestMapping(value = "/settings/modifyEmail")
-	public String modifyEmail(HttpServletRequest request,
+	public ModelAndView modifyEmail(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="password") String password,
 			@RequestParam(value="newEmail") String newEmail,
@@ -282,14 +330,35 @@ public class MemberController extends BaseController {
 		Member member=memberDao.get(v.getUserid());
 		if(!member.getPassword().equals(MD5.getMd5(password))){
 			LOG.error("旧密码不正确！");
-			return this.buildBusinessError(model, "/member/settings/email", "旧密码不正确！");
+			return this.buildErrorByRedirectAndParam( "/member/settings/email",model, "旧密码不正确！");
 		}
+	    if(memberMgr.isRegisterMember(newEmail, "")){
+	    	return this.buildErrorByRedirectAndParam( "/member/settings/email",model, "email is exist");
+	    }
 		memberDao.modifyEmail(v.getUserid(), newEmail);
 		v.setEmail(newEmail);
 		this.session.setAttributeAsVisitor(request, v);
-		return this.buildSuccessOnlyUrl("/member/settings/settings");
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
 	}
-	
+	@RequestMapping(value = "/settings/modifyMemberInfo")
+	public ModelAndView modifyMemberInfo(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("major") String major, 
+			@RequestParam("phone") String phone, 
+			@RequestParam("username") String username, 
+			@RequestParam("description") String description, 
+			ModelMap model){
+		LOG.info("modify Member Info");
+		Visitor v=this.session.getSessionVisitor(request);
+		Member member=memberDao.get(v.getUserid());
+		member.setMajor(major);
+		member.setPhone(phone);
+		member.setName(username);
+		member.setDescription(description);
+		member.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		memberDao.update(member);
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
+	}
 	public SessionProvider getSession() {
 		return session;
 	}

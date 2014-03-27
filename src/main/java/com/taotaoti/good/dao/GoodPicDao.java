@@ -9,6 +9,7 @@ import com.taotaoti.good.bo.GoodPic;
 public interface GoodPicDao extends BaseDao<Integer, GoodPic> {
 
 	public List<GoodPic> findAll();
+	public List<GoodPic> findAllByGoodId(int goodId);
 	
 	public GoodPic createGoodPic(GoodPic goodPic);
 

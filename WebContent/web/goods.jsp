@@ -6,15 +6,15 @@
 <div class="breadcrumbrow">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href='<c:url value="/"></c:url>'>首页</a></li>
-				<li class="active"><a href="#">活动</a></li>
+				<li><a href='<c:url value="/"></c:url>'>Home</a></li>
+				<li class="active"><a href="goods">Good</a></li>
 			</ul>
 		</div>
 	</div>
 <div class="container">
 	<div class="col-md-3">
       <div class="list-group">
-        <a href="#" class="list-group-item active">类型</a>
+        <a href="#" class="list-group-item active">Category</a>
         <c:if test="${categorys!=null }">
           <c:forEach var="category" varStatus="status" items="${categorys}">
 						 <a href="<c:url value="/web/goods"/>?categoryId=${category.id}" class="list-group-item">${category.name}</a>
@@ -25,9 +25,8 @@
     </div>
     <div class="col-md-9 content">
        <div class="leading">
-        <h2>活动中心
-        <a data-toggle="tooltip" title="bottom tooltip" data-placement="right" 
-           id="tooltip-right"><small>帮助中心</small></a></h2>
+        <h2>Good
+        </h2>
       </div>
   
       
@@ -37,8 +36,8 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>标题</th>
-							<th class="tr">价格</th>
+							<th>title</th>
+							<th class="tr">price</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,7 +48,7 @@
 					<c:forEach var="good" varStatus="status" items="${goods}">
 						<tr>
 							<td><span class="img"> <a
-									href="<c:url value="/web/goodDetail?goodId=${good.id}"/>">
+									href="<c:url value="/web/goodDetail?goodId=${good.goodId}"/>">
 										<img width="69" height="43"
 										src="<c:url value="${good.logo}"/>"
 										alt="${good.name}">
