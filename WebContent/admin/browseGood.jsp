@@ -51,8 +51,7 @@
 										
 										<td>
 										<a href="<c:url value="/admin/deleteGood"/>?goodId=${good.goodId }">delete</a> 
-										<a href="<c:url value="/admin/addGood"/>?goodId=${good.goodId}">view</a>
-										
+										<a href="<c:url value="/web/goodDetail"/>?goodId=${good.goodId}">view</a>
 										</td>
 									</tr>
 								</c:forEach>

@@ -56,7 +56,7 @@
 							<label class="col-md-2 control-label" for="profile_truename">商品名称：</label>
 							<div class="col-md-7 controls">
 								<input type="text" id="profile_truename"
-									name="name" class="form-control" />
+									name="name" class="form-control" required="required"/>
 							</div>
 						</div>
 
@@ -108,6 +108,33 @@
 									class="form-control" />
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-md-2 control-label">
+								<label for="profile_company">图片1</label>
+							</div>
+							<div class="col-md-7 controls">
+								<input type="file"  name="file1"
+									class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 control-label">
+								<label for="profile_company">图片2</label>
+							</div>
+							<div class="col-md-7 controls">
+								<input type="file"  name="file2"
+									class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 control-label">
+								<label for="profile_company">图片3</label>
+							</div>
+							<div class="col-md-7 controls">
+								<input type="file"  name="file3"
+									class="form-control" />
+							</div>
+						</div>
 
 						<div class="form-group">
 							<div class="col-md-2 control-label">
@@ -115,7 +142,7 @@
 							</div>
 							<div class="col-md-7 controls">
 								<input type="text" name="price"
-									class="form-control" />
+									class="form-control" required="required"/>
 							</div>
 						</div>
 						<div class="form-group">
@@ -124,7 +151,7 @@
 							</div>
 							<div class="col-md-7 controls">
 								<input type="text" name="title"
-									class="form-control" />
+									class="form-control" required="required"/>
 							</div>
 						</div>
 
@@ -136,7 +163,7 @@
 							</div>
 							<div class="col-md-7 controls">
 								<textarea  name="description"
-									class="form-control" rows="20"></textarea>
+									class="form-control" rows="20" required="required"></textarea>
 							</div>
 						</div>
 

@@ -27,15 +27,11 @@
 		</div>
 	</div>
 	<div class="col-md-9 content">
-		<div class="leading">
+		<div class="leading mb20">
 			<h2>
-				参加成员 <a data-toggle="tooltip" title="bottom tooltip"
-					data-placement="right" id="tooltip-right"><small>帮助中心</small></a>
+				参加成员 <button class="btn btn-success fr mb20">Join</button>
 			</h2>
 		</div>
-		
-
-
 		<div class="row-fluid">
 				<table class="table table-striped table-hover">
 					<thead>
@@ -79,12 +75,10 @@
 							<td class="tr"><button class="btn btn-success">Success</button></td>
 						</tr>
 						<tr>
-							<td><span class="img"> <a itemprop="url"
+							<td><span class="img"> <a 
 									href="<c:url value="/resources/web/images/buy/lands-end.png"/>">
 										<img width="69" height="43"
 										src="<c:url value="/resources/web/images/buy/lands-end.png"/>"
-										itemprop="image"
-										data-src="https://s3.amazonaws.com/assets.coupontrade.com/assets/product-sources/269/thumb/lands-end.png?1370009162"
 										alt="Buy Lands' End Gift Card">
 								</a>
 							</span></td>

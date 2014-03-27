@@ -17,7 +17,7 @@
                  <ul>
                  <c:if test="${sessionScope.UserConstant_VISITOR == null}">
                      <li><a href="#loginModal" data-toggle="modal">登&nbsp;&nbsp;陆</a></li>
-                     <li><a href="#registerModal" data-toggle="modal">注&nbsp;&nbsp;册</a></li>
+                     <li><a href="<c:url value="/preRegister"/>">注&nbsp;&nbsp;册</a></li>
                  </c:if>
                     <c:if test="${sessionScope.UserConstant_VISITOR != null}">
                       <li class="color_f63"><a href="#">${sessionScope.UserConstant_VISITOR.username }</a></li>
@@ -55,16 +55,23 @@
 
 
 					<div class="form-group">
-						<label class="col-lg-2 control-label">邮箱：</label>
+						<label class="col-lg-2 control-label">email：</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="邮箱" name="email"/>
+							<input type="text" class="form-control" placeholder="email" name="email" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-lg-2 control-label">密码：</label>
+						<label class="col-lg-2 control-label">password：</label>
 						<div class="col-lg-10">
 							<input type="password" class="form-control"
-								placeholder="密码"  name="password"/>
+								placeholder="password"  name="password" required="required"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-2 control-label">password：</label>
+						<div class="col-lg-10">
+							<input type="password" class="form-control"
+								placeholder="password"  name="password" required="required"/>
 						</div>
 					</div>
 				</div>
@@ -78,52 +85,7 @@
   
 </div><!-- /.modal -->
 
- <!-- Modal -->
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
- 		<div class="modal-dialog panel-primary">
-          <div class="modal-content">
-            <div class="modal-header panel-heading">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">学淘注册</h4>
-            </div>
-            <form class="form-horizontal" action="<c:url value="/register"/>" method="post">
-				<div class="modal-body">
 
-
-					<div class="form-group">
-						<label class="col-lg-2 control-label">邮箱：</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="邮箱"  name="email"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">nickName：</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="user name"  name="username"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">密码：</label>
-						<div class="col-lg-10">
-							<input type="password" class="form-control"
-								placeholder="密码"  name="password"/>
-						</div>
-					</div>
-				
-				</div>
-				<div class="modal-footer">
-	              <button type="button" class="btn btn-default " data-dismiss="modal">取消</button>
-	              <button type="submit" class="btn btn-primary" >确定</button>
-            	</div>
-          </form>   
-            
-            
-          </div><!-- /.modal-content //-->
-        </div><!-- /.modal-dialog //-->
- 
- 
-  
-</div><!-- /.modal -->
 
 <c:if test="${requestScope.status !=null}">
 <c:if test="${requestScope.status !=0}">

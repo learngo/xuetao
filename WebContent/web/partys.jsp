@@ -37,11 +37,6 @@
 				</c:if>
 				
 				
-				
-				
-				
-				
-				
 			</ul>
 		</div>
 		<div class="row">

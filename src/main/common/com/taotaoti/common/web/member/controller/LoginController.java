@@ -1,6 +1,8 @@
 package com.taotaoti.common.web.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -19,6 +21,7 @@ import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.utils.HttpUtils;
 import com.taotaoti.common.utils.MD5;
+import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
 import com.taotaoti.member.facade.MemberFacade;
@@ -59,6 +62,16 @@ public class LoginController extends BaseController {
 		}else {
 			return this.buildParamError(model, LoginConstant.getERROR(), "index", "用户已经存在");
 		}  
+	}
+	@RequestMapping(value = "/preRegister")
+	public String preRegister(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+			List<MatchMap> listMaps=new ArrayList<MatchMap>();
+			MatchMap schools=new MatchMap("schools", schoolDao.findAll());
+			listMaps.add(schools);
+			LOG.info("preGegister!");
+			return this.buildSuccess(model, "/register", listMaps);
 	}
 	@RequestMapping(value = "/memberLogin", method = RequestMethod.POST)
 	public String login(HttpServletRequest request,

@@ -56,7 +56,7 @@
             </td>
             <td>
             <a href="<c:url value="/admin/deleteParty"/>?partyId=${party.id}">delete</a> 
-			<a href="<c:url value="/admin/party"/>?partyId=${party.id}">view</a>
+			<a href="<c:url value="/web/partyDetail"/>?partyId=${party.id}">view</a>
             </td>
           </tr>
 		   </c:forEach>
