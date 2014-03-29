@@ -8,7 +8,7 @@ import com.taotaoti.common.generic.bo.BaseObject;
 
 /**
  */
-@Table(db = "xuetao", name = "member", keyColumn = Columns.memberId)
+@Table(db = "xuetao", name = "Member", keyColumn = Columns.memberId)
 public class Member extends BaseObject<Integer> {
 
 	private static final long serialVersionUID = 1L;

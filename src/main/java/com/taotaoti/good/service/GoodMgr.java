@@ -3,6 +3,7 @@ package com.taotaoti.good.service;
 import java.util.List;
 
 import com.taotaoti.good.bo.Good;
+import com.taotaoti.good.bo.GoodComment;
 import com.taotaoti.good.vo.GoodView;
 
 
@@ -16,5 +17,8 @@ public interface GoodMgr {
 	public boolean modifyGoodStatu(int goodId,int goodStatu);
 	public boolean modifyGoodStatu(int memberId,int goodId,int goodStatu);
 	public boolean submitGoodPic(int goodId,String path);
+	
+	public boolean commintGoodComment(int memberId,int goodId,String message);
+	public List<GoodComment> findGoodComments(int goodId);
 
 }

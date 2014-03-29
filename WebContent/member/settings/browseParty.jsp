@@ -78,7 +78,7 @@
             <td><fmt:formatDate value="${party.endTime }" pattern="yyyy-MM-dd HH:mm"/></td>
             <td>${party.joinSum}</td>
             <td><a href="deleteParty?partyId=${party.id}">delete</a> 
-            <a href="<c:url value="/web/partyDetail?goodId=${good.goodId}"/>">view</a>
+            <a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">view</a>
 		    <!-- <a href="party?partyId=${party.id}">view</a> -->
             </td>
             

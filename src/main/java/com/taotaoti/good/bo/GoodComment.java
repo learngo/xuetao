@@ -14,7 +14,7 @@ public class GoodComment extends BaseObject<Integer>{
 	@Column(value=GoodColumns.GoodCommentColumns.memberId)
 	private Integer memberId;
 	@Column(value=GoodColumns.GoodCommentColumns.goodId)
-	private String goodId;
+	private Integer goodId;
 	@Column(value=GoodColumns.GoodCommentColumns.content)
 	private String content ;
 	@Column(value=GoodColumns.GoodCommentColumns.statu)
@@ -37,9 +37,9 @@ public class GoodComment extends BaseObject<Integer>{
 	
 	
 	
-	public GoodComment(Integer goodCommentId, Integer memberId, String goodId,
-			String content, String statu, Timestamp createTime,
-			Integer replyMemberId, Integer isReply, Integer replyContent,
+	public GoodComment(Integer goodCommentId, Integer memberId, Integer goodId,
+			String content, Integer replyContent, Timestamp createTime,
+			Integer replyMemberId, Integer isReply, String statu,
 			Timestamp replyTime) {
 		super();
 		this.goodCommentId = goodCommentId;
@@ -65,6 +65,14 @@ public class GoodComment extends BaseObject<Integer>{
 		
 	}
 
+
+
+
+
+
+
+
+	
 
 
 
@@ -116,7 +124,7 @@ public class GoodComment extends BaseObject<Integer>{
 
 
 
-	public String getGoodId() {
+	public Integer getGoodId() {
 		return goodId;
 	}
 
@@ -127,7 +135,7 @@ public class GoodComment extends BaseObject<Integer>{
 
 
 
-	public void setGoodId(String goodId) {
+	public void setGoodId(Integer goodId) {
 		this.goodId = goodId;
 	}
 

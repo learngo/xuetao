@@ -9,6 +9,7 @@ import com.taotaoti.good.bo.GoodComment;
 public interface GoodCommentDao extends BaseDao<Integer, GoodComment> {
 
 	public List<GoodComment> findAll();
+	public List<GoodComment> findByGoodId(int goodId);
 	
 	public GoodComment createGoodComment(GoodComment goodComment);
 

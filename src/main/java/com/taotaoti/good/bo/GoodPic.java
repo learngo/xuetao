@@ -6,7 +6,7 @@ import com.taotaoti.common.generic.annotation.Column;
 import com.taotaoti.common.generic.annotation.Table;
 import com.taotaoti.common.generic.bo.BaseObject;
 
-@Table(db = "xuetao", name = "Good_Pic", keyColumn = GoodColumns.GoodCommentColumns.goodCommentId)
+@Table(db = "xuetao", name = "good_Pic", keyColumn = GoodColumns.GoodCommentColumns.goodCommentId)
 public class GoodPic extends BaseObject<Integer>{
 	private static final long serialVersionUID = 1L;
 	@Column(value=GoodColumns.GoodPicColumns.goodPicId)

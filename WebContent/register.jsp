@@ -17,10 +17,10 @@
           			<div class="form-group">
 						<label class="col-lg-2 control-label">school：</label>
 						<div class="col-lg-10">
-							<select name="schoolId">
+							<select name="schoolId" style="max-width: 220px;">
 									 <c:if test="${schools!=null }">
 							          <c:forEach var="school" varStatus="status" items="${schools}">
-									     <option value="${ school.id}">${school.name}</option>
+									     <option value="${ school.id}" style="max-width: 220px;">${school.name}</option>
 									  </c:forEach>
 							        </c:if>
 							 </select>
@@ -54,7 +54,7 @@
 					<div class="form-group">
 						<label class="col-lg-2 control-label">phone：</label>
 						<div class="col-lg-10">
-							<input type="password" class="form-control"
+							<input type="text" class="form-control"
 								placeholder="phone"  name="phone"/>
 						</div>
 					</div>

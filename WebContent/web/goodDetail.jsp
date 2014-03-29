@@ -13,7 +13,7 @@
 			</ul>
 		</div>
 	</div>
-<div class="container">
+  <div class="container">
    <div class="work" style="height: 450px; overflow: hidden;">
     <div class="row">
       <div class="col-md-4">
@@ -34,6 +34,23 @@
         <div id="number" class="work-pagination"> </div>
       </div>
     </div>
+</div>
+
+  <div class="row">
+     <div class="col-md-8 fr"> 
+     <c:if test="${goodComments!=null}">
+       <c:forEach items="${goodComments }" var="goodComment">
+       <div class="media">
+        <div class="media-body">
+          <h4 class="media-heading">Media Heading</h4>
+           ${goodComment.content}
+        </div>
+      </div>
+       </c:forEach>
+       
+     
+     </c:if>
+    </div>
   </div>
   
   
@@ -41,7 +58,7 @@
   <div class="row contact">
     <div class="col-md-8 fr">
       <div class="wpcf7" id="wpcf7-f75-t1-o1">
-        <form action="" method="post" class="wpcf7-form" id="cform" name="cform">
+        <form action="<c:url value="/web/addGoodMessage"/>" method="post" class="wpcf7-form">
           <div id="output" class="alert"> </div>
           <!-- 
           <div class="form-meta clearfix">
@@ -59,6 +76,7 @@
             </div>
           </div>
            -->
+           <input type="hidden" value="goodId" value="${good.id}" />
           <label for="message"> Message：</label>
           <textarea name="message" id="message" cols="40" rows="10"></textarea>
           <input type="submit" id="send-message" value="Send" class="btn btn-success mt20 mb20" />

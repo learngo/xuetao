@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 import com.taotaoti.cache.AppCache;
 import com.taotaoti.category.bo.Category;
 import com.taotaoti.good.bo.Good;
+import com.taotaoti.good.bo.GoodComment;
 import com.taotaoti.good.bo.GoodPic;
+import com.taotaoti.good.dao.GoodCommentDao;
 import com.taotaoti.good.dao.GoodDao;
 import com.taotaoti.good.dao.GoodPicDao;
 import com.taotaoti.good.service.GoodMgr;
@@ -23,6 +25,8 @@ public class GoodMgrImpl implements GoodMgr {
 	public GoodDao goodDao;
 	@Resource
 	public GoodPicDao goodPicDao;
+	@Resource
+	public GoodCommentDao goodCommentDao;
 	@Resource
 	public AppCache appCache;
 
@@ -121,6 +125,19 @@ public class GoodMgrImpl implements GoodMgr {
 		goodPic.setStatu(0);
 		goodPicDao.create(goodPic);
 		return false;
+	}
+
+	@Override
+	public boolean commintGoodComment(int memberId, int goodId, String message) {
+		GoodComment comment=new GoodComment(null, memberId, goodId, message, 0, new Timestamp(System.currentTimeMillis()), 0, 0, "", null);
+		goodCommentDao.create(comment);
+		return false;
+	}
+
+	@Override
+	public List<GoodComment> findGoodComments(int goodId) {
+		// TODO Auto-generated method stub
+		return goodCommentDao.findByGoodId(goodId);
 	}
 	
 

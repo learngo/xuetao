@@ -46,15 +46,13 @@ $('.carousel').carousel();
 							<h3>${party.title}</h3>
 							<p>${party.description}</p>
 							<p>
-							 <a href="${party.id}" class="btn btn-primary">join</a>
+							 <a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>" class="btn btn-primary">detail</a>
 							</p>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
 		</c:if>
-
-
 	</div>
   </div>
   

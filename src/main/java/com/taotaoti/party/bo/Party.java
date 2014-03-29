@@ -6,7 +6,7 @@ import com.taotaoti.common.generic.annotation.Column;
 import com.taotaoti.common.generic.annotation.Table;
 import com.taotaoti.common.generic.bo.BaseObject;
 
-@Table(db = "xuetao", name = "party", keyColumn = PartyColumns.partyId)
+@Table(db = "xuetao", name = "Party", keyColumn = PartyColumns.partyId)
 public class Party extends BaseObject<Integer>{
 	private static final long serialVersionUID = 1L;
 	@Column(value=PartyColumns.memberId)

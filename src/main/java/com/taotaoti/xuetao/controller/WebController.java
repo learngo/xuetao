@@ -13,15 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.taotaoti.category.bo.Category;
 import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.vo.MatchMap;
+import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
 import com.taotaoti.good.dao.GoodDao;
 import com.taotaoti.good.dao.GoodPicDao;
+import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.member.service.MemberMgr;
 import com.taotaoti.member.vo.AcountInfo;
 import com.taotaoti.party.bo.Party;
@@ -40,6 +43,9 @@ public class WebController extends BaseController {
 	private GoodPicDao goodPicDao;
 	@Resource
 	private CategoryDao categoryDao;
+	
+	@Resource
+	private GoodMgr goodMgr;
 	@Resource
 	private RedisCacheManager redisCacheMgr;
 	@Resource
@@ -100,7 +106,18 @@ public class WebController extends BaseController {
 		listMaps.add(good);
 		MatchMap goodPices=new MatchMap("goodPics", goodPicDao.findAllByGoodId(goodId));
 		listMaps.add(goodPices);
+		listMaps.add(new MatchMap("goodComments", goodMgr.findGoodComments(goodId)));
 		return this.buildSuccess(model, "/web/goodDetail", listMaps);
+	}
+	@RequestMapping(value = "/web/addGoodMessage")
+	public ModelAndView addGoodMessage(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="message") String message,
+			@RequestParam(value="goodId") Integer goodId,
+			ModelMap model){
+		Visitor visitor=this.session.getSessionVisitor(request);
+		goodMgr.commintGoodComment(visitor.getUserid(), goodId, message);
+		return this.buildSuccessByRedirectOnlyUrl( "/web/goodDetail");
 	}
 	
 	@RequestMapping(value = "/web/page/partys")
@@ -131,15 +148,16 @@ public class WebController extends BaseController {
 			String []ids=party.getJoinMemberIds().split(",");
 			if(ids.length>0){
 				for(int i=0;i<ids.length;i++){
-					int memberId=Integer.valueOf(ids[i]);
-					listAcountInfos.add(memberMgr.getAcountInfoByMemberId(memberId));
+				    if(ids[i]!=""){
+						int memberId=Integer.valueOf(ids[i]);
+						listAcountInfos.add(memberMgr.getAcountInfoByMemberId(memberId));
+				    }
 				}
 			}
 		}
 		listMaps.add(new MatchMap("acountInfos", listAcountInfos));
 		return this.buildSuccess(model, "/web/partyDetail", listMaps);
 	}
-	
 	public SessionProvider getSession() {
 		return session;
 	}

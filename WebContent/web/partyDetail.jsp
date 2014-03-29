@@ -29,7 +29,7 @@
 	<div class="col-md-9 content">
 		<div class="leading mb20">
 			<h2>
-				Member of Join <button class="btn btn-success fr mb20">Join</button>
+				Member of Join<a href="<c:url value="/member/joinParty" />?partyId=${party.id}"> <button class="btn btn-success fr mb20">Join</button></a>
 			</h2>
 		</div>
 		<div class="row-fluid">
@@ -39,7 +39,9 @@
 							<th>#</th>
 							<th>name </th>
 							<th>school</th>
+							<!-- 
 							<th class="tr">View</th>
+							 -->
 						</tr>
 					</thead>
 					<tbody>
@@ -55,7 +57,9 @@
 							</span></td>
 							<td>${acountInfo.name }</td>
 							<td>${acountInfo.schoolName }</td>
+							<!-- 
 							<td class="tr"><button class="btn btn-success">View</button></td>
+							 -->
 						</tr>
 					  </c:forEach>
 					</c:if>

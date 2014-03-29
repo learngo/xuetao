@@ -37,6 +37,7 @@ import com.taotaoti.member.bo.Member;
 import com.taotaoti.member.dao.MemberDao;
 import com.taotaoti.member.service.MemberMgr;
 import com.taotaoti.party.bo.Party;
+import com.taotaoti.party.dao.PartyDao;
 import com.taotaoti.party.service.PartyMgr;
 import com.taotaoti.school.bo.School;
 import com.taotaoti.school.dao.SchoolDao;
@@ -57,6 +58,8 @@ public class MemberController extends BaseController {
 	private PartyMgr partyMgr;
 	@Resource
 	private GoodMgr goodMgr;
+	@Resource
+	private PartyDao partyDao;
 	@Resource
 	private SchoolDao schoolDao;
 	
@@ -358,6 +361,40 @@ public class MemberController extends BaseController {
 		member.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		memberDao.update(member);
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
+	}
+	@RequestMapping(value = "/joinParty")
+	public ModelAndView joinParty(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="partyId") Integer partyId,
+			ModelMap model){
+		Party party=partyDao.get(partyId);
+		Visitor visitor=this.session.getSessionVisitor(request);
+		boolean flag=false;
+		if(party!=null){
+			String []ids=party.getJoinMemberIds().split(",");
+			if(ids.length>0){
+				for(int i=0;i<ids.length;i++){
+					if(ids[i]!=""){
+					  if(Integer.valueOf(ids[i])==visitor.getUserid()){
+						  flag=true;
+						  break;
+					  }
+					}
+				}
+			}
+			if(!flag){
+				String joinIds=party.getJoinMemberIds();
+				if(joinIds.endsWith(","))
+					joinIds=joinIds+visitor.getUserid();
+				else
+					joinIds=joinIds+","+visitor.getUserid();
+				
+				party.setJoinMemberIds(joinIds);
+			}
+			partyDao.update(party);
+			
+		}
+		return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", partyId);
 	}
 	public SessionProvider getSession() {
 		return session;

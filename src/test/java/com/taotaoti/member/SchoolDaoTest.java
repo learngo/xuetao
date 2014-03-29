@@ -6,20 +6,15 @@
  *******************************************************************************/
 package com.taotaoti.member;
 
-import java.sql.Timestamp;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
 
 import com.taotaoti.common.BaseTestCase;
-import com.taotaoti.common.utils.ObjToStringUtil;
-import com.taotaoti.member.bo.Member;
-import com.taotaoti.member.bo.Role;
-import com.taotaoti.member.dao.MemberDao;
-import com.taotaoti.member.facade.MemberFacade;
-import com.taotaoti.member.vo.AcountInfo;
+import com.taotaoti.common.utils.BTools;
+import com.taotaoti.school.bo.School;
 import com.taotaoti.school.dao.SchoolDao;
 
 public class SchoolDaoTest extends BaseTestCase {
@@ -30,5 +25,15 @@ public class SchoolDaoTest extends BaseTestCase {
 	@Test
 	public void testfindAll(){
 		System.out.println(schoolDao.get(1).getName());
+	}
+	@Test
+	public void testSchool(){
+	ArrayList<String> lines=(ArrayList<String>) BTools.readFileByLines("school.txt");
+	System.out.println(lines.size());
+	for(String schoolName:lines){
+		School school=new School(schoolName, "", 0);
+		schoolDao.create(school);
+	}
+	
 	}
 }
