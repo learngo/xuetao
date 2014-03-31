@@ -24,10 +24,6 @@
 			  <span class="glyphicon glyphicon-lock"></span>
 			 modify  password 
 			</a> 
-			<a href="email" class="list-group-item">
-			  <span class="glyphicon glyphicon-envelope"></span>
-			  set  email
-			</a> 
 			<a href="addGood" class="list-group-item ">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   add good

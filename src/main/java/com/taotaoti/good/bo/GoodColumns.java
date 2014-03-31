@@ -24,8 +24,10 @@ public class GoodColumns {
 	public final static class GoodCommentColumns{
 		public final static String goodCommentId = "id";
 		public final static String memberId = "member_id";
+		public final static String memberName = "member_name";
 		public final static String goodId = "good_id";
 		public final static String content = "content";
+		public final static String phone = "phone";
 		public final static String statu="statu";
 		public final static String createTime="create_time";
 		

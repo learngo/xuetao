@@ -49,7 +49,7 @@
 					  <c:forEach var="acountInfo" items="${acountInfos }" varStatus="statu">
 					     <tr>
 							<td><span class="img"> <a 
-									href="<c:url value="${acountInfo.photo }"/>">
+									href="<c:url value="/viewMemberInfo"/>?memberId=${acountInfo.id}">
 										<img width="69" height="43"
 										src="<c:url value="${acountInfo.photo }"/>"
 										alt="${acountInfo.name }">

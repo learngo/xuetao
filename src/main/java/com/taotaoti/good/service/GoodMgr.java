@@ -18,7 +18,7 @@ public interface GoodMgr {
 	public boolean modifyGoodStatu(int memberId,int goodId,int goodStatu);
 	public boolean submitGoodPic(int goodId,String path);
 	
-	public boolean commintGoodComment(int memberId,int goodId,String message);
+	public boolean commintGoodComment(int memberId,String memberName,int goodId,String message,String phone);
 	public List<GoodComment> findGoodComments(int goodId);
 
 }

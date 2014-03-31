@@ -39,7 +39,7 @@ public class LogoutController extends BaseController {
 		LOG.info(taotaotiId+"logout");
 		AccountLoginValidator validator = AccountLoginValidator.getInstance();
 		validator.logout(request);
-		return this.buildErrorByRedirectOnlyUrl(LoginConstant.getUC_LOGOUT_URL());
+		return this.buildErrorByRedirectOnlyUrl("/preRegister");
 	}
 
 	public RedisCacheManager getRedisCacheMgr() {

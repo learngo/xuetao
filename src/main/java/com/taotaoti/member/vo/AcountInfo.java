@@ -1,5 +1,7 @@
 package com.taotaoti.member.vo;
 
+import java.sql.Timestamp;
+
 import com.taotaoti.member.bo.Member;
 
 public class AcountInfo extends Member {
@@ -21,6 +23,19 @@ public class AcountInfo extends Member {
 		this.setRoleid(member.getRoleid());
 		this.setUpdateTime(member.getUpdateTime());
 		this.setSchoolId(member.getSchoolId());
+		this.setPhoto(member.getPhoto());
+		this.setMajor(member.getMajor());
+		this.setDescription(member.getDescription());
+		
+		
+		this.setPartyCreateSum(member.getPartyCreateSum());
+		this.setFailSum(member.getFailSum());
+		this.setPoints(member.getPoints());
+		this.setReputation(member.getReputation());
+		this.setSuccessSum(member.getSuccessSum());
+		this.setPartyJoinSum(member.getPartyJoinSum());
+		
+		
 	}
 	public String[] getAuthArr() {
 		return authArr;

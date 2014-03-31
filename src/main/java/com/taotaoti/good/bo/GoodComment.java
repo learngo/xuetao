@@ -13,12 +13,16 @@ public class GoodComment extends BaseObject<Integer>{
 	private Integer goodCommentId;
 	@Column(value=GoodColumns.GoodCommentColumns.memberId)
 	private Integer memberId;
+	@Column(value=GoodColumns.GoodCommentColumns.memberName)
+	private String memberName;
 	@Column(value=GoodColumns.GoodCommentColumns.goodId)
 	private Integer goodId;
 	@Column(value=GoodColumns.GoodCommentColumns.content)
 	private String content ;
+	@Column(value=GoodColumns.GoodCommentColumns.phone)
+	private String phone ;
 	@Column(value=GoodColumns.GoodCommentColumns.statu)
-	private String statu;
+	private Integer statu;
 	@Column(value=GoodColumns.GoodCommentColumns.createTime)
 	private Timestamp createTime ;
 	@Column(value=GoodColumns.GoodCommentColumns.replyMemberId)
@@ -37,21 +41,45 @@ public class GoodComment extends BaseObject<Integer>{
 	
 	
 	
-	public GoodComment(Integer goodCommentId, Integer memberId, Integer goodId,
-			String content, Integer replyContent, Timestamp createTime,
-			Integer replyMemberId, Integer isReply, String statu,
+	public GoodComment(Integer goodCommentId, Integer memberId,String memberName, Integer goodId,
+			String content,String phone, Integer replyContent, Timestamp createTime,
+			Integer replyMemberId, Integer isReply, Integer statu,
 			Timestamp replyTime) {
 		super();
 		this.goodCommentId = goodCommentId;
 		this.memberId = memberId;
+		this.memberName=memberName;
 		this.goodId = goodId;
 		this.content = content;
+		this.phone = phone;
 		this.statu = statu;
 		this.createTime = createTime;
 		this.replyMemberId = replyMemberId;
 		this.isReply = isReply;
 		this.replyContent = replyContent;
 		this.replyTime = replyTime;
+	}
+
+
+
+
+
+
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+
+
+
+
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 
@@ -168,7 +196,7 @@ public class GoodComment extends BaseObject<Integer>{
 
 
 
-	public String getStatu() {
+	public Integer getStatu() {
 		return statu;
 	}
 
@@ -179,7 +207,7 @@ public class GoodComment extends BaseObject<Integer>{
 
 
 
-	public void setStatu(String statu) {
+	public void setStatu(Integer statu) {
 		this.statu = statu;
 	}
 
@@ -225,6 +253,28 @@ public class GoodComment extends BaseObject<Integer>{
 
 	public void setReplyMemberId(Integer replyMemberId) {
 		this.replyMemberId = replyMemberId;
+	}
+
+
+
+
+
+
+
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+
+
+
+
+
+
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
 
 

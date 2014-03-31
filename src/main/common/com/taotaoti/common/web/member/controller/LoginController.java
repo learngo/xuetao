@@ -61,48 +61,55 @@ public class LoginController extends BaseController {
 			ModelMap model){
 			String dbPassword=MD5.getMd5(password);
 			LOG.info("register");
+			String photo="/resources/img/images/avatar-large.png";
+			if(!email.endsWith(".eud")) 
+			 return this.buildErrorByRedirectAndParam("/preRegister", model, "please write u school mail eg：xxxxx@xxx.eud");
+			
 			if(memberFacade.isRegisterMember(email, "")) 
-			 return this.buildErrorByRedirectAndParam("/preRegister", model, "用户已经存在！");
+				return this.buildErrorByRedirectAndParam("/preRegister", model, "User already exists！");
 		
 		   // 转型为MultipartHttpRequest
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			// 根据前台的name名称得到上传的文件
 			MultipartFile file = multipartRequest.getFile("file");
-			// 获得文件名：
-			String realFileName = file.getOriginalFilename();
-			// 获取路径
-			String ctxPath = request.getSession().getServletContext().getRealPath("/")
-					+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"photo"+ File.separator;
-			// 创建文件
-			File dirPath = new File(ctxPath);
-			if (!dirPath.exists()) {
-				dirPath.mkdir();
-			}
-			System.out.println(file.getName());
-			if(!realFileName.endsWith(".jpg"))
-			    return this.buildErrorByRedirectAndParam("/preRegister", model, "图片格式不对！");
-		    
-			realFileName=System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
-			File uploadFile = new File(ctxPath + realFileName);
-			String photo=null;
-			try {
-				FileCopyUtils.copy(file.getBytes(), uploadFile);
-				photo=("/resources/upload/photo/"+realFileName);
-			} catch (IOException e) {
-				e.printStackTrace();
+			if(!file.isEmpty()){
+				// 获得文件名：
+				String realFileName = file.getOriginalFilename();
+				// 获取路径
+				String ctxPath = request.getSession().getServletContext().getRealPath("/")
+						+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"photo"+ File.separator;
+				// 创建文件
+				File dirPath = new File(ctxPath);
+				if (!dirPath.exists()) {
+					dirPath.mkdir();
+				}
+				System.out.println(file.getName());
+				
+				if(!realFileName.endsWith(".jpg"))
+				    return this.buildErrorByRedirectAndParam("/preRegister", model, "The picture is not in the correct format!");
+			    
+				realFileName=System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
+				File uploadFile = new File(ctxPath + realFileName);
+				
+				try {
+					FileCopyUtils.copy(file.getBytes(), uploadFile);
+					photo=("/resources/upload/photo/"+realFileName);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		if(schoolId==null)
-			    return this.buildErrorByRedirectAndParam("/preRegister", model, "学校不能为空");
+			    return this.buildErrorByRedirectAndParam("/preRegister", model, "please write you school name");
 		
 		if(phone==null)
-			return this.buildErrorByRedirectAndParam("/preRegister", model, "学校不能为空");
+			return this.buildErrorByRedirectAndParam("/preRegister", model, "please write you phone");
 		
 		 AcountInfo acountInfo=   memberFacade.registerMember(email, dbPassword, username, phone,schoolId,photo,major);
 		if(acountInfo!=null){
 			initVisterSessionAndRedis(request,response,acountInfo);
 			 return this.buildSuccessByRedirectOnlyUrl("/index");
 		}else {
-			 return this.buildErrorByRedirectAndParam("/preRegister", model, "用户已经存在！");
+			 return this.buildErrorByRedirectAndParam("/preRegister", model, "Sorry, Register fail ! please Try again!");
 		}  
 	}
 	
@@ -134,11 +141,11 @@ public class LoginController extends BaseController {
 				return LoginConstant.getACCOUNT_HOME_URL();
 			}else {
 				LOG.info("用户不存在");
-				return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "用户不存在");
+				return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "user not find!");
 			}
 	    }else{
 	    	LOG.info("参数错误！");
-	    	return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "参数错误！");
+	    	return this.buildBusinessError(model, LoginConstant.getUC_LOGIN_URL(), "param error！");
 	    }	
 	}
 	
@@ -149,10 +156,10 @@ public class LoginController extends BaseController {
 			if(email.contains("@")&&password.length()>=6){
 				return true;
 			}else{
-				this.errors.put("validatorError", "参数验证不合法");
+				this.errors.put("validatorError", "Parameter verification is not legitimate");
 			}
 		}else
-		     this.errors.put("validatorError", "参数不能为空");
+		     this.errors.put("validatorError", "Parameter verification is not NUll");
 		return false;
 	}
 	

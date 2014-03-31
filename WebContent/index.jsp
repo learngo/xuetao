@@ -18,7 +18,7 @@
 				<h1>Buy and Sell Gift Cards on Raise</h1>
 				<p class="lead tl">Turn unused gift cards into cash and shop for discounted gift cards on our marketplace.</p>
 				</div>
-              <a href="/signup" class="btn btn-xlarge btn-primary">Join Raise</a>
+              <a href="<c:url value="/preRegister"/>" class="btn btn-xlarge btn-primary">Join Whoopes</a>
               </div>
               </div>
           </div>

@@ -14,16 +14,29 @@
 		</div>
 	</div>
   <div class="container">
-   <div class="work" style="height: 450px; overflow: hidden;">
+   <div class="work" >
     <div class="row">
       <div class="col-md-4">
-        <h5>${good.title }</h5>
-        <p>${good.name}</p>
+        <h5>Good Name </h5>
+        <p>${good.name }</p>
+        <h5>Good Price </h5>
+        <p>${good.price}</p>
         <h5>About Good</h5>
         <p>${good.description } </p>
         <h5>Add time:</h5>
         <p>${good.createTime }</p>
-        </div>
+        <div id="output" class="alert">contact</div>
+	     <c:if test="${goodComments!=null}">
+	       <c:forEach items="${goodComments }" var="goodComment">
+	       <div class="media">
+	        <div class="media-body">
+	          <h4 class="media-heading">${goodComment.memberName}</h4>
+	           ${goodComment.content}
+	        </div>
+	      </div>
+	    </c:forEach>
+      </c:if>  
+      </div>
       <div class="col-md-8">
         <ul class="portfolio_showcase">
           <li> <img src="<c:url value="${good.logo}"/>" alt="Image" style="height: 400px;width: 750px"/></li>
@@ -32,34 +45,11 @@
           </c:forEach>
         </ul>
         <div id="number" class="work-pagination"> </div>
-      </div>
-    </div>
-</div>
-
-  <div class="row">
-     <div class="col-md-8 fr"> 
-     <c:if test="${goodComments!=null}">
-       <c:forEach items="${goodComments }" var="goodComment">
-       <div class="media">
-        <div class="media-body">
-          <h4 class="media-heading">Media Heading</h4>
-           ${goodComment.content}
-        </div>
-      </div>
-       </c:forEach>
-       
-     
-     </c:if>
-    </div>
-  </div>
-  
-  
-  
-  <div class="row contact">
-    <div class="col-md-8 fr">
-      <div class="wpcf7" id="wpcf7-f75-t1-o1">
-        <form action="<c:url value="/web/addGoodMessage"/>" method="post" class="wpcf7-form">
-          <div id="output" class="alert"> </div>
+        
+        <div class="row contact">
+      <div class="wpcf7 mt20">
+        <form action="<c:url value="/member/addGoodMessage"/>" method="post" class="wpcf7-form">
+          <div id="output" class="alert"> leave u contact</div>
           <!-- 
           <div class="form-meta clearfix">
             <div class="formcol">
@@ -76,12 +66,29 @@
             </div>
           </div>
            -->
-           <input type="hidden" value="goodId" value="${good.id}" />
+           <div class="form-meta clearfix">
+            <div class="formcol">
+              <label for="fname">contact phone</label>
+              <input type="text" name="phone" value="" size="40"  required="required"/>
+            </div>
+            </div>
+          <input type="hidden" name="goodId" value="${good.goodId}" />
           <label for="message"> Message：</label>
-          <textarea name="message" id="message" cols="40" rows="10"></textarea>
+          <textarea name="message" id="message" cols="40" rows="10" required="required"></textarea>
           <input type="submit" id="send-message" value="Send" class="btn btn-success mt20 mb20" />
         </form>
       </div>
+      </div>
+      </div>
+    </div>
+</div>
+  
+  
+  
+  <div class="row contact">
+  
+    <div class="col-md-8 fr">
+      
     </div>
   </div>
 </div>

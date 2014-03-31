@@ -19,6 +19,7 @@ import com.taotaoti.category.bo.Category;
 import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
+import com.taotaoti.common.utils.StringUtils;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
@@ -109,17 +110,6 @@ public class WebController extends BaseController {
 		listMaps.add(new MatchMap("goodComments", goodMgr.findGoodComments(goodId)));
 		return this.buildSuccess(model, "/web/goodDetail", listMaps);
 	}
-	@RequestMapping(value = "/web/addGoodMessage")
-	public ModelAndView addGoodMessage(HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value="message") String message,
-			@RequestParam(value="goodId") Integer goodId,
-			ModelMap model){
-		Visitor visitor=this.session.getSessionVisitor(request);
-		goodMgr.commintGoodComment(visitor.getUserid(), goodId, message);
-		return this.buildSuccessByRedirectOnlyUrl( "/web/goodDetail");
-	}
-	
 	@RequestMapping(value = "/web/page/partys")
 	public String partys2(HttpServletRequest request,
 			HttpServletResponse response,
@@ -148,7 +138,7 @@ public class WebController extends BaseController {
 			String []ids=party.getJoinMemberIds().split(",");
 			if(ids.length>0){
 				for(int i=0;i<ids.length;i++){
-				    if(ids[i]!=""){
+				    if(ids[i]!=""&&!StringUtils.isEmpty(ids[i])){
 						int memberId=Integer.valueOf(ids[i]);
 						listAcountInfos.add(memberMgr.getAcountInfoByMemberId(memberId));
 				    }
@@ -158,6 +148,20 @@ public class WebController extends BaseController {
 		listMaps.add(new MatchMap("acountInfos", listAcountInfos));
 		return this.buildSuccess(model, "/web/partyDetail", listMaps);
 	}
+	@RequestMapping(value = "/viewMemberInfo")
+	public String viewMemberInfo(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="memberId") Integer memberId,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		 if(memberId!=null){
+		  listMaps.add(new MatchMap("acountInfos", memberMgr.getAcountInfoByMemberId(memberId)));
+		  return this.buildSuccess(model, "/user", listMaps);
+		 }else
+			return this.buildSuccessOnlyUrl("/index");  
+	}
+	
+	
 	public SessionProvider getSession() {
 		return session;
 	}

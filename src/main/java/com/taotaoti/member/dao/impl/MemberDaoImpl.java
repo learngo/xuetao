@@ -28,8 +28,20 @@ public class MemberDaoImpl extends AbstractDao<Integer, Member> implements Membe
 		update(modify("email", email), match(Columns.memberId, memberId));
 	}
 	@Override
+	public void modifyCreatePartySum(Integer memberId, int sum) {
+		update(modify(Columns.MemberColumns.partyCreateSum, sum), match(Columns.memberId, memberId));
+	}
+	@Override
 	public void modifyPassword(Integer memberId, String password) {
 		update(modify("password", password), match(Columns.memberId, memberId));
+	}
+	@Override
+	public void modifyJoinPartySum(Integer memberId ,int sum) {
+		update(modify(Columns.MemberColumns.partyJoinSum, sum), match(Columns.memberId, memberId));
+	}
+	@Override
+	public void modifyPoint(Integer memberId ,int point) {
+		update(modify(Columns.MemberColumns.points, point), match(Columns.memberId, memberId));
 	}
 	@Override
 	public Member createMember(Member member) {

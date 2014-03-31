@@ -11,23 +11,19 @@
                  <ul>
                      <li><a href="<c:url value="/web/partys"/>">Party&nbsp;&nbsp;</a></li>
                      <li><a href="<c:url value="/web/goods"/>">Good&nbsp;&nbsp;</a></li>
-				</ul>
-             </div>
-             <div class="top_about">
-                 <ul>
-                 <c:if test="${sessionScope.UserConstant_VISITOR == null}">
+                     <c:if test="${sessionScope.UserConstant_VISITOR == null}">
                      <li><a href="#loginModal" data-toggle="modal">Login&nbsp;&nbsp;</a></li>
                      <li><a href="<c:url value="/preRegister"/>">register&nbsp;&nbsp;</a></li>
                  </c:if>
                     <c:if test="${sessionScope.UserConstant_VISITOR != null}">
-                      <li class="color_f63"><a href="<c:url value="/member/settings/settings"/>">${sessionScope.UserConstant_VISITOR.username }</a></li>
-					   <li><a href="<c:url value="/logout"/>" title="logout "><i class="glyphicon glyphicon-off"></i>
+                      <li class="color_f63">
+                      <a href="<c:url value="viewMemberInfo"/>?memberId=${sessionScope.UserConstant_VISITOR.userid }">${sessionScope.UserConstant_VISITOR.username }</a></li>
+                      <li>  <a href="<c:url value="/member/settings/settings"/>">Setting</a></li>
+					   <li><a href="<c:url value="/logout"/>" title="logout ">
 									logout</a></li>
 					</c:if>
-                 </ul>
-                 
+				</ul>
              </div>
-            
              <!-- end container-->
          </div>
          <!-- end container_wrap-->

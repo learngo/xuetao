@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import com.taotaoti.common.vo.Visitor;
+
 /**
  * 字符串工具方法集
  */
@@ -207,4 +209,20 @@ public class StringUtils {
 		return result;
 	}
 	
+	public static void main(String[] args) {
+		String d=",5";
+		String []ids=d.split(",");
+		System.out.println(ids.length);
+		for(int i=0;i<ids.length;i++){
+		if(ids[i]!=""&&!StringUtils.isEmpty(ids[i])){
+			 int memberId=Integer.valueOf(ids[i]);
+			 System.out.println(memberId);
+	    }
+		}
+		Visitor visitor=new Visitor();
+		visitor.setUserid(1);
+		if(Integer.valueOf("")==visitor.getUserid()){
+			 System.err.println("ok");
+		  }
+	}
 }

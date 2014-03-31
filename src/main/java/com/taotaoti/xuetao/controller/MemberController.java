@@ -27,6 +27,7 @@ import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.utils.DateUtils;
 import com.taotaoti.common.utils.MD5;
+import com.taotaoti.common.utils.StringUtils;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
@@ -36,6 +37,7 @@ import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.member.bo.Member;
 import com.taotaoti.member.dao.MemberDao;
 import com.taotaoti.member.service.MemberMgr;
+import com.taotaoti.member.vo.AcountInfo;
 import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.dao.PartyDao;
 import com.taotaoti.party.service.PartyMgr;
@@ -97,75 +99,85 @@ public class MemberController extends BaseController {
 			HttpServletResponse response,
 			Good good,
 			ModelMap model){
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		MultipartFile file = multipartRequest.getFile("file");
-		String realFileName = file.getOriginalFilename();
+		Visitor v=this.session.getSessionVisitor(request);
 		String ctxPath = request.getSession().getServletContext().getRealPath("/")
 				+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"good"+ File.separator;
 		File dirPath = new File(ctxPath);
 		if (!dirPath.exists()) {
 			dirPath.mkdir();
 		}
-		System.out.println(file.getName());
-		Visitor v=this.session.getSessionVisitor(request);
 		
-		if(!realFileName.endsWith(".jpg"))
-		    return this.buildErrorByRedirectAndParam("/member/settings/addGood", model, "图片格式不对！");
-	    
-		realFileName=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
-		File uploadFile = new File(ctxPath + realFileName);
-		try {
-			FileCopyUtils.copy(file.getBytes(), uploadFile);
-			good.setLogo("/resources/upload/good/"+realFileName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Good goodOk=goodMgr.submitGood(good.getCategoryId(),good.getName(),good.getTitle(), good.getDescription(), good.getLogo(),v.getUserid(),good.getLevel(),good.getPrice());
-		
-		LOG.info(""+goodOk.getId());
-		LOG.info(""+goodOk.getGoodId());
-		MultipartFile file1 = multipartRequest.getFile("file1");
-		String fileName1 = file1.getOriginalFilename();
-		if(fileName1!=null&&realFileName.endsWith(".jpg")){
-			fileName1=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(fileName1)+".jpg";
-			File uploadFile1 = new File(ctxPath + fileName1);
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		MultipartFile file = multipartRequest.getFile("file");
+		if(!file.isEmpty()){
+			String realFileName = file.getOriginalFilename();
+			System.out.println(file.getName());
+			if(!realFileName.endsWith(".jpg"))
+			    return this.buildErrorByRedirectAndParam("/member/settings/addGood", model, "图片格式不对！");
+		    
+			realFileName=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
+			File uploadFile = new File(ctxPath + realFileName);
 			try {
-				FileCopyUtils.copy(file.getBytes(), uploadFile1);
-				goodMgr.submitGoodPic(goodOk.getId(), "/resources/upload/good/"+fileName1);
+				FileCopyUtils.copy(file.getBytes(), uploadFile);
+				good.setLogo("/resources/upload/good/"+realFileName);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+		}else
+			return this.buildErrorByRedirectAndParam("/member/settings/addGood",model,"Logo is null!");
+		if(good.getTitle()==null)
+			return this.buildErrorByRedirectAndParam("/member/settings/addGood",model,"title is null!");
+		if(good.getName()==null)
+			return this.buildErrorByRedirectAndParam("/member/settings/addGood",model,"name is null!");
+		if(good.getPrice()==null)
+			return this.buildErrorByRedirectAndParam("/member/settings/addGood",model,"price is null!");
+		
+		Good goodOk=goodMgr.submitGood(good.getCategoryId(),good.getName(),good.getTitle(), good.getDescription(), good.getLogo(),v.getUserid(),good.getLevel(),good.getPrice());
+		
+		MultipartFile file1 = multipartRequest.getFile("file1");
+		if(!file1.isEmpty()){
+			String fileName1 = file1.getOriginalFilename();
+			if(fileName1!=null&&fileName1.endsWith(".jpg")){
+				fileName1=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(fileName1)+".jpg";
+				File uploadFile1 = new File(ctxPath + fileName1);
+				try {
+					FileCopyUtils.copy(file1.getBytes(), uploadFile1);
+					goodMgr.submitGoodPic(goodOk.getId(), "/resources/upload/good/"+fileName1);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
 		}
+		
 		MultipartFile file2 = multipartRequest.getFile("file2");
+		if(!file1.isEmpty()){
 		String fileName2 = file2.getOriginalFilename();
-		if(fileName1!=null&&realFileName.endsWith(".jpg")){
+		if(fileName2!=null&&fileName2.endsWith(".jpg")){
 			fileName2=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(fileName2)+".jpg";
 			File uploadFile2 = new File(ctxPath + fileName2);
 			try {
-				FileCopyUtils.copy(file.getBytes(), uploadFile2);
+				FileCopyUtils.copy(file2.getBytes(), uploadFile2);
 				goodMgr.submitGoodPic(goodOk.getId(), "/resources/upload/good/"+fileName2);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+		}
 		}
 		MultipartFile file3 = multipartRequest.getFile("file3");
+		if(!file3.isEmpty()){
 		String fileName3 = file3.getOriginalFilename();
-		if(fileName1!=null&&realFileName.endsWith(".jpg")){
+		if(fileName3!=null&&fileName3.endsWith(".jpg")){
 			fileName3=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(fileName3)+".jpg";
 			File uploadFile3 = new File(ctxPath + fileName3);
 			try {
-				FileCopyUtils.copy(file.getBytes(), uploadFile3);
+				FileCopyUtils.copy(file3.getBytes(), uploadFile3);
 				goodMgr.submitGoodPic(goodOk.getId(), "/resources/upload/good/"+fileName3);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		
-		
-		
+		}
 		
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
 	}
@@ -192,7 +204,17 @@ public class MemberController extends BaseController {
 		goodMgr.modifyGoodStatu(v.getUserid(), goodId, GoodConstant.GOOD_STATU_DELETE);
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
 	}
-	
+	@RequestMapping(value = "/addGoodMessage")
+	public ModelAndView addGoodMessage(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="message") String message,
+			@RequestParam(value="phone") String phone,
+			@RequestParam(value="goodId") Integer goodId,
+			ModelMap model){
+		Visitor visitor=this.session.getSessionVisitor(request);
+		goodMgr.commintGoodComment(visitor.getUserid(),visitor.getUsername(), goodId, message,phone);
+		return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", goodId);
+	}
 	
 	@RequestMapping(value = "/settings/party")
 	public String party(HttpServletRequest request,
@@ -232,36 +254,37 @@ public class MemberController extends BaseController {
 			@RequestParam(value="endTime",required=true) String end,
 			ModelMap model){
 		String icon="";
+		Visitor v=this.session.getSessionVisitor(request);
 		// 转型为MultipartHttpRequest
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		// 根据前台的name名称得到上传的文件
 		MultipartFile file = multipartRequest.getFile("file");
-		// 获得文件名：
-		String realFileName = file.getOriginalFilename();
-		// 获取路径
-		String ctxPath = request.getSession().getServletContext().getRealPath("/")
-				+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"party"+ File.separator;
-		// 创建文件
-		File dirPath = new File(ctxPath);
-		if (!dirPath.exists()) {
-			dirPath.mkdir();
+		if(!file.isEmpty()){
+			// 获得文件名：
+			String realFileName = file.getOriginalFilename();
+			// 获取路径
+			String ctxPath = request.getSession().getServletContext().getRealPath("/")
+					+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"party"+ File.separator;
+			// 创建文件
+			File dirPath = new File(ctxPath);
+			if (!dirPath.exists()) {
+				dirPath.mkdir();
+			}
+			
+			if(!realFileName.endsWith(".jpg"))
+			    return this.buildErrorByRedirectAndParam("/member/settings/party", model, "图片格式不对！");
+		    
+			realFileName=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
+			File uploadFile = new File(ctxPath + realFileName);
+			try {
+				LOG.info(ctxPath);
+				FileCopyUtils.copy(file.getBytes(), uploadFile);
+				icon=("/resources/upload/party/"+realFileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		Visitor v=this.session.getSessionVisitor(request);
-		if(!realFileName.endsWith(".jpg"))
-		    return this.buildErrorByRedirectAndParam("/member/settings/party", model, "图片格式不对！");
-	    
-		realFileName=""+v.getUserid()+System.currentTimeMillis()+MD5.getMd5(realFileName)+".jpg";
-		File uploadFile = new File(ctxPath + realFileName);
-		try {
-			LOG.info(ctxPath);
-			FileCopyUtils.copy(file.getBytes(), uploadFile);
-			icon=("/resources/upload/party/"+realFileName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Timestamp startTime=new Timestamp(DateUtils.parseDate("2014-01-22 17:06", "yyyy-MM-dd HH:mm").getTime());
-		System.out.println(start);
-		System.out.println(end);
+		
 		Timestamp startTime;
 		Timestamp endTime;
 		if(start!=null)
@@ -272,11 +295,17 @@ public class MemberController extends BaseController {
 			endTime=new Timestamp(DateUtils.parseDate(end, "yyyy-MM-dd HH:mm:ss").getTime());
 		else{
 			Date date=new Date(startTime.getTime());
-			endTime=new Timestamp(DateUtils.getNextDay(date, 30l).getTime());
+			endTime=new Timestamp(DateUtils.getNextDay(date, 90l).getTime());
+		}
+		Date date=new Date(startTime.getTime());
+		if(endTime.getTime() > DateUtils.getNextDay(date, 91l).getTime()){
+			
 		}
 		
-		
 		partyMgr.submitParty(v.getUserid(), icon, title, description, startTime, endTime);
+		AcountInfo a=memberMgr.getAcountInfoByMemberId(visitor.getUserid());
+		memberDao.modifyCreatePartySum(v.getUserid(), a.getPartyCreateSum()+1);
+		
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseParty");
 	}
 	@RequestMapping(value = "/settings/browseParty")
@@ -312,12 +341,12 @@ public class MemberController extends BaseController {
 		Visitor v=this.session.getSessionVisitor(request);
 		if(!newPassword.equals(newPassword2)){
 			LOG.error("新密码与确认密码不一致");
-			return this.buildErrorByRedirectAndParam("/member/settings/password", model, "新密码与确认密码不一致！");
+			return this.buildErrorByRedirectAndParam("/member/settings/password", model, "New password and confirm new password fields do not match");
 		}
 		Member member=memberDao.get(v.getUserid());
-		if(!member.getPassword().equals(MD5.getMd5(newPassword))){
+		if(!member.getPassword().equals(MD5.getMd5(oldPassword))){
 			LOG.error("旧密码不正确！");
-			return this.buildErrorByRedirectAndParam( "/member/settings/password",model, "旧密码不正确！");
+			return this.buildErrorByRedirectAndParam( "/member/settings/password",model, "The specified old password is incorrect for changing the password！");
 		}
 		memberDao.modifyPassword(v.getUserid(), MD5.getMd5(newPassword));
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
@@ -333,7 +362,7 @@ public class MemberController extends BaseController {
 		Member member=memberDao.get(v.getUserid());
 		if(!member.getPassword().equals(MD5.getMd5(password))){
 			LOG.error("旧密码不正确！");
-			return this.buildErrorByRedirectAndParam( "/member/settings/email",model, "旧密码不正确！");
+			return this.buildErrorByRedirectAndParam( "/member/settings/email",model, "The  password is incorrect for changing ！");
 		}
 	    if(memberMgr.isRegisterMember(newEmail, "")){
 	    	return this.buildErrorByRedirectAndParam( "/member/settings/email",model, "email is exist");
@@ -374,12 +403,12 @@ public class MemberController extends BaseController {
 			String []ids=party.getJoinMemberIds().split(",");
 			if(ids.length>0){
 				for(int i=0;i<ids.length;i++){
-					if(ids[i]!=""){
-					  if(Integer.valueOf(ids[i])==visitor.getUserid()){
-						  flag=true;
-						  break;
-					  }
-					}
+				    if(ids[i]!=""&&!StringUtils.isEmpty(ids[i])){
+				    	if(Integer.valueOf(ids[i])==visitor.getUserid()||ids[i].equals(visitor.getUserid().toString())){
+							  flag=true;
+							  break;
+						  }
+				    }
 				}
 			}
 			if(!flag){
@@ -388,10 +417,19 @@ public class MemberController extends BaseController {
 					joinIds=joinIds+visitor.getUserid();
 				else
 					joinIds=joinIds+","+visitor.getUserid();
-				
 				party.setJoinMemberIds(joinIds);
+				partyDao.update(party);
+				AcountInfo a=memberMgr.getAcountInfoByMemberId(visitor.getUserid());
+				int sum=0;
+				if(a.getPartyJoinSum()!=null)
+					sum=a.getPartyCreateSum()+1;
+				memberDao.modifyJoinPartySum(visitor.getUserid(), sum);
+				sum=0;
+				if(a.getPoints()!=null)
+					sum=a.getPoints()+5;
+				memberDao.modifyJoinPartySum(visitor.getUserid(), sum);
 			}
-			partyDao.update(party);
+		
 			
 		}
 		return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", partyId);

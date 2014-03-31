@@ -29,40 +29,40 @@
                     <div class="form-group">
 						<label class="col-lg-2 control-label">major：</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="major"  name="major"/>
+							<input type="text" class="form-control" placeholder="major"  name="major" required="required"/>
 						</div>
 					</div>
                     <div class="form-group">
 						<label class="col-lg-2 control-label">email：</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="email"  name="email"/>
+							<input type="text" class="form-control" placeholder="write your school mail address correctly "  name="email" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">nickName：</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="user name"  name="username"/>
+							<input type="text" class="form-control" placeholder="user name"  name="username" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">password：</label>
 						<div class="col-lg-10">
 							<input type="password" class="form-control"
-								placeholder="password"  name="password"/>
+								placeholder="password"  name="password" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">phone：</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control"
-								placeholder="phone"  name="phone"/>
+								placeholder="phone"  name="phone" required="required"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">photo：</label>
 						<div class="col-lg-10">
 							<input type="file" class="form-control"
-								placeholder="file"  name="file"/>
+								placeholder="file"  name="file" />
 						</div>
 					</div>
 					

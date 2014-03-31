@@ -34,7 +34,13 @@ public class GoodCommentDaoImpl extends AbstractDao<Integer, GoodComment> implem
 	}
 	@Override
 	public List<GoodComment> findByGoodId(int goodId) {
+		
 		return this.find(match(GoodCommentColumns.goodId, goodId),match(GoodCommentColumns.statu, 0));
+	}
+	@Override
+	public List<GoodComment> findByGoodId(int goodId,int memberId) {
+		
+		return this.find(match(GoodCommentColumns.goodId, goodId),match(GoodCommentColumns.memberId, memberId),match(GoodCommentColumns.statu, 0));
 	}
 	
 }

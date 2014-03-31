@@ -128,8 +128,8 @@ public class GoodMgrImpl implements GoodMgr {
 	}
 
 	@Override
-	public boolean commintGoodComment(int memberId, int goodId, String message) {
-		GoodComment comment=new GoodComment(null, memberId, goodId, message, 0, new Timestamp(System.currentTimeMillis()), 0, 0, "", null);
+	public boolean commintGoodComment(int memberId,String memberName,int goodId, String message,String phone) {
+		GoodComment comment=new GoodComment(null, memberId, memberName,goodId, message,phone,0, new Timestamp(System.currentTimeMillis()), 0, 0, 0, null);
 		goodCommentDao.create(comment);
 		return false;
 	}
