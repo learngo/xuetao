@@ -66,8 +66,21 @@
 						</div>
 					</div>
 					
+					<div class="form-group">
+			            
+			            <label class="col-lg-2 control-label"></label>
+						<div class="col-lg-10">
+							<div class="checkbox">
+			              <label>
+			                <input type="checkbox" value="1" name="checkBox">
+			                By clicking Sign up you agree to the Terms of Use and Privacy Policy.
+			              </label>
+			            </div>
+						</div>
+			          </div>
+					
 				<div class="modal-footer">
-	              <button type="submit" class="btn btn-primary" >submit</button>
+	              <button type="submit" class="btn btn-primary" >Submit</button>
             	</div>
             </div>
         </form>

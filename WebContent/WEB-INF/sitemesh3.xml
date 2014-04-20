@@ -27,6 +27,11 @@
 		<decorator>/WEB-INF/decorators/main-member-layout.jsp</decorator>
 		<exclue>false</exclue>
 	</mapping>
+	<mapping>
+		<path>/member/settings/*</path>
+		<decorator>/WEB-INF/decorators/main-member-settings-layout.jsp</decorator>
+		<exclue>false</exclue>
+	</mapping>
 	
 	<mapping>
 		<path>/admin/*</path>

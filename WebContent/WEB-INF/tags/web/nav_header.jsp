@@ -7,17 +7,21 @@
          <div class="container">
 			<strong class="logo"> <a href="<c:url value="/index"/>""> <img
 					src="<c:url value="/resources/web/images/Logo_youyika.png"/>" alt="Whoopes"></a></strong>
-			<div class="top_nav">
+			  <div class="top_nav">
                  <ul>
                      <li><a href="<c:url value="/web/partys"/>">Party&nbsp;&nbsp;</a></li>
-                     <li><a href="<c:url value="/web/goods"/>">Good&nbsp;&nbsp;</a></li>
-                     <c:if test="${sessionScope.UserConstant_VISITOR == null}">
+                     <li><a href="<c:url value="/web/goods"/>">shop&nbsp; by &nbsp;department</a></li>
+				</ul>
+             </div>
+			 <div class="top_about">
+                 <ul>
+                 <c:if test="${sessionScope.UserConstant_VISITOR == null}">
                      <li><a href="#loginModal" data-toggle="modal">Login&nbsp;&nbsp;</a></li>
                      <li><a href="<c:url value="/preRegister"/>">register&nbsp;&nbsp;</a></li>
                  </c:if>
                     <c:if test="${sessionScope.UserConstant_VISITOR != null}">
                       <li class="color_f63">
-                      <a href="<c:url value="viewMemberInfo"/>?memberId=${sessionScope.UserConstant_VISITOR.userid }">${sessionScope.UserConstant_VISITOR.username }</a></li>
+                      <a href="<c:url value="/viewMemberInfo"/>?memberId=${sessionScope.UserConstant_VISITOR.userid }">${sessionScope.UserConstant_VISITOR.username }</a></li>
                       <li>  <a href="<c:url value="/member/settings/settings"/>">Setting</a></li>
 					   <li><a href="<c:url value="/logout"/>" title="logout ">
 									logout</a></li>
@@ -37,37 +41,57 @@
 
  <!-- Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
- 		<div class="modal-dialog panel-primary">
+ 		<div class="modal-dialog panel-primary login-panel">
           <div class="modal-content">
-            <div class="modal-header panel-heading">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">login</h4>
-            </div>
-            <form class="form-horizontal" action='<c:url value="/memberLogin"/>' method="post">
-				<div class="modal-body">
-
-
-					<div class="form-group">
-						<label class="col-lg-2 control-label">email：</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="email" name="email" required="required"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">password：</label>
-						<div class="col-lg-10">
-							<input type="password" class="form-control"
-								placeholder="password"  name="password" required="required"/>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
+	         <div class="modal-body login-panel">
+			          <form class="form-horizontal login-panel-left" action='<c:url value="/memberLogin"/>' method="post">
+							<div class="form-group">
+								<h3>Sign in</h3>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">email：</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control" placeholder="email" name="email" required="required"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">password：</label>
+								<div class="col-lg-10">
+									<input type="password" class="form-control"
+										placeholder="password"  name="password" required="required"/>
+								</div>
+							</div>
+							<div class="form-group tc">
+								<button type="submit" class="btn btn-info btn-lg"> Login </button>
+							</div>
+					   </form>
+					   <div class="login-panel-middle"></div> 
+			          <form class="form-horizontal login-panel-right" action='<c:url value="/memberLogin"/>' method="post">
+							<div class="form-group">
+							</div>
+							<div class="form-group">
+							</div>
+							<div class="form-group">
+							</div>
+							<div class="form-group">
+							</div>
+							<div class="form-group">
+								<button type="button" class="btn btn-info btn-lg" data-dismiss="modal">facebook Login </button>
+							</div>
+							<div class="form-group">
+							
+							</div>
+							
+					   </form> 
+				 </div>
+	<!-- 
+		      <div class="modal-footer">
 	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
 	              <button type="submit" class="btn btn-primary" >login</button>
-            	</div>
-          </form>   
-          </div><!-- /.modal-content //-->
-        </div><!-- /.modal-dialog //-->
+            </div>
+     -->
+       </div><!-- /.modal-content //-->
+    </div><!-- /.modal-dialog //-->
   
 </div><!-- /.modal -->
 

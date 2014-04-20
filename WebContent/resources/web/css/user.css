@@ -27,14 +27,14 @@
 }
 
 .userpage-header .avatar {
-	float: left;
 	width: 128px;
 	height: 128px;
 	border-radius: 50%;
+	clear: both;
 }
 
 .userpage-header-info {
-	margin-left: 150px;
+	clear: both;
 }
 
 .userpage-header-info h1 {

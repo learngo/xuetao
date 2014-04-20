@@ -156,6 +156,8 @@ public class WebController extends BaseController {
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
 		 if(memberId!=null){
 		  listMaps.add(new MatchMap("acountInfos", memberMgr.getAcountInfoByMemberId(memberId)));
+		  listMaps.add(new MatchMap("partys",partyDao.findParyByMemberId(memberId, 0, 10)));
+		  listMaps.add(new MatchMap("goods",goodMgr.findGoodByMemberId(memberId, 0, 10)));
 		  return this.buildSuccess(model, "/user", listMaps);
 		 }else
 			return this.buildSuccessOnlyUrl("/index");  

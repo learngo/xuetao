@@ -77,8 +77,39 @@ public class MemberController extends BaseController {
 	 	MatchMap member=new MatchMap("member", memberDao.get(v.getUserid()));
 		listMaps.add(member);
 		listMaps.add(new MatchMap("v", v));
+		listMaps.add(new MatchMap("path", "/member/settings/settings"));
+		listMaps.add(new MatchMap("pathName", "settings"));
+		
 		return this.buildSuccess(model, "/member/settings/settings", listMaps);
 	}
+	@RequestMapping(value = "/settings/password")
+	public String password(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+        List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		listMaps.add(new MatchMap("path", "/member/settings/password"));
+		listMaps.add(new MatchMap("pathName", "password"));
+		return this.buildSuccess(model, "/member/settings/password", listMaps);
+	}
+	@RequestMapping(value = "/settings/email")
+	public String email(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		listMaps.add(new MatchMap("path", "/member/settings/email"));
+		listMaps.add(new MatchMap("pathName", "email"));
+		return this.buildSuccess(model, "/member/settings/email", listMaps);
+	}
+	@RequestMapping(value = "/settings/addParty")
+	public String addParty(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		listMaps.add(new MatchMap("path", "/member/settings/addParty"));
+		listMaps.add(new MatchMap("pathName", "addParty"));
+		return this.buildSuccess(model, "/member/settings/addParty", listMaps);
+	}
+	
 	@RequestMapping(value = "/settings/addGood")
 	public String addGood(HttpServletRequest request,
 			HttpServletResponse response,
@@ -92,6 +123,8 @@ public class MemberController extends BaseController {
 			listMaps.add(new MatchMap("goodView", goodMgr.getGoodViewByGoodId(v.getUserid(),goodId)));
 			return this.buildSuccess(model, "/member/settings/viewGood", listMaps);
 		}
+		listMaps.add(new MatchMap("path", "/member/settings/addGood"));
+		listMaps.add(new MatchMap("pathName", "addGood"));
 		return this.buildSuccess(model, "/member/settings/addGood", listMaps);
 	}
 	@RequestMapping(value = "/settings/submitGood")
@@ -193,6 +226,8 @@ public class MemberController extends BaseController {
 	 	Visitor v=this.session.getSessionVisitor(request);
 		MatchMap goods=new MatchMap("goods", goodMgr.findGoodByMemberId(v.getUserid(), curPage, pageSize));
 		listMaps.add(goods);
+		listMaps.add(new MatchMap("path", "/member/settings/browseGood"));
+		listMaps.add(new MatchMap("pathName", "browseGood"));
 		return this.buildSuccess(model, "/member/settings/browseGood", listMaps);
 	}
 	@RequestMapping(value = "/settings/deleteGood")
@@ -320,6 +355,8 @@ public class MemberController extends BaseController {
 	 	Visitor v=this.session.getSessionVisitor(request);
 		MatchMap partys=new MatchMap("partys", partyMgr.findParyByMemberId(v.getUserid(), curPage, pageSize));
 		listMaps.add(partys);
+		listMaps.add(new MatchMap("path", "/member/settings/browseParty"));
+		listMaps.add(new MatchMap("pathName", "browseParty"));
 		return this.buildSuccess(model, "/member/settings/browseParty", listMaps);
 	}
 	@RequestMapping(value = "/settings/deleteParty")
@@ -429,8 +466,6 @@ public class MemberController extends BaseController {
 					sum=a.getPoints()+5;
 				memberDao.modifyJoinPartySum(visitor.getUserid(), sum);
 			}
-		
-			
 		}
 		return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", partyId);
 	}

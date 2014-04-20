@@ -16,6 +16,7 @@ public class Visitor extends BaseObject<Integer> implements Serializable {
 	private String[] roleArr = new String[]{};
 	private Integer userid;
 	private String taotaotiId;
+	private String photo;
 
 	private String username;
 
@@ -24,6 +25,9 @@ public class Visitor extends BaseObject<Integer> implements Serializable {
 	
 	private boolean isTeacher;
 	private String schoolName;
+	private String major;
+	private Integer point;
+	private Integer joinSum;
 	
 	public String getSchoolName() {
 		return schoolName;
@@ -75,6 +79,12 @@ public class Visitor extends BaseObject<Integer> implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
@@ -87,8 +97,29 @@ public class Visitor extends BaseObject<Integer> implements Serializable {
 	public Date getLoginTime() {
 		return loginTime;
 	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 	public void setLoginTime(Date loginTime) {
 		this.loginTime = loginTime;
+	}
+	public Integer getPoint() {
+		return point;
+	}
+	public void setPoint(Integer point) {
+		this.point = point;
+	}
+	public Integer getJoinSum() {
+		return joinSum;
+	}
+	public void setJoinSum(Integer joinSum) {
+		this.joinSum = joinSum;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 
