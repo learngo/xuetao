@@ -26,8 +26,8 @@
 }
 
 #header_main .container,.main_menu ul:first-child>li a {
-	height: 88px;
-	line-height: 88px;
+	height: 44px;
+	line-height: 44px;
 	overflow: hidden;
 }
 
@@ -74,6 +74,19 @@ div .logo {
 	margin-left:20px;
 	text-align: center;
 }
+.top_middle{
+	width: 400px;
+	float: right;
+}
+.top_middle .navbar-form{
+	float: right;
+	padding: 0px; 
+	margin-top: 0px; 
+}
+.top_middle .navbar-form .categoryType{
+	width: 100px;
+}
+
 .top_about {
 	text-align: center;
 	float: right;
@@ -87,14 +100,14 @@ div .logo {
 
 .top_about li,.top_nav li  {
 	float: left;
-	height: 88px;
-	line-height: 88px;
+	height: 44px;
+	line-height: 22px;
 	vertical-align: middle;
 }
 
 .top_about li a,.top_nav li a  {
 	display: block;
-	height: 88px;
+	height: 44px;
 	margin-right:10px;
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif, "微软雅黑";
@@ -103,13 +116,17 @@ div .logo {
 
 .top_about li a:hover ,.top_nav li a:hover {
 	display: block;
-	height: 88px;
+	height: 44px;
 	font-size: 16px;
 	margin-right:10px;
 	font-family: Arial, Helvetica, sans-serif, "微软雅黑";
 	color: #66b3e1;
 	text-decoration: none;
 }
+.top_about .badge{
+	background-color: #999;
+}
+
 
 div .joinus {
 	float: right;

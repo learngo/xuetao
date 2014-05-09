@@ -18,6 +18,7 @@ import com.taotaoti.member.bo.Roleauth;
 import com.taotaoti.member.constant.MemberConstant;
 import com.taotaoti.member.dao.AuthDao;
 import com.taotaoti.member.dao.MemberDao;
+import com.taotaoti.member.dao.MessageDao;
 import com.taotaoti.member.dao.RoleAuthDao;
 import com.taotaoti.member.dao.RoleDao;
 import com.taotaoti.member.service.MemberMgr;
@@ -65,7 +66,6 @@ public class MemberMgrImpl implements MemberMgr {
 					if(school!=null)
 						acountInfo.setSchoolName(school.getName());
 				}
-				
 				return acountInfo;
 			}
 			return null;

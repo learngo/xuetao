@@ -13,7 +13,7 @@ public interface PartyMgr {
 			int pageSize);
 	public List<Party> findPary(int curPage,
 			int pageSize);
-	public void submitParty(int memberId,String icon,String title,String description,Timestamp startTime,Timestamp endTime);
+	public void submitParty(int memberId,String icon,String title,String description,Timestamp startTime,Timestamp endTime,String address);
 	public void modifyPartyStatu(int memberId,int partyId,int statu);
 	public void modifyPartyStatu(int partyId,int statu);
 	public Party findPartyByMemberIdAndPartyId(int memberId,int partyId);

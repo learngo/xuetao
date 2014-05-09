@@ -1,6 +1,5 @@
 package com.taotaoti.good.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -8,12 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import com.taotaoti.common.dao.AbstractDao;
-import com.taotaoti.common.generic.dao.operator.Match;
-import com.taotaoti.common.generic.dao.operator.Order;
-import com.taotaoti.good.bo.GoodColumns;
 import com.taotaoti.good.bo.GoodColumns.GoodCommentColumns;
 import com.taotaoti.good.bo.GoodComment;
-import com.taotaoti.good.constant.GoodConstant;
 import com.taotaoti.good.dao.GoodCommentDao;
 
 @Repository
@@ -39,8 +34,17 @@ public class GoodCommentDaoImpl extends AbstractDao<Integer, GoodComment> implem
 	}
 	@Override
 	public List<GoodComment> findByGoodId(int goodId,int memberId) {
-		
-		return this.find(match(GoodCommentColumns.goodId, goodId),match(GoodCommentColumns.memberId, memberId),match(GoodCommentColumns.statu, 0));
+//        String sql = "select * from xuetao.Good_Comment where goodId = ? and member_id =? and modtime >? and modtime<=?" ;
+//		
+//		List<Object> params = new ArrayList<Object>();
+//		params.add(dspId);
+//		params.add(state);
+//		params.add(start);
+//		params.add(end);
+//		return this.findBySQL(sql, params);
+		return this.find(match(GoodCommentColumns.goodId, goodId),
+				match(GoodCommentColumns.memberId, memberId),
+				match(GoodCommentColumns.statu, 0));
 	}
 	
 }

@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.taotaoti.common.BaseTestCase;
 import com.taotaoti.good.bo.Good;
 import com.taotaoti.good.bo.GoodPic;
+import com.taotaoti.good.dao.GoodCommentSubDao;
 import com.taotaoti.good.dao.GoodDao;
 import com.taotaoti.good.dao.GoodPicDao;
 
@@ -18,10 +19,22 @@ public class GoodPicDaoTest extends BaseTestCase {
 	private GoodPicDao goodPicDao;
 	@Resource
 	private GoodDao goodDao;
+	@Resource
+	private GoodCommentSubDao goodCommentSubDao;
 	
+	
+	@Test
+	public void testfindSub(){
+		goodCommentSubDao.findByGoodCommentId(3);
+	}
 	@Test
 	public void testfindAll(){
 		goodPicDao.findAll();
+		//System.out.println(list.toArray(a));
+	}
+	@Test
+	public void testfindGoodAll(){
+		goodDao.findAll();
 		//System.out.println(list.toArray(a));
 	}
 	

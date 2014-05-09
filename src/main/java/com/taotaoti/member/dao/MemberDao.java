@@ -14,6 +14,7 @@ public interface MemberDao extends BaseDao<Integer, Member> {
 	public void modifyJoinPartySum(Integer memberId,int sum);
 	public void modifyPoint(Integer memberId ,int point);
 	public void modifyCreatePartySum(Integer memberId, int sum);
+	public void modifyPhoto(Integer memberId, String photo);
 	
 	
 	public Member createMember(Member member);

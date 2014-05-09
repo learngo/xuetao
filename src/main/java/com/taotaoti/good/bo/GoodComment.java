@@ -30,7 +30,7 @@ public class GoodComment extends BaseObject<Integer>{
 	@Column(value=GoodColumns.GoodCommentColumns.isReply)
 	private Integer isReply;
 	@Column(value=GoodColumns.GoodCommentColumns.replyContent)
-	private Integer replyContent;
+	private String replyContent;
 	@Column(value=GoodColumns.GoodCommentColumns.replyTime)
 	private Timestamp replyTime ;
 	
@@ -42,7 +42,7 @@ public class GoodComment extends BaseObject<Integer>{
 	
 	
 	public GoodComment(Integer goodCommentId, Integer memberId,String memberName, Integer goodId,
-			String content,String phone, Integer replyContent, Timestamp createTime,
+			String content,String phone, String replyContent, Timestamp createTime,
 			Integer replyMemberId, Integer isReply, Integer statu,
 			Timestamp replyTime) {
 		super();
@@ -306,7 +306,7 @@ public class GoodComment extends BaseObject<Integer>{
 
 
 
-	public Integer getReplyContent() {
+	public String getReplyContent() {
 		return replyContent;
 	}
 
@@ -317,7 +317,7 @@ public class GoodComment extends BaseObject<Integer>{
 
 
 
-	public void setReplyContent(Integer replyContent) {
+	public void setReplyContent(String replyContent) {
 		this.replyContent = replyContent;
 	}
 

@@ -13,6 +13,7 @@ public class PartyColumns {
 	public final static String description = "description";
 	public final static String startTime = "start_time";
 	public final static String endTime = "end_time";
+	public final static String address = "address";
 	public final static String state = "state";
 	public final static String createTime = "create_time";
 	public final static String updateTime = "update_time";

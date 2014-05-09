@@ -22,7 +22,7 @@ public class PartyDaoTest extends BaseTestCase {
 		Party party=new Party(1, "title", "description",
 				new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()),
 				0, new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), 
-				"/web/logo.jpg", "1", 0, 0, 0, "");
+				"/web/logo.jpg", "1", 0, 0, 0, "","北京");
 		partyDao.create(party);
 	}
 	

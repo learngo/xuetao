@@ -17,6 +17,14 @@
    <div class="work" >
     <div class="row">
       <div class="col-md-4">
+         <c:if test="${member!=null }">
+         <h5> Sale Name </h5>
+        <p>${member.name }</p>
+         </c:if>
+         <c:if test="${good.buyerName!=null }">
+         <h5>Buyer Name </h5>
+        <p>${good.buyerName }</p>
+         </c:if>
         <h5>Good Name </h5>
         <p>${good.name }</p>
         <h5>Good Price </h5>
@@ -30,8 +38,74 @@
 	       <c:forEach items="${goodComments }" var="goodComment">
 	       <div class="media">
 	        <div class="media-body">
-	          <h4 class="media-heading">${goodComment.memberName}</h4>
-	           ${goodComment.content}
+	          <h4 class="media-heading">
+                <a 
+					href="<c:url value="/viewMemberInfo"/>?memberId=${goodComment.memberId}">
+						${goodComment.memberName}
+				</a>
+	          </h4>
+	           Phone:
+	           ${goodComment.phone }
+	           <br/>
+	           Message:
+	            ${goodComment.content}
+	            
+	           <br/>
+	           <c:if test="${isManager==0}">
+	             Reply:
+	              <c:if test="${goodComment.isReply==1}">
+	                ${goodComment.replyContent}
+	              </c:if>
+	           </c:if>
+	           <c:if test="${isManager==1}">
+                Reply:
+                   ${goodComment.replyContent}
+                <br/>
+                <c:if test="${goodComment.goodCommentSubs!=null }">
+                    <c:forEach items="${goodComment.goodCommentSubs}" var="goodCommentSub">
+                       <a 
+					href="<c:url value="/viewMemberInfo"/>?memberId=${goodCommentSub.memberId}">
+						${goodCommentSub.memberName}
+				</a>
+                       :${goodCommentSub.content}
+                        <br/>
+                    </c:forEach>
+                </c:if>
+	          <br/>      
+	        <a href="#replyModal${goodComment.id}" data-toggle="modal" class="btn btn-primary">Reply</a>
+	              <!-- Modal -->
+<div class="modal fade" id="replyModal${goodComment.id}" tabindex="-1" role="dialog" aria-labelledby="replyModal${goodComment.id}" aria-hidden="true">
+ 		<div class="modal-dialog panel-primary">
+          <div class="modal-content">
+            <div class="modal-header panel-heading">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">reply：</h4>
+            </div>
+            <form class="form-horizontal" action="<c:url value="/web/replyContent"/>">
+				<div class="modal-body">
+					<input type="hidden" value="${goodComment.id}" name="commentId">
+					<div class="form-group">
+						<label class="col-lg-2 control-label">replyContent：</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" name="replyContent"
+								placeholder="replyContent"  required="required"/>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
+	              <button type="submit" class="btn btn-primary" >submit</button>
+            	</div>
+          </form>   
+            
+            
+          </div><!-- /.modal-content //-->
+        </div><!-- /.modal-dialog //-->
+</div><!-- /.modal -->
+
+
+	           </c:if>
+	          
 	        </div>
 	      </div>
 	    </c:forEach>
@@ -50,22 +124,6 @@
       <div class="wpcf7 mt20">
         <form action="<c:url value="/member/addGoodMessage"/>" method="post" class="wpcf7-form">
           <div id="output" class="alert"> leave u contact</div>
-          <!-- 
-          <div class="form-meta clearfix">
-            <div class="formcol">
-              <label for="fname"> First Name</label>
-              <input type="text" name="fname" value="" id="fname" size="40" />
-              <label for="lname"> Last Name</label>
-              <input type="text" name="lname" value="" id="lname" size="40" />
-            </div>
-            <div class="formcol">
-              <label for="email"> Email Address</label>
-              <input type="text" name="email" id="email" value="" size="40" />
-              <label for="subject"> Subject</label>
-              <input type="text" name="subject" id="subject" value="" size="40" />
-            </div>
-          </div>
-           -->
            <div class="form-meta clearfix">
             <div class="formcol">
               <label for="fname">contact phone</label>
@@ -92,6 +150,9 @@
     </div>
   </div>
 </div>
+
+
+
 <script src="../resources/web/js/jquery.prettyPhoto.js" type="text/javascript"></script> 
 <script src="../resources/web/js/superfish.js" type="text/javascript"></script> 
 <script src="../resources/web/js/jquery.isotope.min.js" type="text/javascript"></script> 

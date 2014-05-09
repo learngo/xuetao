@@ -20,6 +20,7 @@ public class GoodColumns {
 	public final static String level = "level";
 	public final static String createTime = "create_time";
 	public final static String updateTime = "update_time";
+	public final static String buyerName = "buyerName";
 	
 	public final static class GoodCommentColumns{
 		public final static String goodCommentId = "id";
@@ -36,6 +37,15 @@ public class GoodColumns {
 		public final static String replyContent="reply_content";
 		public final static String replyTime="reply_time";
 		
+	}
+	public final static class GoodCommentSubColumns{
+		public final static String goodCommentSubId = "id";
+		public final static String  memberId= "member_id";
+		public final static String commentId = "comment_id";
+		public final static String memberName = "member_name";
+		public final static String content = "content";
+		public final static String statu="statu";
+		public final static String createTime="create_time";
 	}
 	public final static class GoodPicColumns{
 		public final static String goodPicId = "id";

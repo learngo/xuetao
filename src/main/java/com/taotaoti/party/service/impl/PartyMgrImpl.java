@@ -36,12 +36,12 @@ public class PartyMgrImpl implements PartyMgr {
 
 	@Override
 	public void submitParty(int memberId, String icon, String title,
-			String description, Timestamp startTime, Timestamp endTime) {
+			String description, Timestamp startTime, Timestamp endTime,String address) {
 
 		Party party=new Party(memberId, title, description,
 				startTime, endTime,
 				0, new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), 
-				icon, "", 0, 0, 0, "");
+				icon, "", 0, 0, 0, "",address);
 		partyDao.create(party);
 	}
 

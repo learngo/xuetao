@@ -8,13 +8,13 @@
 			<strong class="logo"> <a href="<c:url value="/index"/>""> <img
 					src="<c:url value="/resources/web/images/Logo_youyika.png"/>" alt="Whoopes"></a></strong>
 			  <div class="top_nav">
-                 <ul>
-                     <li><a href="<c:url value="/web/partys"/>">Party&nbsp;&nbsp;</a></li>
+                <ul class="nav nav-pills">
+                     <li class="active"><a href="<c:url value="/web/partys"/>">Party&nbsp;&nbsp;</a></li>
                      <li><a href="<c:url value="/web/goods"/>">shop&nbsp; by &nbsp;department</a></li>
 				</ul>
              </div>
 			 <div class="top_about">
-                 <ul>
+                 <ul class="nav nav-pills">
                  <c:if test="${sessionScope.UserConstant_VISITOR == null}">
                      <li><a href="#loginModal" data-toggle="modal">Login&nbsp;&nbsp;</a></li>
                      <li><a href="<c:url value="/preRegister"/>">register&nbsp;&nbsp;</a></li>
@@ -25,9 +25,22 @@
                       <li>  <a href="<c:url value="/member/settings/settings"/>">Setting</a></li>
 					   <li><a href="<c:url value="/logout"/>" title="logout ">
 									logout</a></li>
+					   <li><a href="<c:url value="/member/settings/browseMessage"/>">
+					   <span class="glyphicon glyphicon-bullhorn"></span>
+					    <span class="badge">${sessionScope.UserConstant_VISITOR.messageSum}</span></a></li>
 					</c:if>
 				</ul>
              </div>
+      <div class="top_middle">
+	      <form class="navbar-form" action="<c:url value="/web/search"/>">
+		      <select class="form-control categoryType" name="categoryType" >
+	              <option value="1">good</option>
+	              <option value="2">party</option>
+	            </select>
+	          <input type="text" class="form-control navbar-form-width" name="content" required="required">
+	          <button type="submit" class="btn btn-primary">search</button>
+        </form>
+      </div>
              <!-- end container-->
          </div>
          <!-- end container_wrap-->

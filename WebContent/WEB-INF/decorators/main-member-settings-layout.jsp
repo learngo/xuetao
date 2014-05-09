@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="zh-CN" class="fixed_header">
+<html lang="en" class="fixed_header">
 <head>
   <c:import url="/WEB-INF/tags/web/header_title.jsp"/> 	
   <c:import url="/WEB-INF/tags/web/jsPlugin.jsp"/>
@@ -11,7 +11,7 @@
 
 <body>
   <c:import url="/WEB-INF/tags/web/nav_header.jsp" />
-    <div class="row youyika nav-common">
+    <div class="youyika nav-common">
 	</div>
 <div class="breadcrumbrow">
 	<div class="container">
@@ -56,6 +56,10 @@
 			  <span class="glyphicon glyphicon-lock"></span>
 			 modify  password 
 			</a> 
+			<a href="avatar" class="list-group-item">
+			  <span class="glyphicon glyphicon-envelope"></span>
+			     modify photo
+			</a> 
 			<a href="addGood" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			   add good
@@ -71,6 +75,10 @@
 			<a href="browseParty" class="list-group-item">
 			  <span class="glyphicon glyphicon-envelope"></span>
 			     browse partys
+			</a> 
+			<a href="browseMessage" class="list-group-item">
+			  <span class="glyphicon glyphicon-envelope"></span>
+			     browse Messages
 			</a> 
 		</div>
 	</div>

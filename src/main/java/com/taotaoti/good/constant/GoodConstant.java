@@ -8,8 +8,9 @@ package com.taotaoti.good.constant;
  */
 public class GoodConstant {
 
-	public static final int GOOD_STATU_OK= 0;  //超级管理员
-	public static final int GOOD_STATU_DELETE= 1;  //超级管理员
+	public static final int GOOD_STATU_OK= 0;  //ok
+	public static final int GOOD_STATU_BUY= 1;  //delete
+	public static final int GOOD_STATU_DELETE= 2;  //delete
 	
 	
 }

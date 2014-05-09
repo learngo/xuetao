@@ -29,7 +29,15 @@
 						<li class="product-source"><a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
 								<span class="img thumbnail"> 
 							    <img src="<c:url value="${party.icon}"/>" alt="${party.title}" width="160" height="98"/>
-							</span> <span class="name">${party.title}</span> <span class="info">Sum in Party（${party.joinSum}）</span>
+							</span> 
+							 <c:if test="${party.state==0 }">
+										 <span class="badge badge-success">进行中</span>
+							</c:if>
+							<c:if test="${party.state==1 }">
+								<span class="badge badge-danger">已经结束</span>
+							</c:if>
+							<span class="name">${party.title}</span> 
+							<span class="info">Sum in Party（${party.joinSum}）</span>
 						</a>
 						</li>
 					</c:forEach>
@@ -40,9 +48,13 @@
 		</div>
 		<div class="row">
 			<ul class="pager">
+			    <c:if test="${isPre==1 }">
 				<li class="previous"><a href="<c:url value="/web/partys"/>?curPage=${curPage-1}&pageSize=12">&larr; 上一页</a></li>
+				</c:if>
+				<c:if test="${isNext==1 }">
 				<li class="next"><a href="<c:url value="/web/partys"/>?curPage=${curPage+1}&pageSize=12"">下一页 &rarr;</a></li>
-			</ul>
+				</c:if>
+		   </ul>
 		</div>
 
 

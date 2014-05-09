@@ -2,6 +2,8 @@ package com.taotaoti.good.bo;
 
 import java.sql.Timestamp;
 
+import org.junit.Ignore;
+
 import com.taotaoti.common.generic.annotation.Column;
 import com.taotaoti.common.generic.annotation.Table;
 import com.taotaoti.common.generic.bo.BaseObject;
@@ -32,11 +34,23 @@ public class Good extends BaseObject<Integer>{
 	private Integer statu;
 	@Column(value=GoodColumns.memberId)
 	private Integer memberId;
+	@Column(value="ignore")
+	private String memberName;
+	
 	@Column(value=GoodColumns.price)
 	private Integer price;
 	@Column(value=GoodColumns.level)
 	private Integer level;
 	
+	@Column(value=GoodColumns.buyerName)
+	private String buyerName;
+	
+	public String getBuyerName() {
+		return buyerName;
+	}
+	public void setBuyerName(String buyerName) {
+		this.buyerName = buyerName;
+	}
 	public Good(){
 		
 	}
@@ -139,6 +153,12 @@ public class Good extends BaseObject<Integer>{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
 	
 	

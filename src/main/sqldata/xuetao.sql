@@ -194,3 +194,15 @@ create table roleauth
    primary key (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table good_comment_sub
+(
+   id                   int not null auto_increment,
+   member_id            int not null,
+   comment_id           int not null,
+   content              text not null,
+   statu                int not null default 0,
+   create_time          timestamp not null,
+   primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

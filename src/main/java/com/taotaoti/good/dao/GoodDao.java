@@ -17,10 +17,14 @@ public interface GoodDao extends BaseDao<Integer, Good> {
 	public int counts();
 	public List<Good> findIndexGood( int curPage,
 			int pageSize);
+	public List<Good> findGoodLike(String content, int curPage,
+			int pageSize);
 	public List<Good> findGoodByMemberId(int memberId, int curPage,
 			int pageSize);
 
 	public List<Good> findIndexGood(int curPage, int pageSize, int categoryId);
 	
 	public Good findGoodByMemberIdAndGoodId(int memberId,int goodId);
+	public void modifyGoodClickSum(Integer goodId,int sum);
+	public void modifyGoodBuyerName(Integer goodId,String buyerName);
 }

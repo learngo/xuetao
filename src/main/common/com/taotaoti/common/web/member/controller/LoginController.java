@@ -30,6 +30,7 @@ import com.taotaoti.common.utils.MD5;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
+import com.taotaoti.member.dao.MessageDao;
 import com.taotaoti.member.facade.MemberFacade;
 import com.taotaoti.member.vo.AcountInfo;
 import com.taotaoti.school.bo.School;
@@ -48,14 +49,16 @@ public class LoginController extends BaseController {
 	private MemberFacade memberFacade;
 	@Resource
 	private SchoolDao schoolDao;
+	@Resource
+	private MessageDao messageDao;
 	
 	@RequestMapping(value = "/register")
 	public ModelAndView register(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam("schoolId") Integer schoolId, 
-			@RequestParam("major") String major, 
+			//@RequestParam("major") String major, 
 			@RequestParam("email") String email, 
-			@RequestParam("phone") String phone, 
+			//@RequestParam("phone") String phone, 
 			@RequestParam("username") String username, 
 			@RequestParam("password") String password,
 			ModelMap model){
@@ -101,9 +104,11 @@ public class LoginController extends BaseController {
 		if(schoolId==null)
 			    return this.buildErrorByRedirectAndParam("/preRegister", model, "please write you school name");
 		
-		if(phone==null)
-			return this.buildErrorByRedirectAndParam("/preRegister", model, "please write you phone");
-		
+//		if(phone==null)
+//			return this.buildErrorByRedirectAndParam("/preRegister", model, "please write you phone");
+		String phone="";
+//		String username="";
+		String major="";
 		 AcountInfo acountInfo=   memberFacade.registerMember(email, dbPassword, username, phone,schoolId,photo,major);
 		if(acountInfo!=null){
 			initVisterSessionAndRedis(request,response,acountInfo);
@@ -196,6 +201,9 @@ public class LoginController extends BaseController {
         visitor.setJoinSum(member.getPartyJoinSum());
         visitor.setPoint(member.getPoints());
         visitor.setTeacher(false);
+        
+        int messageSum=messageDao.countsByMessageMemberId(member.getId());
+        visitor.setMessageSum(messageSum);
         School school=schoolDao.get(member.getSchoolId());
         if(school!=null){
         	visitor.setSchoolName(school.getName());

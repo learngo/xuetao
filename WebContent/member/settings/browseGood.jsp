@@ -13,6 +13,7 @@
             <th>title</th>
             <th>price</th>
             <th>level</th>
+            <th>buy statu</th>
             <th>manager</th>
           </tr>
         </thead>
@@ -27,8 +28,19 @@
 										<td>${good.title }</td>
 										<td>${good.price }</td>
 										<td>${good.level }</td>
+										<td>
+										<c:if test="${good.statu==0 }">
+										 拍卖中
+										</c:if>
+										<c:if test="${good.statu==1 }">
+										  已买
+										</c:if>
+										
+										
+										</td>
 										<td><a href="deleteGood?goodId=${good.goodId }">delete</a> 
 										<a href="<c:url value="/web/goodDetail?goodId=${good.goodId}"/>">view</a>
+										<a href="<c:url value="/member/settings/preBuyGood?goodId=${good.goodId}"/>">sold</a>
 										<!-- <a href="addGood?goodId=${good.goodId}">view</a> -->
 										
 										</td>

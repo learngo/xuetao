@@ -133,6 +133,7 @@ public class ManagerController extends BaseController {
 		listMaps.add(partys);
 		return this.buildSuccess(model, "/admin/browseParty", listMaps);
 	}
+
 	@RequestMapping(value = "/deleteParty")
 	public ModelAndView deleteParty(HttpServletRequest request,
 			HttpServletResponse response,

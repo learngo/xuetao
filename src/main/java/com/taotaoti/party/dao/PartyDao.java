@@ -16,6 +16,8 @@ public interface PartyDao extends BaseDao<Integer, Party> {
 			int pageSize);
 	public List<Party> findIndexPary( int curPage,
 			int pageSize);
+	public List<Party> findParyByLike(String content, int curPage,
+			int pageSize);
 	public List<Party> findParyByMemberId(int memberId, int curPage,
 			int pageSize);
 	public Party findPartyByMemberIdAndPartyId(int memberId,int partyId);

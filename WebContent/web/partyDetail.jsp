@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet"
 	href="<c:url value="/resources/web/css/common-content.css"/>" />
 <link rel="stylesheet"
@@ -20,16 +21,31 @@
 			src="<c:url value="${party.icon}"/>"
 			alt="${party.title }">
 		</span>
-		<p class="text-primary tc">${party.title }</p>
+		<p class="text-primary tc">
+		  ${party.title }
+		</p>
+		<p class="text-primary"><span class="color_f63 fb">活动发起人：</span>
+		   ${member.name} 
+		  </p>
+		<p class="text-primary"><span class="color_f63 fb">活动时间：</span>
+		   <fmt:formatDate value="${party.startTime }" pattern="yyyy-MM-dd"/>~
+		  <fmt:formatDate value="${party.endTime }" pattern="yyyy-MM-dd"/>
+		  </p>
+		  <p class="text-primary"><span class="color_f63 fb">活动地点：</span>
+		  ${party.address }
+		  </p>
 		<div class="media-body">
-			<h4 class="media-heading">${party.updateTime}</h4>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${party.description }
+		   <span class="color_f63 fb">活动简介：</span>
+		   ${party.description }
 		</div>
 	</div>
 	<div class="col-md-9 content">
 		<div class="leading mb20">
 			<h2>
-				Member of Join<a href="<c:url value="/member/joinParty" />?partyId=${party.id}"> <button class="btn btn-success fr mb20">Join</button></a>
+				Member of Join
+				<a href="<c:url value="/web/leaveMessage" />?partyId=${party.id}"><button class="btn btn-success fr ml20">message</button></a>
+				<a href="<c:url value="/member/joinParty" />?partyId=${party.id}"> <button class="btn btn-success fr mb20">Join</button></a>
+				
 			</h2>
 		</div>
 		<div class="row-fluid">

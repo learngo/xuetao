@@ -28,6 +28,7 @@ public class Visitor extends BaseObject<Integer> implements Serializable {
 	private String major;
 	private Integer point;
 	private Integer joinSum;
+	private Integer messageSum;
 	
 	public String getSchoolName() {
 		return schoolName;
@@ -120,6 +121,12 @@ public class Visitor extends BaseObject<Integer> implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public Integer getMessageSum() {
+		return messageSum;
+	}
+	public void setMessageSum(Integer messageSum) {
+		this.messageSum = messageSum;
 	}
 
 

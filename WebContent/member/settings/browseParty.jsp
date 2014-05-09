@@ -15,6 +15,7 @@
             <th>startTime</th>
             <th>endTime</th>
             <th>join sum</th>
+            <th>statu</th>
             <th>manager</th>
           </tr>
         </thead>
@@ -26,14 +27,26 @@
             <td>
              <img alt="${party.title }" src="<c:url value="${party.icon}"></c:url>" width="120px" height="60px">
             </td>
-            <td>${party.title }</td>
+            <td>
+            
+            ${party.title }
+            </td>
             <td>
              <fmt:formatDate value="${party.startTime }" pattern="yyyy-MM-dd HH:mm"/>
             </td>
             <td><fmt:formatDate value="${party.endTime }" pattern="yyyy-MM-dd HH:mm"/></td>
             <td>${party.joinSum}</td>
+            <td> <c:if test="${party.state==0 }">
+										进行中
+										</c:if>
+										<c:if test="${party.state==1 }">
+										  已结束
+										</c:if></td>
+           
+            
             <td><a href="deleteParty?partyId=${party.id}">delete</a> 
             <a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">view</a>
+            <a href="<c:url value="overParty?partyId=${party.id}"/>">over</a>
 		    <!-- <a href="party?partyId=${party.id}">view</a> -->
             </td>
             

@@ -44,6 +44,10 @@ public class MemberDaoImpl extends AbstractDao<Integer, Member> implements Membe
 		update(modify(Columns.MemberColumns.points, point), match(Columns.memberId, memberId));
 	}
 	@Override
+	public void modifyPhoto(Integer memberId, String photo) {
+		update(modify(Columns.MemberColumns.photo, photo), match(Columns.memberId, memberId));
+	}
+	@Override
 	public Member createMember(Member member) {
 		// TODO Auto-generated method stub
 		return this.create(member);

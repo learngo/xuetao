@@ -19,6 +19,10 @@ public class Party extends BaseObject<Integer>{
 	private Timestamp startTime;
 	@Column(value=PartyColumns.endTime)
 	private Timestamp endTime ;
+	@Column(value=PartyColumns.address)
+	private String address ;
+	
+	
 	@Column(value=PartyColumns.state)
 	private Integer state;
 	@Column(value=PartyColumns.createTime)
@@ -51,7 +55,7 @@ public class Party extends BaseObject<Integer>{
 			Timestamp startTime, Timestamp endTime, Integer state,
 			Timestamp createTime, Timestamp updateTime, String icon,
 			String schoolIds, Integer joinSum, Integer maxSum, Integer ponit,
-			String joinMemberIds) {
+			String joinMemberIds,String address) {
 		super();
 		this.memberId = memberId;
 		this.title = title;
@@ -67,6 +71,21 @@ public class Party extends BaseObject<Integer>{
 		this.maxSum = maxSum;
 		this.ponit = ponit;
 		this.joinMemberIds = joinMemberIds;
+		this.address=address;
+	}
+
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 

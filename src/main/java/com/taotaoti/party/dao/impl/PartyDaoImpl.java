@@ -12,6 +12,7 @@ import com.taotaoti.common.generic.dao.operator.Match;
 import com.taotaoti.common.generic.dao.operator.Order;
 import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.bo.PartyColumns;
+import com.taotaoti.party.constant.PartyConstant;
 import com.taotaoti.party.dao.PartyDao;
 
 @Repository
@@ -28,7 +29,7 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 	@Override
 	public int counts() {
 		// TODO Auto-generated method stub
-		return this.count(match(PartyColumns.state, 0));
+		return this.count(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
 		orders.add(order(PartyColumns.partyId, false));
-		matchs.add(match(PartyColumns.state, 0));
+		matchs.add(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
 		return this.page(matchs,orders, curPage,
 				pageSize);
 	}
@@ -54,7 +55,7 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
 		orders.add(order(PartyColumns.partyId, false));
-		matchs.add(match(PartyColumns.state, 0));
+		matchs.add(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
 		matchs.add(match(PartyColumns.memberId, memberId));
 		return this.page(matchs,orders, curPage,
 				pageSize);
@@ -64,6 +65,17 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 	public Party findPartyByMemberIdAndPartyId(int memberId, int partyId) {
 		// TODO Auto-generated method stub
 		return findOne(match(PartyColumns.memberId,memberId),match(PartyColumns.partyId, partyId));
+	}
+
+	@Override
+	public List<Party> findParyByLike(String content, int curPage, int pageSize) {
+		List<Match> matchs=new ArrayList<Match>();
+		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(PartyColumns.partyId, false));
+		matchs.add(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
+		matchs.add(match(PartyColumns.title,like(content)));
+		return this.page(matchs,orders, curPage,
+				pageSize);
 	}
 	
 }

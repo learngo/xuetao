@@ -3,14 +3,20 @@ package com.taotaoti.xuetao.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,19 +32,26 @@ import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.utils.DateUtils;
+import com.taotaoti.common.utils.FileUtils;
 import com.taotaoti.common.utils.MD5;
 import com.taotaoti.common.utils.StringUtils;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
 import com.taotaoti.good.bo.Good;
+import com.taotaoti.good.bo.GoodComment;
+import com.taotaoti.good.bo.GoodCommentSub;
 import com.taotaoti.good.constant.GoodConstant;
 import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.member.bo.Member;
+import com.taotaoti.member.bo.Message;
+import com.taotaoti.member.constant.MessageConstant;
 import com.taotaoti.member.dao.MemberDao;
+import com.taotaoti.member.dao.MessageDao;
 import com.taotaoti.member.service.MemberMgr;
 import com.taotaoti.member.vo.AcountInfo;
 import com.taotaoti.party.bo.Party;
+import com.taotaoti.party.constant.PartyConstant;
 import com.taotaoti.party.dao.PartyDao;
 import com.taotaoti.party.service.PartyMgr;
 import com.taotaoti.school.bo.School;
@@ -64,7 +77,8 @@ public class MemberController extends BaseController {
 	private PartyDao partyDao;
 	@Resource
 	private SchoolDao schoolDao;
-	
+	@Resource
+	private MessageDao messageDao;
 	@Resource
 	private RedisCacheManager redisCacheMgr;
 	
@@ -239,6 +253,27 @@ public class MemberController extends BaseController {
 		goodMgr.modifyGoodStatu(v.getUserid(), goodId, GoodConstant.GOOD_STATU_DELETE);
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
 	}
+	@RequestMapping(value = "/settings/preBuyGood")
+	public String preBuyGood(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="goodId") Integer goodId,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		listMaps.add(new MatchMap("goodId", goodId));
+		return this.buildSuccess(model, "/member/settings/buyGood", listMaps);
+	}
+	@RequestMapping(value = "/settings/buyGood")
+	public ModelAndView buyGood(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="goodId") Integer goodId,
+			@RequestParam(value="buyerName") String buyerName,
+			
+			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
+		goodMgr.modifyGoodStatu(v.getUserid(), goodId, GoodConstant.GOOD_STATU_BUY);
+		goodMgr.modifyGoodBuyerName(v.getUserid(), goodId, buyerName);
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
+	}
 	@RequestMapping(value = "/addGoodMessage")
 	public ModelAndView addGoodMessage(HttpServletRequest request,
 			HttpServletResponse response,
@@ -248,6 +283,16 @@ public class MemberController extends BaseController {
 			ModelMap model){
 		Visitor visitor=this.session.getSessionVisitor(request);
 		goodMgr.commintGoodComment(visitor.getUserid(),visitor.getUsername(), goodId, message,phone);
+		
+		Message m=new Message();
+		m.setMessageContent(message);
+		m.setMessageCreateTime(new Timestamp(System.currentTimeMillis()));
+		m.setMessageMemberId(visitor.getUserid());
+		m.setMessageProductId(goodId);
+		m.setMessageType(MessageConstant.MESSAGE_PRODUCT_TYPE_GOOD);
+		m.setMessageStatu(MessageConstant.MESSAGE_STATU_OK);
+		messageDao.create(m);
+		
 		return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", goodId);
 	}
 	
@@ -287,6 +332,7 @@ public class MemberController extends BaseController {
 			@RequestParam(value="description",required=true) String description,
 			@RequestParam(value="startTime",required=true) String start,
 			@RequestParam(value="endTime",required=true) String end,
+			@RequestParam(value="address",required=false) String address,
 			ModelMap model){
 		String icon="";
 		Visitor v=this.session.getSessionVisitor(request);
@@ -334,10 +380,9 @@ public class MemberController extends BaseController {
 		}
 		Date date=new Date(startTime.getTime());
 		if(endTime.getTime() > DateUtils.getNextDay(date, 91l).getTime()){
-			
 		}
 		
-		partyMgr.submitParty(v.getUserid(), icon, title, description, startTime, endTime);
+		partyMgr.submitParty(v.getUserid(), icon, title, description, startTime, endTime,address);
 		AcountInfo a=memberMgr.getAcountInfoByMemberId(visitor.getUserid());
 		memberDao.modifyCreatePartySum(v.getUserid(), a.getPartyCreateSum()+1);
 		
@@ -359,13 +404,67 @@ public class MemberController extends BaseController {
 		listMaps.add(new MatchMap("pathName", "browseParty"));
 		return this.buildSuccess(model, "/member/settings/browseParty", listMaps);
 	}
+	
+	@RequestMapping(value = "/settings/browseMessage")
+	public String browseMessage(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="curPage",required=false) Integer curPage,
+			@RequestParam(value="pageSize",required=false) Integer pageSize,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		if(curPage==null||curPage<0) curPage=0;
+		if(pageSize==null) pageSize=12;
+		Visitor v=this.session.getSessionVisitor(request);
+		MatchMap messages=new MatchMap("messages", messageDao.findByMemberId(v.getUserid()));
+		listMaps.add(messages);
+		return this.buildSuccess(model, "/member/settings/browseMessage", listMaps);
+	}
+	
+	
+	@RequestMapping(value = "/subLeaveMessage")
+	public ModelAndView subLeaveMessage(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="partyId") Integer partyId,
+			@RequestParam(value="message") String replyContent,
+			ModelMap model){
+		Party party=partyDao.get(partyId);
+		Visitor visitor=this.session.getSessionVisitor(request);
+		if(visitor!=null){
+			LOG.info(visitor.getUserid()+ " modify reply content"+ partyId+ "=="+replyContent);
+				Message message=new Message();
+				message.setMessageContent(replyContent);
+				message.setMessageCreateTime(new Timestamp(System.currentTimeMillis()));
+				message.setMessageMemberId(visitor.getUserid());
+				message.setMessageMemberName(visitor.getUsername());
+				message.setMessageProductId(party.getId());
+				message.setMessageType(MessageConstant.MESSAGE_PRODUCT_TYPE_PARTY);
+				message.setMessageStatu(MessageConstant.MESSAGE_STATU_OK);
+				messageDao.create(message);
+				int messageSum=messageDao.countsByMessageMemberId(visitor.getUserid());
+		        visitor.setMessageSum(messageSum);
+				session.setAttributeAsVisitor(request, visitor);
+		}
+		return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", partyId);
+	}
+	
+	
+	
 	@RequestMapping(value = "/settings/deleteParty")
 	public ModelAndView deleteParty(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="partyId") Integer partyId,
 			ModelMap model){
 		Visitor v=this.session.getSessionVisitor(request);
-		partyMgr.modifyPartyStatu(v.getUserid(), partyId, 1);
+		partyMgr.modifyPartyStatu(v.getUserid(), partyId, PartyConstant.PARTY_STATU_DELETE);
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseParty");
+	}
+	@RequestMapping(value = "/settings/overParty")
+	public ModelAndView overParty(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="partyId") Integer partyId,
+			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
+		partyMgr.modifyPartyStatu(v.getUserid(), partyId, PartyConstant.PARTY_STATU_OVER);
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseParty");
 	}
 	@RequestMapping(value = "/settings/modifyPassword")
@@ -409,6 +508,106 @@ public class MemberController extends BaseController {
 		this.session.setAttributeAsVisitor(request, v);
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
 	}
+	@RequestMapping(value = "/settings/avatar")
+	public String avatar(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
+        List<MatchMap> listMaps=new ArrayList<MatchMap>();
+	 	MatchMap member=new MatchMap("acountInfo", memberMgr.getAcountInfoByMemberId(v.getUserid()));
+		listMaps.add(member);
+		listMaps.add(new MatchMap("v", v));
+		listMaps.add(new MatchMap("settingsPath", "/member/settings/avatar"));
+		listMaps.add(new MatchMap("settingsPathName", "修改头像"));
+		return this.buildSuccess(model, "/member/settings/avatar", listMaps);
+	}
+	@RequestMapping(value = "/settings/modifyPhoto")
+	public ModelAndView modifyPhoto(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		Visitor v = this.session.getSessionVisitor(request);
+		String commPath = File.separator +"resources" + File.separator + "upload"
+				+ File.separator + "photo"
+				+ File.separator;
+		String pageUrl = "/member/settings/avatar";
+		// 根目录路径，可以指定绝对路径，比如 /var/www/attached/
+		String savePath = request.getSession().getServletContext()
+				.getRealPath("/")
+				+ commPath;
+		// 根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/
+		//String saveUrl = request.getContextPath() + File.separator + commPath;
+		String saveUrl = commPath;
+		// 图片扩展名
+		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp" };
+		// 最大文件大小
+		long maxSize = 1000000;
+
+		if (!ServletFileUpload.isMultipartContent(request)) {
+			LOG.info("请选择文件。");
+			return this.buildErrorByRedirectAndParam(pageUrl, model, "请选择文件。");
+		}
+		// 检查目录
+		File uploadDir = new File(savePath);
+		if (!uploadDir.isDirectory()) {
+			LOG.info("上传目录不存在。");
+			return this
+					.buildErrorByRedirectAndParam(pageUrl, model, "上传目录不存在。");
+		}
+		// 检查目录写权限
+		if (!uploadDir.canWrite()) {
+			LOG.info("上传目录没有写权限");
+			return this.buildErrorByRedirectAndParam(pageUrl, model,
+					"上传目录没有写权限。");
+		}
+		// 创建文件夹
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String ymd = sdf.format(new Date());
+		savePath += ymd + "/";
+		saveUrl += ymd + "/";
+		File dirFile = new File(savePath);
+		if (!dirFile.exists()) {
+			dirFile.mkdirs();
+		}
+
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		Map<String, MultipartFile> filess = multipartRequest.getFileMap();
+		Iterator<String> keys = filess.keySet().iterator();
+		while (keys.hasNext()) {
+			String key = keys.next();
+			MultipartFile multipartFile = filess.get(key);
+			String fileName = multipartFile.getOriginalFilename();
+			// 检查文件大小
+			if (multipartFile.getSize() > maxSize) {
+				LOG.info("上传文件大小超过限制");
+				return this.buildErrorByRedirectAndParam(pageUrl, model,
+						"上传文件大小超过限制。");
+			}
+			// 检查扩展名
+			String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1)
+					.toLowerCase();
+			if (!Arrays.<String> asList(fileTypes).contains(fileExt)) {
+				LOG.info("上传文件扩展名是不允许的扩展名。");
+				return this.buildErrorByRedirectAndParam(pageUrl, model,
+						"上传文件扩展名是不允许的扩展名。");
+			}
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+			String newFileName =v.getUserid()+"_"+ df.format(new Date()) + "_"
+					+ new Random().nextInt(1000) + "." + fileExt;
+			try {
+				FileUtils.SaveFileFromInputStream(
+						multipartFile.getInputStream(), savePath + newFileName);
+			} catch (IOException e) {
+				LOG.info("上传失败！");
+				return this.buildErrorByRedirectAndParam(pageUrl, model,
+						"上传文件失败。");
+			}
+			LOG.info("上传成功！");
+			memberDao.modifyPhoto(v.getUserid(), saveUrl + newFileName);
+			return this.buildSuccessByRedirectOnlyUrl("/member/settings/avatar");
+		}
+
+		return this.buildSuccessByRedirectOnlyUrl("/member/settings/avatar");
+	}
+	
 	@RequestMapping(value = "/settings/modifyMemberInfo")
 	public ModelAndView modifyMemberInfo(HttpServletRequest request,
 			HttpServletResponse response,
@@ -455,16 +654,17 @@ public class MemberController extends BaseController {
 				else
 					joinIds=joinIds+","+visitor.getUserid();
 				party.setJoinMemberIds(joinIds);
+				party.setJoinSum(party.getJoinSum()+1);
 				partyDao.update(party);
 				AcountInfo a=memberMgr.getAcountInfoByMemberId(visitor.getUserid());
 				int sum=0;
 				if(a.getPartyJoinSum()!=null)
-					sum=a.getPartyCreateSum()+1;
-				memberDao.modifyJoinPartySum(visitor.getUserid(), sum);
-				sum=0;
+					sum=a.getPartyJoinSum()+1;
+				    memberDao.modifyJoinPartySum(visitor.getUserid(), sum);
+				 int point=0;
 				if(a.getPoints()!=null)
-					sum=a.getPoints()+5;
-				memberDao.modifyJoinPartySum(visitor.getUserid(), sum);
+					point=a.getPoints()+5;
+				memberDao.modifyPoint(visitor.getUserid(), point);
 			}
 		}
 		return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", partyId);

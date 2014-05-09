@@ -26,24 +26,27 @@
 							 </select>
 						</div>
 					</div>
-                    <div class="form-group">
-						<label class="col-lg-2 control-label">major：</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="major"  name="major" required="required"/>
-						</div>
-					</div>
-                    <div class="form-group">
-						<label class="col-lg-2 control-label">email：</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" placeholder="write your school mail address correctly "  name="email" required="required"/>
-						</div>
-					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label">nickName：</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" placeholder="user name"  name="username" required="required"/>
 						</div>
 					</div>
+					<!-- 
+                    <div class="form-group">
+						<label class="col-lg-2 control-label">major：</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" placeholder="major"  name="major" required="required"/>
+						</div>
+					</div>
+					 -->
+                    <div class="form-group">
+						<label class="col-lg-2 control-label">email：</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" placeholder="write your school mail address correctly "  name="email" required="required"/>
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<label class="col-lg-2 control-label">password：</label>
 						<div class="col-lg-10">
@@ -51,6 +54,7 @@
 								placeholder="password"  name="password" required="required"/>
 						</div>
 					</div>
+					<!-- 
 					<div class="form-group">
 						<label class="col-lg-2 control-label">phone：</label>
 						<div class="col-lg-10">
@@ -58,6 +62,7 @@
 								placeholder="phone"  name="phone" required="required"/>
 						</div>
 					</div>
+					 -->
 					<div class="form-group">
 						<label class="col-lg-2 control-label">photo：</label>
 						<div class="col-lg-10">
@@ -67,12 +72,11 @@
 					</div>
 					
 					<div class="form-group">
-			            
 			            <label class="col-lg-2 control-label"></label>
 						<div class="col-lg-10">
 							<div class="checkbox">
 			              <label>
-			                <input type="checkbox" value="1" name="checkBox">
+			                <input type="checkbox" value="1" name="checkBox" checked="checked">
 			                By clicking Sign up you agree to the Terms of Use and Privacy Policy.
 			              </label>
 			            </div>

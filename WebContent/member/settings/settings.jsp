@@ -21,36 +21,7 @@
 							</div>
 						</div>
 
-			<!-- 
-
-						<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label class="required">Sex</label>
-							</div>
-							<div class="col-md-7 controls radios">
-								<div id="profile_gender">
-									
-								  <c:if test="${member.sex == 'man' }">
-								   <input type="radio" 
-										name="sex"  value="man" checked="checked"/>
-									<label>man</label>
-								  <input
-										type="radio"  name="sex" value="woman" />
-								  <label>woman</label>
-								  </c:if>
-								  <c:if test="${member.sex == 'woman' }">
-								   <input type="radio" 
-										name="sex"  value="man" />
-									<label>nan</label>
-								  <input
-										type="radio"  name="sex" value="woman" checked="checked"/>
-								  <label>woman</label>
-								  </c:if>
-								  
-								</div>
-							</div>
-						</div>
- -->
+			
 						<div class="form-group">
 							<div class="col-md-2 control-label">
 								<label for="profile_company">School</label>

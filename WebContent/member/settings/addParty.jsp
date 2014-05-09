@@ -60,6 +60,14 @@
 				              </div>
 						<input type="hidden" class="input-sm form-control" name="endTime" id="endTime" />
 				       </div>
+				       <div class="form-group">
+							<label class="col-md-2 control-label">Address：</label>
+							<div class="col-md-7 controls">
+								<input type="text"
+									name="address" class="form-control" />
+							</div>
+						</div>
+				       
 						<div class="form-group">
 							<div class="col-md-2 control-label">
 								<label for="profile_about">DES：</label>
