@@ -236,12 +236,18 @@ public class WebController extends BaseController {
 		if(pageSize==null) pageSize=12;
 		if(categoryType==null) categoryType=2;
 		if(categoryType==2){
-			MatchMap partys=new MatchMap("partys", partyDao.findParyByLike(content,curPage,pageSize));
-			listMaps.add(partys);
+			List<Party> partys=partyDao.findParyByLike(content,curPage,pageSize);
+			if(partys==null||partys.size()==0){
+				partys=null;
+			}
+			listMaps.add(new MatchMap("partys", partys));
 			return this.buildSuccess(model, "/web/partys", listMaps);
 		}else{
-			 MatchMap goods=new MatchMap("goods", goodDao.findGoodLike(content,curPage,pageSize));
-			 listMaps.add(goods);
+			List<Good> goods=goodDao.findGoodLike(content,curPage,pageSize);
+			if(goods==null||goods.size()==0){
+				goods=null;
+			}
+			 listMaps.add(new MatchMap("goods", goods));
 			 MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
 			 listMaps.add(categorys);
 			return this.buildSuccess(model, "/web/goods", listMaps);

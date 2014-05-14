@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet" href="<c:url value="/resources/web/css/common-content.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/css/prettyPhoto.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/web/css/piano.css"/>" />
@@ -49,25 +50,26 @@
 	           <br/>
 	           Message:
 	            ${goodComment.content}
-	            
+	            ---
+	            <fmt:formatDate value="${goodComment.createTime}" pattern="yyyy-MM-dd HH:mm"/>
 	           <br/>
-	           <c:if test="${isManager==0}">
-	             Reply:
-	              <c:if test="${goodComment.isReply==1}">
-	                ${goodComment.replyContent}
-	              </c:if>
-	           </c:if>
+	           
 	           <c:if test="${isManager==1}">
                 Reply:
                    ${goodComment.replyContent}
+                   
+                   ---by ${goodComment.memberName}
+                   <fmt:formatDate value="${goodComment.createTime}" pattern="yyyy-MM-dd HH:mm"/>
                 <br/>
                 <c:if test="${goodComment.goodCommentSubs!=null }">
                     <c:forEach items="${goodComment.goodCommentSubs}" var="goodCommentSub">
-                       <a 
+                 <a 
 					href="<c:url value="/viewMemberInfo"/>?memberId=${goodCommentSub.memberId}">
 						${goodCommentSub.memberName}
 				</a>
                        :${goodCommentSub.content}
+                       ---
+                       <fmt:formatDate value="${goodCommentSub.createTime}" pattern="yyyy-MM-dd HH:mm"/>
                         <br/>
                     </c:forEach>
                 </c:if>

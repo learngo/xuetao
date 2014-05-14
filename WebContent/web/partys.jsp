@@ -20,10 +20,8 @@
   
       
       
-    <div class="row-fluid">
+    <div class="row">
 			<ul class="unstyled product-sources">
-				
-				
 			   <c:if test="${partys!= null}">
 					<c:forEach var="party" varStatus="status" items="${partys}">
 						<li class="product-source"><a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
@@ -42,9 +40,14 @@
 						</li>
 					</c:forEach>
 				</c:if>
-				
+				<c:if test="${partys== null}">
+						<div class="jumbotron">
+				          <h1 id="jumboheader">抱歉，没有您需要的活动</h1>
+				      </div>
+			   </c:if>
 				
 			</ul>
+			
 		</div>
 		<div class="row">
 			<ul class="pager">

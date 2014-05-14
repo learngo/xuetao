@@ -48,7 +48,7 @@
 				
 			</h2>
 		</div>
-		<div class="row-fluid">
+		<div class="row">
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -88,10 +88,3 @@
 
 
 </div>
-
-
-
-
-<script>
-	$('#tooltip-right').tooltip();
-</script>

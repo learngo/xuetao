@@ -25,7 +25,7 @@
 		  ${party.title }
 		</p>
 		<p class="text-primary"><span class="color_f63 fb">活动发起人：</span>
-		   ${member.name} <a href="<c:url value="/member/levelMessage" />?partyId=${party.id}">message</a>
+		   ${member.name} 
 		  </p>
 		<p class="text-primary"><span class="color_f63 fb">活动时间：</span>
 		   <fmt:formatDate value="${party.startTime }" pattern="yyyy-MM-dd"/>~
@@ -101,6 +101,7 @@
           
           <div class="row mt20">
 			<div class="col-md-7 col-md-offset-2 mt20">
+			    <a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>"><button type="button" class="btn btn-primary">cancel</button></a>
 				<button type="submit" class="btn btn-primary">留言</button>
 			</div>
 		</div>

@@ -93,9 +93,22 @@ public class MemberController extends BaseController {
 		listMaps.add(new MatchMap("v", v));
 		listMaps.add(new MatchMap("path", "/member/settings/settings"));
 		listMaps.add(new MatchMap("pathName", "settings"));
-		
 		return this.buildSuccess(model, "/member/settings/settings", listMaps);
 	}
+	@RequestMapping(value = "/settings/preSettings")
+	public String editorSettings(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+		Visitor v=this.session.getSessionVisitor(request);
+        List<MatchMap> listMaps=new ArrayList<MatchMap>();
+	 	MatchMap member=new MatchMap("member", memberDao.get(v.getUserid()));
+		listMaps.add(member);
+		listMaps.add(new MatchMap("v", v));
+		listMaps.add(new MatchMap("path", "/member/settings/preSettings"));
+		listMaps.add(new MatchMap("pathName", "settings"));
+		return this.buildSuccess(model, "/member/settings/preSettings", listMaps);
+	}
+	
 	@RequestMapping(value = "/settings/password")
 	public String password(HttpServletRequest request,
 			HttpServletResponse response,

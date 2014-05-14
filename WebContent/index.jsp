@@ -4,11 +4,14 @@
 <link rel="stylesheet" href="<c:url value="/resources/web/css/index-content.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/css/index-scrollpic.css"/>" />
 
-<div class="row first-row">
+<div class="first-row">
     <div class="col-lg-12">
       <div id="carousel-example-generic" class="carousel slide">
-        <!-- Indicators //-->
-        <!-- Wrapper for slides -->
+       <!-- Indicators //-->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        </ol>
         <div class="carousel-inner">
           <div class="item active">
             <img src="resources/img/hero.jpg" alt="">
@@ -18,16 +21,24 @@
 				<h1>Buy and Sell Gift Cards on Raise</h1>
 				<p class="lead tl">Turn unused gift cards into cash and shop for discounted gift cards on our marketplace.</p>
 				</div>
-              <a href="<c:url value="/preRegister"/>" class="btn btn-xlarge btn-primary">Join Whoopes</a>
+                  <a href="<c:url value="/preRegister"/>" class="btn btn-xlarge btn-primary">Join Whoopes</a>
               </div>
               </div>
           </div>
+          <div class="item">
+            <img src="resources/img/hero.jpg" alt="">
+          </div>
         </div>
       </div><!-- carousel end //-->
-    </div>
     
+        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+          <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+          <span class="icon-next"></span>
+        </a>
+    </div>
   </div>
-  
 <script>
 $('.carousel').carousel();
 </script>

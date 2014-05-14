@@ -15,7 +15,7 @@ public class GoodCommentViewUtil{
 	public static GoodCommentView toGoodCommentViewByGoodCommentAndSub(String memberName,GoodComment goodComment,List<GoodCommentSub> goodCommentSubs){
 		GoodCommentView goodCommentView=new GoodCommentView();
 		goodCommentView.setGoodCommentSubs(goodCommentSubs);
-		goodCommentView.setMemberName(memberName);
+		goodCommentView.setMemberName(goodComment.getMemberName());
 		
 		goodCommentView.setContent(goodComment.getContent());
 		goodCommentView.setCreateTime(goodComment.getCreateTime());

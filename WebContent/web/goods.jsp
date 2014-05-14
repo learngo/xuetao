@@ -31,7 +31,8 @@
   
       
       
-			<div class="row-fluid">
+			<div class="row">
+			 <c:if test="${goods!= null}">
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -44,7 +45,7 @@
 						
 						
 							
-			   <c:if test="${goods!= null}">
+			  
 					<c:forEach var="good" varStatus="status" items="${goods}">
 						<tr>
 							<td><span class="img"> <a
@@ -74,10 +75,20 @@
 						
 						
 					</c:forEach>
-				</c:if>
+				
+					
+					
+					
 					
 					</tbody>
 				</table>
+				</c:if>
+				<c:if test="${goods== null}">
+						<div class="jumbotron">
+				          <h1 id="jumboheader">抱歉，没有您需要的产品</h1>
+				      </div>
+				</c:if>
+				
 
 		</div>
 		<div class="row">

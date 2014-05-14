@@ -62,6 +62,10 @@ create table Good_Comment
    primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+
+
 /*==============================================================*/
 /* Table: Member                                                */
 /*==============================================================*/
