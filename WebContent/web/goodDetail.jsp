@@ -35,83 +35,32 @@
         <h5>Add time:</h5>
         <p>${good.createTime }</p>
         <div id="output" class="alert">contact</div>
-	     <c:if test="${goodComments!=null}">
-	       <c:forEach items="${goodComments }" var="goodComment">
+        <c:if test="${evalutes!=null}">
+	       <c:forEach items="${evalutes }" var="evalute">
 	       <div class="media">
 	        <div class="media-body">
 	          <h4 class="media-heading">
                 <a 
-					href="<c:url value="/viewMemberInfo"/>?memberId=${goodComment.memberId}">
-						${goodComment.memberName}
+					href="<c:url value="/viewMemberInfo"/>?memberId=${evalute.memberId}">
+						${evalute.memberName}
 				</a>
 	          </h4>
 	           Phone:
-	           ${goodComment.phone }
+	           ${evalute.remark }
 	           <br/>
 	           Message:
-	            ${goodComment.content}
+	            ${evalute.content}
 	            ---
-	            <fmt:formatDate value="${goodComment.createTime}" pattern="yyyy-MM-dd HH:mm"/>
+	            <fmt:formatDate value="${evalute.createTime}" pattern="yyyy-MM-dd HH:mm"/>
 	           <br/>
-	           
-	           <c:if test="${isManager==1}">
-                Reply:
-                   ${goodComment.replyContent}
-                   
-                   ---by ${goodComment.memberName}
-                   <fmt:formatDate value="${goodComment.createTime}" pattern="yyyy-MM-dd HH:mm"/>
-                <br/>
-                <c:if test="${goodComment.goodCommentSubs!=null }">
-                    <c:forEach items="${goodComment.goodCommentSubs}" var="goodCommentSub">
-                 <a 
-					href="<c:url value="/viewMemberInfo"/>?memberId=${goodCommentSub.memberId}">
-						${goodCommentSub.memberName}
-				</a>
-                       :${goodCommentSub.content}
-                       ---
-                       <fmt:formatDate value="${goodCommentSub.createTime}" pattern="yyyy-MM-dd HH:mm"/>
-                        <br/>
-                    </c:forEach>
-                </c:if>
-	          <br/>      
-	        <a href="#replyModal${goodComment.id}" data-toggle="modal" class="btn btn-primary">Reply</a>
-	              <!-- Modal -->
-<div class="modal fade" id="replyModal${goodComment.id}" tabindex="-1" role="dialog" aria-labelledby="replyModal${goodComment.id}" aria-hidden="true">
- 		<div class="modal-dialog panel-primary">
-          <div class="modal-content">
-            <div class="modal-header panel-heading">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">reply：</h4>
-            </div>
-            <form class="form-horizontal" action="<c:url value="/web/replyContent"/>">
-				<div class="modal-body">
-					<input type="hidden" value="${goodComment.id}" name="commentId">
-					<div class="form-group">
-						<label class="col-lg-2 control-label">replyContent：</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" name="replyContent"
-								placeholder="replyContent"  required="required"/>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
-	              <button type="submit" class="btn btn-primary" >submit</button>
-            	</div>
-          </form>   
-            
-            
-          </div><!-- /.modal-content //-->
-        </div><!-- /.modal-dialog //-->
-</div><!-- /.modal -->
-
-
-	           </c:if>
-	          
-	        </div>
-	      </div>
-	    </c:forEach>
-      </c:if>  
+	           <a href="<c:url value="/web/goodCommentDetail"/>?goodId=${good.goodId}&evaluateId=${evalute.id}"
+					target="_blank">Reply sum </a>(${evalute.replyCount})
+	           </div>
+	           </div>
+	           </c:forEach>
+	     </c:if>
+        
+	       
       </div>
       <div class="col-md-8">
         <ul class="portfolio_showcase">
@@ -124,17 +73,19 @@
         
         <div class="row contact">
       <div class="wpcf7 mt20">
-        <form action="<c:url value="/member/addGoodMessage"/>" method="post" class="wpcf7-form">
+        <form action="<c:url value="/member/subEvalute"/>" method="post" class="wpcf7-form">
           <div id="output" class="alert"> leave u contact</div>
            <div class="form-meta clearfix">
             <div class="formcol">
               <label for="fname">contact phone</label>
-              <input type="text" name="phone" value="" size="40"  required="required"/>
+              <input type="text" name="remark" value="" size="40"  required="required"/>
             </div>
             </div>
-          <input type="hidden" name="goodId" value="${good.goodId}" />
+          <input type="hidden" name="evaluateProductId" value="${good.goodId}" />
+          <input type="hidden" name="evaluateProductType" value="2" />
+          <input type="hidden" name="evaluateProductMemberId" value="${good.memberId}" />
           <label for="message"> Message：</label>
-          <textarea name="message" id="message" cols="40" rows="10" required="required"></textarea>
+          <textarea name="content" id="message" cols="40" rows="10" required="required"></textarea>
           <input type="submit" id="send-message" value="Send" class="btn btn-success mt20 mb20" />
         </form>
       </div>

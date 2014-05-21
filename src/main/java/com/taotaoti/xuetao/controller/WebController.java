@@ -32,12 +32,13 @@ import com.taotaoti.good.dao.GoodDao;
 import com.taotaoti.good.dao.GoodPicDao;
 import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.member.bo.Member;
-import com.taotaoti.member.bo.Message;
-import com.taotaoti.member.constant.MessageConstant;
 import com.taotaoti.member.dao.MemberDao;
-import com.taotaoti.member.dao.MessageDao;
 import com.taotaoti.member.service.MemberMgr;
 import com.taotaoti.member.vo.AcountInfo;
+import com.taotaoti.message.bo.Evaluate;
+import com.taotaoti.message.bo.EvaluateComment;
+import com.taotaoti.message.constant.EvaluateConstant;
+import com.taotaoti.message.service.EvaluateMgr;
 import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.dao.PartyDao;
 
@@ -68,15 +69,13 @@ public class WebController extends BaseController {
 	@Resource
 	private MemberDao memberDao;
 	@Resource
-	private MessageDao messageDao;
+	private EvaluateMgr evaluateMgr;
 	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request,
 			HttpServletResponse response,
 			ModelMap model){
         List<MatchMap> listMaps=new ArrayList<MatchMap>();
-//	 	MatchMap partys=new MatchMap("partys", partyDao.findIndexPary(0,4));
-//		listMaps.add(partys);
 		return this.buildSuccess(model, "/index", listMaps);
 	}
 	@RequestMapping(value = "/web/partys")
@@ -129,7 +128,6 @@ public class WebController extends BaseController {
 			MatchMap goods=new MatchMap("goods", goodlist);
 			listMaps.add(goods);
 			listMaps.add(new MatchMap("categoryId",categoryId));
-			
 		}
 	 	
 	 	if(goodlist.size()<12)
@@ -160,15 +158,18 @@ public class WebController extends BaseController {
 		if(visitor!=null){
 			if(good.getMemberId()==visitor.getUserid()){
 		      listMaps.add(new MatchMap("goodComments", goodMgr.findGoodComments(goodId)));
+		      listMaps.add(new MatchMap("evalutes", evaluateMgr.findEvaluate(EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD, goodId)));
 		      listMaps.add(new MatchMap("isManager", 1));
 			}else{
 				 listMaps.add(new MatchMap("isManager", 0));
+				 listMaps.add(new MatchMap("evalutes", evaluateMgr.findEvaluate(EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD, goodId,visitor.getUserid())));
 		         listMaps.add(new MatchMap("goodComments", goodMgr.findGoodCommentsByMemberId(goodId, visitor.getUserid())));
 			}
 		}else
 			 listMaps.add(new MatchMap("isManager", 0));
 		return this.buildSuccess(model, "/web/goodDetail", listMaps);
 	}
+	
 	@RequestMapping(value = "/web/replyContent")
 	public ModelAndView replyContent(HttpServletRequest request,
 			HttpServletResponse response,
@@ -188,22 +189,22 @@ public class WebController extends BaseController {
 			goodCommentSub.setMemberName(visitor.getUsername());
 			goodCommentSub.setStatu(0);
 			goodCommentSubDao.create(goodCommentSub);
-			
-			if(good.getMemberId()!=visitor.getUserid()){
-				Message message=new Message();
-				message.setMessageContent(replyContent);
-				message.setMessageCreateTime(new Timestamp(System.currentTimeMillis()));
-				message.setMessageMemberId(visitor.getUserid());
-				message.setMessageMemberName(visitor.getUsername());
-				message.setMessageProductId(good.getGoodId());
-				message.setMessageType(MessageConstant.MESSAGE_PRODUCT_TYPE_GOOD);
-				message.setMessageStatu(MessageConstant.MESSAGE_STATU_OK);
-				messageDao.create(message);
-				
-				int messageSum=messageDao.countsByMessageMemberId(visitor.getUserid());
-		        visitor.setMessageSum(messageSum);
-				session.setAttributeAsVisitor(request, visitor);
-			}
+//			
+//			if(good.getMemberId()!=visitor.getUserid()){
+//				Message message=new Message();
+//				message.setMessageContent(replyContent);
+//				message.setMessageCreateTime(new Timestamp(System.currentTimeMillis()));
+//				message.setMessageMemberId(visitor.getUserid());
+//				message.setMessageMemberName(visitor.getUsername());
+//				message.setMessageProductId(good.getGoodId());
+//				message.setMessageType(MessageConstant.MESSAGE_PRODUCT_TYPE_GOOD);
+//				message.setMessageStatu(MessageConstant.MESSAGE_STATU_OK);
+//				messageDao.create(message);
+//				
+//				int messageSum=messageDao.countsByMessageMemberId(visitor.getUserid());
+//		        visitor.setMessageSum(messageSum);
+//				session.setAttributeAsVisitor(request, visitor);
+//			}
 		}
 		return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", goodComment.getGoodId());
 	}
@@ -281,14 +282,14 @@ public class WebController extends BaseController {
 			}
 		}
 		listMaps.add(new MatchMap("acountInfos", listAcountInfos));
+		listMaps.add(new MatchMap("evalutes", evaluateMgr.findEvaluate(EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY, partyId)));
 		return this.buildSuccess(model, "/web/partyDetail", listMaps);
 	}
-	@RequestMapping(value = "/web/leaveMessage")
-	public String levelMessage(HttpServletRequest request,
+	@RequestMapping(value = "/web/partyCommentDetail")
+	public String partyCommentDetail(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="partyId") Integer partyId,
-			@RequestParam(value="curPage",required=false) Integer curPage,
-			@RequestParam(value="pageSize",required=false) Integer pageSize,
+			@RequestParam(value="evaluateId") Integer evaluateId,
 			ModelMap model){
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
 		Party party=partyDao.get(partyId);
@@ -296,6 +297,40 @@ public class WebController extends BaseController {
 		MatchMap memberMatch=new MatchMap("member", memberMgr.getAcountInfoByMemberId(party.getMemberId()));
 		listMaps.add(partyMatch);
 		listMaps.add(memberMatch);
+		listMaps.add(new MatchMap("evalute", evaluateMgr.findEvaluate(evaluateId)));
+		return this.buildSuccess(model, "/web/partyCommentDetail", listMaps);
+	}
+	@RequestMapping(value = "/web/goodCommentDetail")
+	public String goodCommentDetail(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="goodId") Integer goodId,
+			@RequestParam(value="evaluateId") Integer evaluateId,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		Good good=goodDao.get(goodId);
+		MatchMap goodMap=new MatchMap("good", good);
+		listMaps.add(goodMap);
+		Member member=memberDao.get(good.getMemberId());
+		MatchMap memberMatch=new MatchMap("member", member);
+		listMaps.add(memberMatch);
+		MatchMap goodPices=new MatchMap("goodPics", goodPicDao.findAllByGoodId(goodId));
+		listMaps.add(goodPices);
+		listMaps.add(new MatchMap("evalute", evaluateMgr.findEvaluate(evaluateId)));
+		return this.buildSuccess(model, "/web/goodCommentDetail", listMaps);
+		
+	}
+	@RequestMapping(value = "/web/partyEvaluate")
+	public String partyEvaluates(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="partyId") Integer partyId,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		Party party=partyDao.get(partyId);
+		MatchMap partyMatch=new MatchMap("party", party);
+		MatchMap memberMatch=new MatchMap("member", memberMgr.getAcountInfoByMemberId(party.getMemberId()));
+		listMaps.add(partyMatch);
+		listMaps.add(memberMatch);
+		
 		ArrayList<AcountInfo> listAcountInfos=new ArrayList<AcountInfo>();
 		if(party!=null){
 			String []ids=party.getJoinMemberIds().split(",");
@@ -309,23 +344,74 @@ public class WebController extends BaseController {
 			}
 		}
 		listMaps.add(new MatchMap("acountInfos", listAcountInfos));
-		
-		 if(curPage==null||curPage<0) {
-		 		curPage=0;
-		 		listMaps.add(new MatchMap("isPre", 0));
-		 	}
-		if(pageSize==null) pageSize=12;
-		List<Message> messageList=messageDao.findByProductTypeAndProductId(MessageConstant.MESSAGE_PRODUCT_TYPE_PARTY, partyId, curPage, pageSize);
-		MatchMap messages=new MatchMap("messages",messageList);
-		listMaps.add(messages);
-		LOG.info("Message :"+messageList.size());
-		if(messageList.size()<12)
-    		listMaps.add(new MatchMap("isNext", 0));
-    	else
-    		listMaps.add(new MatchMap("isNext", 1));
-		
+		List<Evaluate> evaluateList=evaluateMgr.findEvaluate(EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY, partyId);
+		MatchMap evaluates=new MatchMap("evaluates",evaluateList);
+		listMaps.add(evaluates);
 		return this.buildSuccess(model, "/web/leaveMessage", listMaps);
 	}
+	@RequestMapping(value = "/web/partyEvaluateComment")
+	public String partyEvaluateComment(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="partyId") Integer partyId,
+			@RequestParam(value="evaluateId") Integer evaluateId,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		Party party=partyDao.get(partyId);
+		MatchMap partyMatch=new MatchMap("party", party);
+		MatchMap memberMatch=new MatchMap("member", memberMgr.getAcountInfoByMemberId(party.getMemberId()));
+		listMaps.add(partyMatch);
+		listMaps.add(memberMatch);
+		Evaluate evaluate=evaluateMgr.findEvaluate(evaluateId);
+		MatchMap e=new MatchMap("evaluate",evaluate);
+		List<EvaluateComment> evaluateCommentList=evaluateMgr.findEvaluateComment(evaluateId);
+		MatchMap evaluateComments=new MatchMap("evaluateComments",evaluateCommentList);
+		listMaps.add(e);
+		listMaps.add(evaluateComments);
+		return this.buildSuccess(model, "/web/leaveMessage", listMaps);
+	}
+//	@RequestMapping(value = "/web/leaveMessage")
+//	public String levelMessage(HttpServletRequest request,
+//			HttpServletResponse response,
+//			@RequestParam(value="partyId") Integer partyId,
+//			@RequestParam(value="curPage",required=false) Integer curPage,
+//			@RequestParam(value="pageSize",required=false) Integer pageSize,
+//			ModelMap model){
+//		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+//		Party party=partyDao.get(partyId);
+//		MatchMap partyMatch=new MatchMap("party", party);
+//		MatchMap memberMatch=new MatchMap("member", memberMgr.getAcountInfoByMemberId(party.getMemberId()));
+//		listMaps.add(partyMatch);
+//		listMaps.add(memberMatch);
+//		ArrayList<AcountInfo> listAcountInfos=new ArrayList<AcountInfo>();
+//		if(party!=null){
+//			String []ids=party.getJoinMemberIds().split(",");
+//			if(ids.length>0){
+//				for(int i=0;i<ids.length;i++){
+//				    if(ids[i]!=""&&!StringUtils.isEmpty(ids[i])){
+//						int memberId=Integer.valueOf(ids[i]);
+//						listAcountInfos.add(memberMgr.getAcountInfoByMemberId(memberId));
+//				    }
+//				}
+//			}
+//		}
+//		listMaps.add(new MatchMap("acountInfos", listAcountInfos));
+//		
+//		 if(curPage==null||curPage<0) {
+//		 		curPage=0;
+//		 		listMaps.add(new MatchMap("isPre", 0));
+//		 	}
+//		if(pageSize==null) pageSize=12;
+//		List<Message> messageList=messageDao.findByProductTypeAndProductId(MessageConstant.MESSAGE_PRODUCT_TYPE_PARTY, partyId, curPage, pageSize);
+//		MatchMap messages=new MatchMap("messages",messageList);
+//		listMaps.add(messages);
+//		LOG.info("Message :"+messageList.size());
+//		if(messageList.size()<12)
+//    		listMaps.add(new MatchMap("isNext", 0));
+//    	else
+//    		listMaps.add(new MatchMap("isNext", 1));
+//		
+//		return this.buildSuccess(model, "/web/leaveMessage", listMaps);
+//	}
 	
 	@RequestMapping(value = "/viewMemberInfo")
 	public String viewMemberInfo(HttpServletRequest request,
@@ -355,4 +441,5 @@ public class WebController extends BaseController {
 	public void setRedisCacheMgr(RedisCacheManager redisCacheMgr) {
 		this.redisCacheMgr = redisCacheMgr;
 	}
+	
 }

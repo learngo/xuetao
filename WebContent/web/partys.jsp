@@ -24,7 +24,8 @@
 			<ul class="unstyled product-sources">
 			   <c:if test="${partys!= null}">
 					<c:forEach var="party" varStatus="status" items="${partys}">
-						<li class="product-source"><a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
+						<li class="product-source">
+						<a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
 								<span class="img thumbnail"> 
 							    <img src="<c:url value="${party.icon}"/>" alt="${party.title}" width="160" height="98"/>
 							</span> 

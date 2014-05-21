@@ -30,26 +30,30 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
+import com.taotaoti.common.generic.dao.operator.Match;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.utils.DateUtils;
 import com.taotaoti.common.utils.FileUtils;
 import com.taotaoti.common.utils.MD5;
+import com.taotaoti.common.utils.ObjToStringUtil;
 import com.taotaoti.common.utils.StringUtils;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
 import com.taotaoti.good.bo.Good;
-import com.taotaoti.good.bo.GoodComment;
-import com.taotaoti.good.bo.GoodCommentSub;
 import com.taotaoti.good.constant.GoodConstant;
 import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.member.bo.Member;
 import com.taotaoti.member.bo.Message;
 import com.taotaoti.member.constant.MessageConstant;
 import com.taotaoti.member.dao.MemberDao;
-import com.taotaoti.member.dao.MessageDao;
 import com.taotaoti.member.service.MemberMgr;
 import com.taotaoti.member.vo.AcountInfo;
+import com.taotaoti.message.bo.Evaluate;
+import com.taotaoti.message.bo.EvaluateComment;
+import com.taotaoti.message.bo.Notification;
+import com.taotaoti.message.constant.EvaluateConstant;
+import com.taotaoti.message.service.EvaluateMgr;
 import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.constant.PartyConstant;
 import com.taotaoti.party.dao.PartyDao;
@@ -78,9 +82,9 @@ public class MemberController extends BaseController {
 	@Resource
 	private SchoolDao schoolDao;
 	@Resource
-	private MessageDao messageDao;
-	@Resource
 	private RedisCacheManager redisCacheMgr;
+	@Resource
+	private EvaluateMgr evaluateMgr;
 	
 	@RequestMapping(value = "/settings/settings")
 	public String settings(HttpServletRequest request,
@@ -304,7 +308,7 @@ public class MemberController extends BaseController {
 		m.setMessageProductId(goodId);
 		m.setMessageType(MessageConstant.MESSAGE_PRODUCT_TYPE_GOOD);
 		m.setMessageStatu(MessageConstant.MESSAGE_STATU_OK);
-		messageDao.create(m);
+		//messageDao.create(m);
 		
 		return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", goodId);
 	}
@@ -428,9 +432,32 @@ public class MemberController extends BaseController {
 		if(curPage==null||curPage<0) curPage=0;
 		if(pageSize==null) pageSize=12;
 		Visitor v=this.session.getSessionVisitor(request);
-		MatchMap messages=new MatchMap("messages", messageDao.findByMemberId(v.getUserid()));
-		listMaps.add(messages);
+//		MatchMap messages=new MatchMap("messages", messageDao.findByMemberId(v.getUserid()));
+//		listMaps.add(messages);
 		return this.buildSuccess(model, "/member/settings/browseMessage", listMaps);
+	}
+	@RequestMapping(value = "/settings/browseEvaluate")
+	public String browseEvaluate(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model){
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		Visitor v=this.session.getSessionVisitor(request);
+		Notification notification=evaluateMgr.findNotificationByMemberId(v.getUserid());
+		LOG.info("EvaluateIds =="+ ObjToStringUtil.objToString(notification));
+		evaluateMgr.clearNoti(v.getUserid());
+		if(notification!=null&&notification.getEvaluateIds().length()>0&&notification.getEvaluateIds()!=""){
+			LOG.info("EvaluateIds =="+ notification.getEvaluateIds());
+			List<String> ids=StringUtils.splitToList(notification.getEvaluateIds(), "\\|");
+			List<Integer> evaluateIds=new ArrayList<Integer>();
+			for(int i=0;i<ids.size();i++){
+				evaluateIds.add(Integer.valueOf(ids.get(i)));
+			}
+			MatchMap evaluates=new MatchMap("evaluates", evaluateMgr.findEvaluateByids(evaluateIds));
+			listMaps.add(evaluates);
+		}
+	     v.setMessageSum(0);
+	     session.setAttributeAsVisitor(request, v);
+		return this.buildSuccess(model, "/member/settings/browseEvaluate", listMaps);
 	}
 	
 	
@@ -452,16 +479,85 @@ public class MemberController extends BaseController {
 				message.setMessageProductId(party.getId());
 				message.setMessageType(MessageConstant.MESSAGE_PRODUCT_TYPE_PARTY);
 				message.setMessageStatu(MessageConstant.MESSAGE_STATU_OK);
-				messageDao.create(message);
-				int messageSum=messageDao.countsByMessageMemberId(visitor.getUserid());
-		        visitor.setMessageSum(messageSum);
+				//messageDao.create(message);
+				//int messageSum=messageDao.countsByMessageMemberId(visitor.getUserid());
+		       // visitor.setMessageSum(messageSum);
 				session.setAttributeAsVisitor(request, visitor);
 		}
 		return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", partyId);
 	}
-	
-	
-	
+
+	@RequestMapping(value = "/subEvalute")
+	public ModelAndView subEvalute(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="evaluateProductType") Integer evaluateProductType,
+			@RequestParam(value="evaluateProductId") Integer evaluateProductId,
+			@RequestParam(value="evaluateProductMemberId") Integer evaluateProductMemberId,
+			@RequestParam(value="content") String content,
+			@RequestParam(value="remark",required=false) String remark,
+			ModelMap model){
+		Visitor visitor=this.session.getSessionVisitor(request);
+		if(visitor!=null){
+			    LOG.info(visitor.getUserid()+ " modify reply content =="+content);
+				Evaluate e= evaluateMgr.addEvaluate(visitor.getUserid(), evaluateProductType, evaluateProductId,evaluateProductMemberId, content, remark);
+				if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY&&e!=null){
+			    	Party party=partyDao.get(evaluateProductId);
+			    	evaluateMgr.additionNotification(party.getMemberId(),e.getId());
+			    	Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
+			    	visitor.setMessageSum(notification.getCount());
+					session.setAttributeAsVisitor(request, visitor);
+					return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", evaluateProductId);
+					
+			    }
+				if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD&&e!=null){
+					Good good=goodMgr.getGoodByGoodId(evaluateProductId);
+			    	evaluateMgr.additionNotification(good.getMemberId(),e.getId());
+			    	Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
+			    	visitor.setMessageSum(notification.getCount());
+					session.setAttributeAsVisitor(request, visitor);
+					return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", evaluateProductId);
+			    }
+		}
+		return null;
+	}
+	@RequestMapping(value = "/subEvaluteComment")
+	public ModelAndView subEvaluteComment(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="evaluateId") Integer evaluateId,
+			@RequestParam(value="memberId",required=false) Integer memberId,
+			@RequestParam(value="evaluateProductType") Integer evaluateProductType,
+			@RequestParam(value="evaluateProductId") Integer evaluateProductId,
+			@RequestParam(value="content") String content,
+			ModelMap model){
+		Visitor visitor=this.session.getSessionVisitor(request);
+		if(visitor!=null){
+		    LOG.info(visitor.getUserid()+ " modify reply content =="+content);
+		    EvaluateComment e= evaluateMgr.addEvaluateComment(visitor.getUserid(), evaluateId, content);
+			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY&&e!=null){
+				if(memberId!=null){
+					evaluateMgr.additionNotification(memberId,e.getId());
+					Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
+			    	visitor.setMessageSum(notification.getCount());
+					session.setAttributeAsVisitor(request, visitor);
+				}
+				List<MatchMap> matchs=new ArrayList<MatchMap>();
+				matchs.add(new MatchMap("partyId", evaluateProductId));
+				matchs.add(new MatchMap("evaluateId", evaluateId));
+				return this.buildSuccessByRedirectAndParam("/web/partyCommentDetail", model, matchs);
+		    }
+			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD&&e!=null){
+				if(memberId!=null){
+					evaluateMgr.additionNotification(memberId,e.getId());
+					Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
+			    	visitor.setMessageSum(notification.getCount());
+					session.setAttributeAsVisitor(request, visitor);
+				}
+				return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", evaluateProductId);
+			}
+	}
+		
+		return null;
+	}
 	@RequestMapping(value = "/settings/deleteParty")
 	public ModelAndView deleteParty(HttpServletRequest request,
 			HttpServletResponse response,

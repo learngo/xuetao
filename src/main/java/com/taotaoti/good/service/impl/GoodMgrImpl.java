@@ -175,6 +175,11 @@ public class GoodMgrImpl implements GoodMgr {
 		  return false; 
 		}
 	}
+
+	@Override
+	public Good getGoodByGoodId(int goodId) {
+		return this.goodDao.get(goodId);
+	}
 	
 
 }

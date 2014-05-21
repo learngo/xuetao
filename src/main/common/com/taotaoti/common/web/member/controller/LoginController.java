@@ -30,9 +30,10 @@ import com.taotaoti.common.utils.MD5;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
-import com.taotaoti.member.dao.MessageDao;
 import com.taotaoti.member.facade.MemberFacade;
 import com.taotaoti.member.vo.AcountInfo;
+import com.taotaoti.message.bo.Notification;
+import com.taotaoti.message.service.EvaluateMgr;
 import com.taotaoti.school.bo.School;
 import com.taotaoti.school.dao.SchoolDao;
 
@@ -50,7 +51,8 @@ public class LoginController extends BaseController {
 	@Resource
 	private SchoolDao schoolDao;
 	@Resource
-	private MessageDao messageDao;
+	private EvaluateMgr evaluateMgr;
+	
 	
 	@RequestMapping(value = "/register")
 	public ModelAndView register(HttpServletRequest request,
@@ -200,18 +202,14 @@ public class LoginController extends BaseController {
         visitor.setMajor(member.getMajor());
         visitor.setJoinSum(member.getPartyJoinSum());
         visitor.setPoint(member.getPoints());
-        visitor.setTeacher(false);
-        
-        int messageSum=messageDao.countsByMessageMemberId(member.getId());
-        visitor.setMessageSum(messageSum);
+        Notification e= evaluateMgr.findNotificationByMemberId(member.getId());
+        visitor.setMessageSum(e.getCount());
         School school=schoolDao.get(member.getSchoolId());
         if(school!=null){
         	visitor.setSchoolName(school.getName());
         }
         
 		session.setAttributeAsVisitor(request, visitor);
-		
-		//redisCacheMgr.put(taotaotiId + UserWebConstant.USER_KEY, LoginConstant.SESSION_EXPIRE_TIME, visitor);
 		
 	}
 	

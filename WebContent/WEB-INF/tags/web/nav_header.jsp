@@ -25,7 +25,7 @@
                       <li>  <a href="<c:url value="/member/settings/settings"/>">Setting</a></li>
 					   <li><a href="<c:url value="/logout"/>" title="logout ">
 									logout</a></li>
-					   <li><a href="<c:url value="/member/settings/browseMessage"/>">
+					   <li><a href="<c:url value="/member/settings/browseEvaluate"/>">
 					   <span class="glyphicon glyphicon-bullhorn"></span>
 					    <span class="badge">${sessionScope.UserConstant_VISITOR.messageSum}</span></a></li>
 					</c:if>

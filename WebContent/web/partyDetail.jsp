@@ -4,8 +4,9 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/web/css/common-content.css"/>" />
 <link rel="stylesheet"
-	href="<c:url value="/resources/web/css/buy-card.css"/>" />
-
+	href="<c:url value="/resources/web/css/partyDetail.css"/>" />
+<link rel="stylesheet"
+	href="<c:url value="/resources/web/css/comment.css"/>" />
 <div class="breadcrumbrow">
 	<div class="container">
 		<ul class="breadcrumb">
@@ -43,9 +44,8 @@
 		<div class="leading mb20">
 			<h2>
 				Member of Join
-				<a href="<c:url value="/web/leaveMessage" />?partyId=${party.id}"><button class="btn btn-success fr ml20">message</button></a>
+				<a href="#commentParty" data-toggle="modal" class="btn btn-primary fr">[ message]</a>
 				<a href="<c:url value="/member/joinParty" />?partyId=${party.id}"> <button class="btn btn-success fr mb20">Join</button></a>
-				
 			</h2>
 		</div>
 		<div class="row">
@@ -83,8 +83,79 @@
 				</table>
 		</div>
 
+     <div class="row goods-detail-desc">
+			<div class="xm-box goods-detail-comment " id="goodsComment">
+				<div class="box-hd">
+					<div class="title">用户评价</div>
+				</div>
+				<div class="box-bd" id="J_goods_detail_comment">
+					<div class="com-body">
+						<ul class="content">
+						 <c:if test="${evalutes!=null}">
+	       <c:forEach items="${evalutes }" var="evalute">
+	     
+	           <li>
+								<div class="article">
+									<h2 class="art_title clearfix"> 
+									<div class="leftPart">  ${evalute.remark }  </div> 
+									<div class="rightPart">   <fmt:formatDate value="${evalute.createTime}" pattern="yyyy-MM-dd HH:mm"/>   </div> 
+									</h2>
+									<div class="art_content">${evalute.content}</div>
+									<div class="art_info clearfix">
+										<div class="rightPart">
+											<a href="<c:url value="/web/partyCommentDetail"/>?partyId=${party.id}&evaluateId=${evalute.id}"
+												target="_blank">阅读全文</a> <span class="separator">|</span> <a
+												href="<c:url value="/web/partyCommentDetail"/>?partyId=${party.id}&evaluateId=${evalute.id}#reply"
+												target="_blank">回复</a>(${evalute.replyCount})
+										</div>
+									</div>
+								</div>
+								<div class="head_photo">
+									 <a target="_blank"
+										href="<c:url value="/viewMemberInfo"/>?memberId=${evalute.memberId}"><h3 class="name">${evalute.memberName}</h3></a>
+								</div>
+							</li>
+	           
+	           </c:forEach>
+	     </c:if>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
 
-	</div>
-
+		</div>
 
 </div>
+</div>
+
+
+	              <!-- Modal -->
+<div class="modal fade" id="commentParty">
+ 		<div class="modal-dialog panel-primary">
+          <div class="modal-content">
+            <div class="modal-header panel-heading">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">reply：</h4>
+            </div>
+            <form class="form-horizontal" action="<c:url value="/member/subEvalute"/>">
+				<div class="modal-body">
+					<input  type="hidden" name="evaluateProductType" value="1"/>
+                    <input  type="hidden" name="evaluateProductId" value="${party.id}"/>
+                    <input  type="hidden" name="evaluateProductMemberId" value="${party.memberId}"/>
+					<div class="form-group">
+						<label class="col-lg-2 control-label">replyContent：</label>
+						<div class="col-lg-10">
+						 <textarea class="form-control" name="content" id="message" cols="50" rows="5" required="required" placeholder="reply:  ${member.name}"></textarea>
+         
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
+	              <button type="submit" class="btn btn-primary" >submit</button>
+            	</div>
+          </form>   
+          </div><!-- /.modal-content //-->
+        </div><!-- /.modal-dialog //-->
+</div><!-- /.modal -->

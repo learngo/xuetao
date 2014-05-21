@@ -4,6 +4,7 @@ create table notification
    id                   int not null auto_increment,
    member_id            int not null,
    count          		int not null default 0,
+   evaluate_ids			text,
    primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
