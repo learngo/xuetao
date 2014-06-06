@@ -6,9 +6,29 @@
 <div class="container">
   <div class="row contact mt20">
 	  <div class="col-lg-6">
-        <a href="#" class="thumbnail">
-         <img alt="" src="<c:url value="/resources/img/login.jpg"/>">
-      </a>
+       <form class="login-form" action="index.htm">
+			<h3 class="form-title">Login to your account</h3>
+			<div class="form-group">
+				<div class="input-icon">
+					<i class="fa fa-user"></i>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="Username" name="username"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-icon">
+					<i class="fa fa-lock"></i>
+					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
+				</div>
+			</div>
+			<div class="form-actions">
+				<label class="checkbox">
+				<input type="checkbox" name="remember" value="1"/> Remember me
+				</label>
+				<button type="submit" class="btn button_color pull-right">
+				Login <i class="m-icon-swapright m-icon-white"></i>
+				</button>            
+			</div>
+		</form>
     </div>
     <div class="col-lg-6 fr">
          <form class="form-horizontal" action="<c:url value="/register"/>" method="post" enctype="multipart/form-data">

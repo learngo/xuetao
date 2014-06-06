@@ -38,6 +38,7 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 		// TODO Auto-generated method stub
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(PartyColumns.state, true));
 		orders.add(order(PartyColumns.partyId, false));
 		matchs.add(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
 		return this.page(matchs,orders, curPage,
@@ -54,6 +55,7 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 			int pageSize) {
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(PartyColumns.state, true));
 		orders.add(order(PartyColumns.partyId, false));
 		matchs.add(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
 		matchs.add(match(PartyColumns.memberId, memberId));
@@ -71,6 +73,7 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 	public List<Party> findParyByLike(String content, int curPage, int pageSize) {
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(PartyColumns.state, true));
 		orders.add(order(PartyColumns.partyId, false));
 		matchs.add(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
 		matchs.add(match(PartyColumns.title,like(content)));

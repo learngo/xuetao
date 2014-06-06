@@ -1,6 +1,6 @@
 <!-- THIS FILE IS ONLY REQUIRED IF YOU WANT TO DEPLOY TO GOOGLE APP ENGINE. THIS IS NOT NEEDED FOR SITEMESH -->
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-    <application>yangguang</application>
+    <application>xuetao</application>
     <version>1</version>
     <system-properties>
         <property name="file.encoding" value="UTF-8"/>

@@ -39,6 +39,7 @@ public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
 		// TODO Auto-generated method stub
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(GoodColumns.statu, true));
 		orders.add(order(GoodColumns.goodId, false));
 		matchs.add(match(GoodColumns.statu, not(GoodConstant.GOOD_STATU_DELETE)));
 		return this.page(matchs,orders, curPage,
@@ -48,6 +49,7 @@ public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
 	public List<Good> findGoodByMemberId(int memberId,int curPage, int pageSize) {
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(GoodColumns.statu, true));
 		orders.add(order(GoodColumns.goodId, false));
 		matchs.add(match(GoodColumns.statu, not(GoodConstant.GOOD_STATU_DELETE)));
 		matchs.add(match(GoodColumns.memberId, memberId));
@@ -59,6 +61,7 @@ public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
 		// TODO Auto-generated method stub
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(GoodColumns.statu, true));
 		orders.add(order(GoodColumns.goodId, false));
 		matchs.add(match(GoodColumns.statu, not(GoodConstant.GOOD_STATU_DELETE)));
 		matchs.add(match(GoodColumns.categoryId, categoryId));
@@ -76,6 +79,7 @@ public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
 	public List<Good> findGoodLike(String content, int curPage, int pageSize) {
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
+		orders.add(order(GoodColumns.statu, true));
 		orders.add(order(GoodColumns.goodId, false));
 		matchs.add(match(GoodColumns.statu, not(GoodConstant.GOOD_STATU_DELETE)));
 		matchs.add(match(GoodColumns.title, like(content)));

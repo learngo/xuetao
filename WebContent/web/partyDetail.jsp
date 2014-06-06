@@ -26,7 +26,11 @@
 		  ${party.title }
 		</p>
 		<p class="text-primary"><span class="color_f63 fb">活动发起人：</span>
-		   ${member.name} 
+		   
+		   <a 
+									href="<c:url value="/viewMemberInfo"/>?memberId=${member.id}">
+										${member.name} 
+								</a>
 		  </p>
 		<p class="text-primary"><span class="color_f63 fb">活动时间：</span>
 		   <fmt:formatDate value="${party.startTime }" pattern="yyyy-MM-dd"/>~
@@ -37,6 +41,10 @@
 		  </p>
 		<div class="media-body">
 		   <span class="color_f63 fb">活动简介：</span>
+		   ${party.description }
+		</div>
+		<div class="media-body">
+		   <span class="color_f63 fb">活动总结：</span>
 		   ${party.description }
 		</div>
 	</div>

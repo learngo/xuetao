@@ -207,6 +207,8 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 		evaluateComment.setEvaluateId(evaluateId);
 		evaluateComment.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		Evaluate evaluate=evaluateDao.get(evaluateId);
+		if(evaluate.getReplyCount()==null)
+			evaluate.setReplyCount(0);
 		evaluateDao.modifyReplyCount(evaluate.getReplyCount()+1, evaluateId);
 		return evaluateCommentDao.create(evaluateComment);
 	}

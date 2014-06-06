@@ -1,7 +1,3 @@
-.first-row{
-	top: 45px;
-	position: relative;
-}
 .first-row .carousel-inner>.item>img {
    /**height: 100%;**/
 }
@@ -20,39 +16,6 @@ background: #50be9e;
 border: 1px solid #50be9e;
 }
 
-.first-row  h1 {
-color: #FFF;
-margin-bottom: 25px;
-font: 2.89em "OpenSans-Bold","Lucida Sans Unicode","Lucida Grande",sans-serif;
-line-height: 1.35em;
-text-shadow: 0 0 15px rgba(0,0,0,0.6),0 -1px 1px rgba(0,0,0,0.6);
--webkit-transform-style: preserve-3d;
-}
-.first-row p.lead {
-color: #FFF;
-font: 1.7em "OpenSans";
-line-height: 1.4em;
-text-shadow: 0 0 15px rgba(0,0,0,0.6),0 0 1px rgba(0,0,0,0.8);
--webkit-transform-style: preserve-3d;
-}
-
-
-.first-row .carousel-caption{
-	padding-bottom: 150px;
-}
-.first-row .button_buy {
-background: url(../images/button_buy.png) no-repeat top;
-border: 0px;
-width: 364px;
-height: 72px;
-cursor: pointer;
-position: absolute;
-top: 76px;
-right: 130px;
-}
-.first-row .button_buy:hover {
-	background: url(../images/button_buy.png) no-repeat bottom;
-}
 
 
 .banner {

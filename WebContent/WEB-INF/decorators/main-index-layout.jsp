@@ -6,10 +6,8 @@
   <c:import url="/WEB-INF/tags/web/header_title.jsp"/> 	
   <c:import url="/WEB-INF/tags/web/jsPlugin.jsp"/>
 </head>
-
 <body>
-<c:import url="/WEB-INF/tags/web/nav_header.jsp" />
  <sitemesh:write property="body"/>
- <c:import url="/WEB-INF/tags/web/main_footer.jsp"/>
+ <c:import url="/WEB-INF/tags/web/nav_header.jsp" />
 </body>
 </html>

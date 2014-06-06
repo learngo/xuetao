@@ -12,7 +12,7 @@
 							<label class="col-md-2 control-label" for="profile_truename">Buyer Name：</label>
 							<div class="col-md-7 controls">
 								<input type="text" 
-									name="buyerName" class="form-control" required="required"/>
+									name="buyerName" class="form-control" required="required" placeholder="please write buyer name"/>
 							</div>
 						</div>
 						<div class="row">

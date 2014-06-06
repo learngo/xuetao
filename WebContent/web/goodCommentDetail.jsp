@@ -100,7 +100,7 @@
             </div>
             <form class="form-horizontal" action="<c:url value="/member/subEvaluteComment"/>">
 				<div class="modal-body">
-					<input type="hidden" value="${evaluateComment.id}" name="evaluateId">
+					<input type="hidden" value="${evaluateComment.evaluateId}" name="evaluateId">
 					<input  type="hidden" name="evaluateProductType" value="2"/>
                     <input  type="hidden" name="evaluateProductId" value="${good.goodId}"/>
                     <input  type="hidden" name="memberId" value="${evaluateComment.memberId}"/>

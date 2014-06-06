@@ -1,74 +1,90 @@
 @CHARSET "UTF-8";
-
-.fixed_header #header {
-	position: fixed;
-}
-
 #header {
 	position: relative;
-	z-index: 400;
 	width: 100%;
-	background-color: transparent;
-}
-
-.container_wrap {
-	clear: both;
-	position: relative;
-	z-index: 1;
-	border-top-style: solid;
-	border-top-width: 1px;
-}
-
-#header_main {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #eeeeee;
-}
-
-#header_main .container,.main_menu ul:first-child>li a {
-	height: 44px;
-	line-height: 44px;
+	background: url("../../../resources/images/nav_bg.jpg") repeat-x;
+	height: 60px;
 	overflow: hidden;
 }
-
-.header_color .header_bg {
-	background-color: #ffffff;
-	color: #000000;
-	list-style: none;
-}
-
-.header_bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0.95;
-	filter: alpha(opacity = 95);
-	z-index: 0;
-}
-
-/*logo*/
-div .logo {
+#header .nav{
 	float: left;
 }
-
-.logo,.logo a {
-	overflow: hidden;
-	position: relative;
+#header .nav>li {
+	padding: 0px;
+	float: left;
 	display: block;
-	height: 100%;
+	color: white;
 }
+#header .nav>li >a,#header .nav>li >a:hover {
+	float: left;
+	padding: 0px;
+	margin: 0px;
+	width: 170px;
+	height: 60px;
+	color: #c4c4c4;
+	font-size: 16px;
 
-.logo img {
-	padding: 5px 0;
-	display: block;
-	width: auto;
-	height: auto;
-	max-height: 100%;
-	height: 100% \9;
-	border: 0px;
-	hack: fixes ie8 logo;
+}
+#header .glyphicon{
+	top: 0px;
+	float: left;
+}
+#header .glyphiconText{
+	float: left;
+	padding-top: 22px;
+}
+#header .nav>li >a:hover {
+	background: url("../../../resources/images/active_bg.jpg") repeat-x;
+}
+.homeIcon{
+	background: url("../../../resources/images/logo.png") no-repeat;
+	width: 171px;
+	height: 60px;
+	overflow: hidden;
+	float: right;
+}
+.photoIcon{
+	background: url("../../../resources/images/photo_gray.png") no-repeat;
+	width: 30px;
+	height: 20px;
+	margin-top: 20px;
+    margin-left: 35px;
+}
+.nav>li>a:hover>.photoIcon{
+	background: url("../../../resources/images/photo.png") no-repeat;
+}
+.loveIcon{
+	background: url("../../../resources/images/love.png") no-repeat;
+	width: 30px;
+	height: 20px;
+	margin-top: 20px;
+    margin-left: 35px;
+}
+#header .nav>li >a:hover  span.loveIcon{
+	background: url("../../../resources/images/love_gree.png") no-repeat;
+}
+.messageIcon{
+	background: url("../../../resources/images/message.png") no-repeat;
+	width: 30px;
+	height: 20px;
+	margin-top: 20px;
+}
+.logoutIcon{
+	background: url("../../../resources/images/logout.png") no-repeat;
+	width: 30px;
+	height: 20px;
+	margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.top_about .photo{
+	float: left;
+}
+.avatar {
+width: 58px;
+height: 58px;
+border-radius: 50%;
+padding: 3px;
 }
 .top_nav{
 	margin-left:20px;
@@ -91,8 +107,6 @@ div .logo {
 	text-align: center;
 	float: right;
 }
-
-
 .top_about ul ,.top_nav ul {
 	list-style: none;
 	float: left;
@@ -100,31 +114,32 @@ div .logo {
 
 .top_about li,.top_nav li  {
 	float: left;
-	height: 44px;
 	line-height: 22px;
 	vertical-align: middle;
+	font-size: 16px;
 }
 
 .top_about li a,.top_nav li a  {
 	display: block;
-	height: 44px;
-	margin-right:10px;
-	font-size: 16px;
-	font-family: Arial, Helvetica, sans-serif, "微软雅黑";
-	color: #333333;
+	float: left;
+	height: 60px;
+	color: #c4c4c4;
 }
 
 .top_about li a:hover ,.top_nav li a:hover {
 	display: block;
 	height: 44px;
-	font-size: 16px;
-	margin-right:10px;
-	font-family: Arial, Helvetica, sans-serif, "微软雅黑";
-	color: #66b3e1;
-	text-decoration: none;
+	
+}
+.top_about li .setting{
+	min-width:50px;
+	text-align: center;
+	padding-left: 15px;
+	color: #c4c4c4;
 }
 .top_about .badge{
 	background-color: #999;
+	margin-top: 20px;
 }
 
 
@@ -132,19 +147,6 @@ div .joinus {
 	float: right;
 	height: 100%;
 }
-
-.joinus img {
-	padding: 5px 0;
-	display: block;
-	width: auto;
-	height: auto;
-	max-height: 100%;
-	height: 100% \9;
-	border: 0px;
-	hack: fixes ie8 logo;
-}
-
-
 .login-panel{
 	width: 760px;
 	display: block;

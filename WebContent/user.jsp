@@ -2,123 +2,117 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet"
 	href="<c:url value="/resources/web/css/common-content.css"/>" />
-	<link rel="stylesheet" href="<c:url value="/resources/web/css/buy.css"/>" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/web/css/user.css"/>" />
-<div class="breadcrumbrow">
-	<div class="container">
-		<ul class="breadcrumb">
-			<li><a href='<c:url value="/"></c:url>'>Home</a></li>
-			<li class="active"><a href="<c:url value="/viewMemberInfo"/>?memberId=${member.memberId}">Member Info</a></li>
-		</ul>
-	</div>
-</div>
+<div class="user_page">
 <div class="container">
-	
-<div class="es-row-wrap  container-gap userpage-header">
-  <div class="row">
-    <div class="col-md-3">
-      <img class="avatar" src="<c:url value="${acountInfos.photo }"/>">
-      <div class="userpage-header-info">
-          <h1>${acountInfos.name }</h1>
-         <div class="tags">
-			<em class="S_txt2">发布商品数：</em>
-			<a href="" title="${acountInfos.successSum}">${acountInfos.successSum}</a>
-		</div>
-		<div class="tags">
-			<em class="S_txt2">积分：</em>
-			<a href="" title="${acountInfos.points }">${acountInfos.points }</a>
-		</div>
-		<div class="tags">
-			<em class="S_txt2">学校：</em>
-			<a href="" title="${acountInfos.schoolName }">${acountInfos.schoolName }</a>
-		</div>
-		<div class="tags">
-			<em class="S_txt2">专业：</em><a href="" title="${acountInfos.major}">${acountInfos.major}</a>
-		</div>
-		<div class="tags">
-			<em class="S_txt2">失约次数：</em><a href="" title="${acountInfos.reputation}">${acountInfos.reputation}</a>
-		</div>
-		<div class="tags">
-			<em class="S_txt2">组织活动次数：</em><a href="" title="${acountInfos.partyCreateSum}">${acountInfos.partyCreateSum}</a>
-		</div>
-		<div class="tags">
-			<em class="S_txt2">参加组织活动次数：</em><a href="" title="${acountInfos.partyJoinSum}">${acountInfos.partyJoinSum}</a>
-		</div>
-      </div>
-      
+	<div class="section user_base">
+       <div class="col-md-12 ">
+         <span class="photo"><img class="avatar bg_white" src="${acountInfos.photo }"></span>
+         <span class="user_name">流量喜爱那</span>
+         <span class="bg_line"></span>
+         <span class="user_profile">
+          <li>${acountInfos.schoolName }</li>
+          <li>${acountInfos.major}</li>
+         </span>
+       </div>
     </div>
-    
-	<div class="col-md-9">
-	   <section id="about-us">
-          <div class="page-header">
-            <h1>关于${acountInfos.name }</h1>
-          </div>
-          <p class="lead about">
-             ${acountInfos.description }
-        </section>
-	   <section id="parties">
-          <div class="page-header">
-            <h1>我组织的活动</h1>
-          </div>
-          <p class="lead">
-          <ul class="unstyled product-sources">
-              <c:if test="${partys!= null}">
+	<div class="clearfix"></div>
+	<div class="section user_baseInfo">
+	   <div class="col-md-12 section_title">
+	    <span class="section_title_border_left bg_line"></span>
+	    <span class="user_baseInfo_userName">${acountInfos.name }</span>
+	  </div>
+       <div class="col-md-7 user_baseInfo_left">
+         <ul>
+          <li><span class="user_base_info_name">Email:</span>   <span class="user_base_info_value">${acountInfos.email}</span></li>
+          <li><span class="user_base_info_name">Product sum:</span>   <span class="user_base_info_value">${acountInfos.successSum}</span></li>
+          <li><span class="user_base_info_name">Point :</span>   <span class="user_base_info_value">${acountInfos.points}</span></li>
+          <li><span class="user_base_info_name">Introduce:</span>   <span class="user_base_info_value">${acountInfos.description }</span></li>
+         </ul>
+       </div>
+       <div class="col-md-5 user_baseInfo_right">
+         <ul>
+          <li><span class="user_base_info_name">组织活动次数:</span>   <span class="user_base_info_value">${acountInfos.partyCreateSum}</span></li>
+          <li><span class="user_base_info_name">参加组织活动次数：</span>   <span class="user_base_info_value">${acountInfos.partyJoinSum}</span></li>
+         </ul>
+       </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="section user_work">
+	   <div class="col-md-10 section_title">
+	    <span class="section_title_border_left bg_line"></span>
+	    <span class="user_baseInfo_userName">My organization's activities</span>
+	    <span class="user_baseInfo_userName fr"><a class="btn button_color" href="#">
+	    Organization Party 
+	    </a>
+	    </span>
+	  </div>
+       <div class="col-md-12 works">
+      
+         <ul>
+           <c:if test="${partys!= null}">
 					<c:forEach var="party" varStatus="status" items="${partys}">
-						<li class="product-source"><a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
-								<span class="img thumbnail"> 
-							    <img src="<c:url value="${party.icon}"/>" alt="${party.title}" width="160" height="98"/>
-							</span> <span class="name">${party.title}</span> <span class="info">Sum in Party（${party.joinSum}）</span>
-						</a>
-						</li>
+					
+		  <li class="work">
+            <div class="work_image">
+               <a href="<c:url value="/web/partyDetail?partyId=${party.id}"/>">
+                <img alt="${party.title}" src="<c:url value="${party.icon}"/>">
+             </a>
+            </div>
+            <div class="work_title">
+              <span class="work_disc">
+                <p class="work_disc_name">${party.title}</p>
+              </span>
+              
+              <span class="work_price">
+                <span class="work_price_icon"></span>
+                <span class="work_price_sum">（${party.joinSum}）</span>
+              </span>
+            </div>
+          </li>
+          
 					</c:forEach>
-				</c:if>
-		</ul>
-        </section>
-         <section id="goods">
-          <div class="page-header">
-            <h1>good</h1>
-          </div>
-          <p class="lead">
-              <table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>title</th>
-							<th class="tr">price</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						
-							
+		  </c:if>
+          
+         </ul>
+       </div>
+      <div class="clearfix"></div>
+      <div class="col-md-10 section_title">
+	    <span class="section_title_border_left bg_line"></span>
+	    <span class="user_baseInfo_userName"> Release goods </span>
+	    <span class="user_baseInfo_userName fr"><a class="btn button_color" href="#">
+	     Release goods 
+	    </a></span>
+	  </div>
+        <div class="col-md-12 works">
+      
+         <ul>
 			   <c:if test="${goods!= null}">
 					<c:forEach var="good" varStatus="status" items="${goods}">
-						<tr>
-							<td><span class="img"> <a
-									href="<c:url value="/web/goodDetail?goodId=${good.goodId}"/>">
-										<img width="69" height="43"
-										src="<c:url value="${good.logo}"/>"
-										alt="${good.name}">
-								</a>
-							</span></td>
-							<td>
-							 <p><h3>${good.name }</h3></p>
-							 <p>${good.title}</p>
-							</td>
-							<td class="tr"><span class="badge badge-danger">${good.price }</span>元</td>
-						</tr>
-						
-						
-						
+		<li class="work">
+            <div class="work_image">
+            <a href="<c:url value="/web/goodDetail?goodId=${good.goodId}"/>">
+                <img alt="${good.name }" src="<c:url value="${good.logo}"/>">
+             </a>
+            </div>
+            <div class="work_title">
+              <span class="work_disc">
+                <p class="work_disc_name">${good.name }</p>
+                <p >${good.title}</p>
+              </span>
+              
+              <span class="work_price">
+                <span class="work_price_icon"></span>
+                <span class="work_price_sum">（${good.price }）</span>
+              </span>
+            </div>
+          </li>
 					</c:forEach>
 				</c:if>
-					
-					</tbody>
-				</table>
-        </section>
-   </div>
+          
+         </ul>
+       </div>
+    </div>
+</div>	
 </div>
-</div>
-</div>
-

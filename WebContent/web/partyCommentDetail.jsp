@@ -95,7 +95,7 @@
             </div>
             <form class="form-horizontal" action="<c:url value="/member/subEvaluteComment"/>">
 				<div class="modal-body">
-					<input type="hidden" value="${evaluateComment.id}" name="evaluateId">
+					<input type="hidden" value="${evaluateComment.evaluateId}" name="evaluateId">
 					<input  type="hidden" name="evaluateProductType" value="1"/>
                     <input  type="hidden" name="evaluateProductId" value="${party.id}"/>
                     <input  type="hidden" name="memberId" value="${evaluateComment.memberId}"/>
@@ -103,7 +103,7 @@
 						<label class="col-lg-2 control-label">replyContent：</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control" name="content"
-								placeholder="reply: ${evaluateComment.memberName }"  required="required"/>
+								placeholder="reply: ${evaluateComment.memberName }"  required="required" value="@${evaluateComment.memberName }"/>
 						</div>
 					</div>
 				</div>

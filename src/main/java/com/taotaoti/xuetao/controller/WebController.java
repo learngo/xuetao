@@ -14,12 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
 import com.taotaoti.common.utils.StringUtils;
+import com.taotaoti.common.vo.JsonObject;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
@@ -76,7 +78,19 @@ public class WebController extends BaseController {
 			HttpServletResponse response,
 			ModelMap model){
         List<MatchMap> listMaps=new ArrayList<MatchMap>();
+        List<Party> partyList= partyDao.findAll(0, 4);
+        MatchMap partys=new MatchMap("partys", partyList);
+		listMaps.add(partys);
 		return this.buildSuccess(model, "/index", listMaps);
+	}
+	@ResponseBody
+	@RequestMapping(value="/json/ajax/demo")
+    public JsonObject demojson(){
+		List<Party> partyList= partyDao.findIndexPary(0,10);
+		List<MatchMap> listMaps=new ArrayList<MatchMap>();
+		 MatchMap partys=new MatchMap("partys", partyList);
+		listMaps.add(partys);
+		return this.buildSuccess(listMaps);
 	}
 	@RequestMapping(value = "/web/partys")
 	public String partys(HttpServletRequest request,

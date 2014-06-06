@@ -9,7 +9,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.taotaoti.common.controller.BaseController;
@@ -34,6 +36,7 @@ public class DemoController extends BaseController {
 		return this.buildSuccess(model, "other/error", "error", "sb");
 		//return "other/error";
 	}
+	
 	@RequestMapping(value = "/page")
 	public String initHome3(ModelMap model,Integer currentPage ){// 这个可以传入参数
 		System.out.println("initHome");

@@ -7,6 +7,8 @@
 <meta name="author" content="taotaoti 科技有限公司 ">
 <meta name="baidu-site-verification" content="BWkOw937jj" />
 <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
+<!-- 
 <link href="<c:url value="/resources/css/theme.css"/>" rel="stylesheet">
+ -->
 <link href="<c:url value="/resources/web/css/common.css"/>" rel="stylesheet">
 <link rel="shortcut icon" href="<c:url value="/resources/web/womiga/womiga_32.ico"/>">
