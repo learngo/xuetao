@@ -28,6 +28,10 @@ margin-left: 30px;
 margin-bottom: 20px;
 display: block;
 }
+.container .goods-detail-desc .goods-detail-comment .box-hd .title{
+margin: 0 0 0 30px;
+}
+
 
 .party_content_title .photo{
 }

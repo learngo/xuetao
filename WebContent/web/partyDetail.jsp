@@ -65,34 +65,6 @@
 		</div>
         
         </div>
-        
-	  </div>
-	   <div class="col-md-3">
-	   <span class="party_title">Member of Join</span>
-	   <ul class="party_join_member">
-	   <c:if test="${acountInfos!=null }">
-					  <c:forEach var="acountInfo" items="${acountInfos }" varStatus="statu">
-					     <li>
-							<span class="img photo"> <a 
-									href="<c:url value="/viewMemberInfo"/>?memberId=${acountInfo.id}">
-										<img width="69" height="43"
-										src="<c:url value="${acountInfo.photo }"/>"
-										alt="${acountInfo.name }" class="avatar">
-								</a>
-							</span>
-							<span class="member_info">
-							<div class="name">${acountInfo.name }</div>
-							<div class="schoolName">${acountInfo.schoolName }</div>
-							</span>
-						</li>
-					  </c:forEach>
-		</c:if>
-	   </ul>
-	   </div>
-  </div>
-
-	
-	<div class="col-md-9 content">
      <div class="row goods-detail-desc">
 			<div class="xm-box goods-detail-comment " id="goodsComment">
 				<div class="box-hd">
@@ -134,9 +106,35 @@
 				</div>
 			</div>
 
-		</div>
 
 </div>
+	  </div>
+	   <div class="col-md-3">
+	   <span class="party_title">Member of Join</span>
+	   <ul class="party_join_member">
+	   <c:if test="${acountInfos!=null }">
+					  <c:forEach var="acountInfo" items="${acountInfos }" varStatus="statu">
+					     <li>
+							<span class="img photo"> <a 
+									href="<c:url value="/viewMemberInfo"/>?memberId=${acountInfo.id}">
+										<img width="69" height="43"
+										src="<c:url value="${acountInfo.photo }"/>"
+										alt="${acountInfo.name }" class="avatar">
+								</a>
+							</span>
+							<span class="member_info">
+							<div class="name">${acountInfo.name }</div>
+							<div class="schoolName">${acountInfo.schoolName }</div>
+							</span>
+						</li>
+					  </c:forEach>
+		</c:if>
+	   </ul>
+	   </div>
+  </div>
+
+	
+	
 </div>
 
 
