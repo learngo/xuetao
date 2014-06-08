@@ -16,3 +16,60 @@
 .content{
 	border-left: 1px solid #d9e2e2;
 }
+.party_content_title{
+margin-top: 10px;
+margin-left: 30px;
+margin-bottom: 20px;
+display: block;
+}
+.party_info{
+margin-top: 10px;
+margin-left: 30px;
+margin-bottom: 20px;
+display: block;
+}
+
+.party_content_title .photo{
+}
+.party_content_title .name{
+    margin-left: 30px;
+line-height: 51px;
+height: 30px;
+}
+
+
+.party_content{
+background: #ffffff;
+padding-top: 21px;
+border-radius: 5px;
+padding-left: 0px;
+}
+
+.party_title{
+	margin-left: 18px;
+	font-size: 18px;
+}
+ul.party_join_member{
+clear: both;
+margin-left: 0px;
+padding-left: 0px;
+}
+ul.party_join_member li{
+clear: both;
+height: 100px;
+}
+ul.party_join_member li span.photo{
+	float: left;
+display: block;
+margin-right: 18px;
+}
+ul.party_join_member li span.member_info{
+margin-top: 10px;
+height: 80px;
+overflow: hidden;
+display: block;
+}
+ul.party_join_member li span.member_info .name{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

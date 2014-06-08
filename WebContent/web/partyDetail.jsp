@@ -16,21 +16,37 @@
 	</div>
 </div>
 <div class="container">
-	<div class="col-md-3">
-		<span> <img width="233" height="145"
-			class="product-image thumbnail"
-			src="<c:url value="${party.icon}"/>"
-			alt="${party.title }">
-		</span>
-		<p class="text-primary tc">
+  <div class="row">
+	  <div class="col-md-9 party_content">
+	  <span class="party_content_title">
+	  <span class="photo">
+	  <img width="69" height="43" src="<c:url value="${member.photo }"/>"
+										alt="${member.name }" class="avatar">
+	  </span>
+	  <span class="name">
+		  <a href="<c:url value="/viewMemberInfo"/>?memberId=${member.id}">
+											${member.name} 
+		  </a>
+	  </span>
+	  <span>
+	  <a href="#commentParty" data-toggle="modal" class="btn btn-primary fr">[ message]</a>
+				<a href="<c:url value="/member/joinParty" />?partyId=${party.id}"> <button class="btn btn-success fr mb20">Join</button></a>
+	  </span>
+	  </span>
+	     <ul>
+          <li> 
+              <img src="<c:url value="${party.icon}"/>" alt="Image" style="width: 100%"/>
+          </li>
+        </ul>
+        <div class="party_info">
+        <p class="text-primary tc">
 		  ${party.title }
 		</p>
 		<p class="text-primary"><span class="color_f63 fb">活动发起人：</span>
 		   
-		   <a 
-									href="<c:url value="/viewMemberInfo"/>?memberId=${member.id}">
+		   <a href="<c:url value="/viewMemberInfo"/>?memberId=${member.id}">
 										${member.name} 
-								</a>
+		   </a>
 		  </p>
 		<p class="text-primary"><span class="color_f63 fb">活动时间：</span>
 		   <fmt:formatDate value="${party.startTime }" pattern="yyyy-MM-dd"/>~
@@ -47,50 +63,36 @@
 		   <span class="color_f63 fb">活动总结：</span>
 		   ${party.description }
 		</div>
-	</div>
-	<div class="col-md-9 content">
-		<div class="leading mb20">
-			<h2>
-				Member of Join
-				<a href="#commentParty" data-toggle="modal" class="btn btn-primary fr">[ message]</a>
-				<a href="<c:url value="/member/joinParty" />?partyId=${party.id}"> <button class="btn btn-success fr mb20">Join</button></a>
-			</h2>
-		</div>
-		<div class="row">
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>name </th>
-							<th>school</th>
-							<!-- 
-							<th class="tr">View</th>
-							 -->
-						</tr>
-					</thead>
-					<tbody>
-					<c:if test="${acountInfos!=null }">
+        
+        </div>
+        
+	  </div>
+	   <div class="col-md-3">
+	   <span class="party_title">Member of Join</span>
+	   <ul class="party_join_member">
+	   <c:if test="${acountInfos!=null }">
 					  <c:forEach var="acountInfo" items="${acountInfos }" varStatus="statu">
-					     <tr>
-							<td><span class="img"> <a 
+					     <li>
+							<span class="img photo"> <a 
 									href="<c:url value="/viewMemberInfo"/>?memberId=${acountInfo.id}">
 										<img width="69" height="43"
 										src="<c:url value="${acountInfo.photo }"/>"
-										alt="${acountInfo.name }">
+										alt="${acountInfo.name }" class="avatar">
 								</a>
-							</span></td>
-							<td>${acountInfo.name }</td>
-							<td>${acountInfo.schoolName }</td>
-							<!-- 
-							<td class="tr"><button class="btn btn-success">View</button></td>
-							 -->
-						</tr>
+							</span>
+							<span class="member_info">
+							<div class="name">${acountInfo.name }</div>
+							<div class="schoolName">${acountInfo.schoolName }</div>
+							</span>
+						</li>
 					  </c:forEach>
-					</c:if>
-					</tbody>
-				</table>
-		</div>
+		</c:if>
+	   </ul>
+	   </div>
+  </div>
 
+	
+	<div class="col-md-9 content">
      <div class="row goods-detail-desc">
 			<div class="xm-box goods-detail-comment " id="goodsComment">
 				<div class="box-hd">
