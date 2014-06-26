@@ -91,7 +91,7 @@
           <div class="modal-content">
             <div class="modal-header panel-heading">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">reply：</h4>
+              <h4 class="modal-title">reply：${evaluateComment.memberName }</h4>
             </div>
             <form class="form-horizontal" action="<c:url value="/member/subEvaluteComment"/>">
 				<div class="modal-body">

@@ -90,13 +90,13 @@
           <input type="hidden" name="partyId" value="${party.id}" />
          
 		<div class="form-group">
-							<div class="col-md-2 control-label">
-								<label for="profile_about">Message</label>
-							</div>
-							<div class="col-md-7 controls">
-								<textarea  name="message"
-									class="form-control" rows="10" required="required"></textarea>
-							</div>
+			<div class="col-md-2 control-label">
+				<label for="profile_about">Message</label>
+			</div>
+			<div class="col-md-7 controls">
+				<textarea  name="message"
+					class="form-control" rows="10" required="required"></textarea>
+			</div>
 		</div>
           
           <div class="row mt20">

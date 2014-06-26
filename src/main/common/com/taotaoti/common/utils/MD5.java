@@ -28,7 +28,7 @@ public class MD5 {
 	private static final Log log = LogFactory.getLog(MD5.class);
 
 	public static void main(String[] args) {
-		String dbPassword=MD5.getMd5("chengjie");
+		String dbPassword=MD5.getMd5("123456");
 		System.out.println(dbPassword);
 	}
 	

@@ -16,6 +16,7 @@ import com.taotaoti.good.constant.GoodConstant;
 import com.taotaoti.good.dao.GoodDao;
 import com.taotaoti.member.bo.Columns;
 import com.taotaoti.party.bo.PartyColumns;
+import com.taotaoti.party.constant.PartyConstant;
 
 @Repository
 public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
@@ -30,10 +31,12 @@ public class GoodDaoImpl extends AbstractDao<Integer, Good> implements GoodDao{
 
 	@Override
 	public int counts() {
-		// TODO Auto-generated method stub
-		return this.counts();
+	   return this.count(match(GoodColumns.statu, not(GoodConstant.GOOD_STATU_DELETE)));
 	}
-
+	@Override
+	public int countsBycategoryId(int categoryId){
+	   return this.count(match(GoodColumns.statu, not(GoodConstant.GOOD_STATU_DELETE)),match(GoodColumns.categoryId,categoryId));
+	}
 	@Override
 	public List<Good> findIndexGood(int curPage, int pageSize) {
 		// TODO Auto-generated method stub

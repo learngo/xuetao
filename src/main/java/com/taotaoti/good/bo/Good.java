@@ -36,6 +36,8 @@ public class Good extends BaseObject<Integer>{
 	private Integer memberId;
 	@Column(value="ignore")
 	private String memberName;
+	@Column(value="ignore")
+	private String memberPhoto;
 	
 	@Column(value=GoodColumns.price)
 	private Integer price;
@@ -159,6 +161,12 @@ public class Good extends BaseObject<Integer>{
 	}
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
+	}
+	public String getMemberPhoto() {
+		return memberPhoto;
+	}
+	public void setMemberPhoto(String memberPhoto) {
+		this.memberPhoto = memberPhoto;
 	}
 	
 	

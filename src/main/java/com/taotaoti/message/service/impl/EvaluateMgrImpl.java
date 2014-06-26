@@ -34,32 +34,32 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 	EvaluateCommentDao evaluateCommentDao;
 	@Resource
 	MemberDao memberDao;
-	@Override
-	public int clearNoti(int memberId) {
-		Notification notification=notificationDao.findOne(memberId);
-		if(notification==null){
-			notification=new Notification();
-			notification.setCount(0);
-			notification.setEvaluateIds("");
-			notification.setMemberId(memberId);
-			notificationDao.create(notification);
-			return 0;
-		}
-		return notificationDao.modifyCountByMemberId(0,"", memberId);
-	}
+//	@Override
+//	public int clearNoti(int memberId) {
+//		Notification notification=notificationDao.findOne(memberId);
+//		if(notification==null){
+//			notification=new Notification();
+//			notification.setCount(0);
+//			notification.setEvaluateIds("");
+//			notification.setMemberId(memberId);
+//			notificationDao.create(notification);
+//			return 0;
+//		}
+//		return notificationDao.modifyCountByMemberId(0,"", memberId);
+//	}
 
-	@Override
-	public Notification findNotificationByMemberId(int memberId) {
-		Notification notification=notificationDao.findOne(memberId);
-		if(notification==null){
-			notification=new Notification();
-			notification.setCount(0);
-			notification.setEvaluateIds("");
-			notification.setMemberId(memberId);
-			notification=notificationDao.create(notification);
-		}
-		return notification;
-	}
+//	@Override
+//	public Notification findNotificationByMemberId(int memberId) {
+//		Notification notification=notificationDao.findOne(memberId);
+//		if(notification==null){
+//			notification=new Notification();
+//			notification.setCount(0);
+//			notification.setEvaluateIds("");
+//			notification.setMemberId(memberId);
+//			notification=notificationDao.create(notification);
+//		}
+//		return notification;
+//	}
 
 	@Override
 	public Evaluate findEvaluate(int evaluateId) {
@@ -90,21 +90,32 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 	public List<Evaluate> findEvaluate(int evaluateProductType,
 			int evaluateProductId, int memberId) {
 		List<Evaluate> evaluates=this.evaluateDao.find(evaluateProductType, evaluateProductId, memberId);
-		HashMap<Integer, String> memberIds=new HashMap<Integer, String>();
+		HashMap<Integer, Member> memberIds=new HashMap<Integer, Member>();
 		for(int i=0;i<evaluates.size();i++){
-			memberIds.put(evaluates.get(i).getMemberId(), "");
+			memberIds.put(evaluates.get(i).getMemberId(), null);
 		}
 		List<Member> members=memberDao.get(memberIds.keySet());
 		if(members!=null){
 				for(Member member:members){
 			
 				if(memberIds.containsKey(member.getId())){
-					memberIds.put(member.getId(), member.getName());
+					memberIds.put(member.getId(), member);
 				}
 			}
 			for(int i=0;i<evaluates.size();i++){
-				evaluates.get(i).setMemberName(memberIds.get(evaluates.get(i).getMemberId()));
+				evaluates.get(i).setMemberName(memberIds.get(evaluates.get(i).getMemberId()).getName());
+				evaluates.get(i).setMemberPhoto(memberIds.get(evaluates.get(i).getMemberId()).getPhoto());
 			}
+		}
+		for(int i=0;i<evaluates.size();i++){
+			Evaluate e=evaluates.get(i);
+			List<EvaluateComment> evaluateComments= this.evaluateCommentDao.findByEvaluateId(e.getId());
+			if(evaluateComments!=null){
+				for(int j=0;j<evaluateComments.size();j++){
+					evaluateComments.get(j).setMemberName(memberIds.get(evaluateComments.get(j).getMemberId()).getName());
+				}
+			}
+			evaluates.get(i).setEvaluateComments(evaluateComments);
 		}
 
 		return evaluates;
@@ -114,25 +125,33 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 			int evaluateProductId) {
 		List<Evaluate> evaluates=this.evaluateDao.find(evaluateProductType, evaluateProductId);
 		LOG.info("size" + evaluates.size());
-		HashMap<Integer, String> memberIds=new HashMap<Integer, String>();
+		HashMap<Integer, Member> memberIds=new HashMap<Integer, Member>();
 		for(int i=0;i<evaluates.size();i++){
-			memberIds.put(evaluates.get(i).getMemberId(), "");
+			memberIds.put(evaluates.get(i).getMemberId(), null);
 		}
 		List<Member> members=memberDao.get(memberIds.keySet());
 		if(members!=null){
 		for(Member member:members){
 			if(memberIds.containsKey(member.getId())){
-				memberIds.put(member.getId(), member.getName());
+				memberIds.put(member.getId(), member);
 			}
 		}
 		for(int i=0;i<evaluates.size();i++){
-			evaluates.get(i).setMemberName(memberIds.get(evaluates.get(i).getMemberId()));
+			evaluates.get(i).setMemberName(memberIds.get(evaluates.get(i).getMemberId()).getName());
+			evaluates.get(i).setMemberPhoto(memberIds.get(evaluates.get(i).getMemberId()).getPhoto());
+			
 		}
 	}
-//		for(int i=0;i<evaluates.size();i++){
-//			Evaluate e=evaluates.get(i);
-//			evaluates.get(i).setEvaluateComments(this.evaluateCommentDao.findByEvaluateId(e.getId()));
-//		}
+	for(int i=0;i<evaluates.size();i++){
+		Evaluate e=evaluates.get(i);
+		List<EvaluateComment> evaluateComments= this.evaluateCommentDao.findByEvaluateId(e.getId());
+		if(evaluateComments!=null){
+			for(int j=0;j<evaluateComments.size();j++){
+				evaluateComments.get(j).setMemberName(memberIds.get(evaluateComments.get(j).getMemberId()).getName());
+			}
+		}
+		evaluates.get(i).setEvaluateComments(evaluateComments);
+	}
 		return evaluates;
 	}
 
@@ -169,7 +188,7 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 		evaluate.setEvaluateProductId(evaluateProductId);
 		evaluate.setEvaluateProductType(evaluateProductType);
 		evaluate.setEvaluateProductMemberId(evaluateProductMemberId);
-		evaluate.setStatu(EvaluateConstant.EVALUATE_STATU_OK);
+		evaluate.setStatu(EvaluateConstant.EVALUATE_STATU_NO_READ);
 		evaluate.setReplyCount(0);
 		evaluate.setRemark(remark);
 		evaluate.setEvaluateWorth(5);
@@ -180,22 +199,22 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 		this.evaluateDao.modifyStatu(statu, evaluateId);
 	}
 
-	@Override
-	public Notification additionNotification(int memberId,int evaluateId) {
-		Notification notification=notificationDao.findOne(memberId);
-		if(notification==null){
-			notification=new Notification();
-			notification.setCount(1);
-			notification.setEvaluateIds(""+evaluateId);
-			notification.setMemberId(memberId);
-			notificationDao.create(notification);
-		}else{
-			notification.setCount(notification.getCount()+1);
-			notification.setEvaluateIds(notification.getEvaluateIds()+"|"+evaluateId);
-			notificationDao.modifyCount(notification.getCount(),notification.getEvaluateIds() ,notification.getId());
-		}
-		return notification;
-	}
+//	@Override
+//	public Notification additionNotification(int memberId,int evaluateId) {
+//		Notification notification=notificationDao.findOne(memberId);
+//		if(notification==null){
+//			notification=new Notification();
+//			notification.setCount(1);
+//			notification.setEvaluateIds(""+evaluateId);
+//			notification.setMemberId(memberId);
+//			notificationDao.create(notification);
+//		}else{
+//			notification.setCount(notification.getCount()+1);
+//			notification.setEvaluateIds(notification.getEvaluateIds()+"|"+evaluateId);
+//			notificationDao.modifyCount(notification.getCount(),notification.getEvaluateIds() ,notification.getId());
+//		}
+//		return notification;
+//	}
 
 	@Override
 	@Transactional
@@ -221,5 +240,10 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 	@Override
 	public List<Evaluate> findEvaluateByids(List<Integer> ids) {
 		return this.evaluateDao.find(ids);
+	}
+	@Override
+	public int countNoReadEvaluateByEvaluateProductMemberId(int memberId) {
+		// TODO Auto-generated method stub
+		return this.evaluateDao.count(memberId,EvaluateConstant.EVALUATE_STATU_NO_READ);
 	}
 }

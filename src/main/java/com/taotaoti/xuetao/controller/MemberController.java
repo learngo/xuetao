@@ -156,7 +156,8 @@ public class MemberController extends BaseController {
 		}
 		listMaps.add(new MatchMap("path", "/member/settings/addGood"));
 		listMaps.add(new MatchMap("pathName", "addGood"));
-		return this.buildSuccess(model, "/member/settings/addGood", listMaps);
+		//return this.buildSuccess(model, "/member/settings/addGood", listMaps);
+		return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
 	}
 	@RequestMapping(value = "/settings/submitGood")
 	public ModelAndView submitGood(HttpServletRequest request,
@@ -242,8 +243,8 @@ public class MemberController extends BaseController {
 			}
 		}
 		}
-		
-		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
+		//return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
+		return this.buildSuccessByRedirectAndParam(("/member/settings/browseGood"), model, "memberId", v.getUserid());
 	}
 	@RequestMapping(value = "/settings/browseGood")
 	public String browseGood(HttpServletRequest request,
@@ -259,7 +260,9 @@ public class MemberController extends BaseController {
 		listMaps.add(goods);
 		listMaps.add(new MatchMap("path", "/member/settings/browseGood"));
 		listMaps.add(new MatchMap("pathName", "browseGood"));
-		return this.buildSuccess(model, "/member/settings/browseGood", listMaps);
+		return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
+//		return this.buildSuccessByRedirectAndParam(("/member/settings/browseGood"), model, "memberId", v.getUserid());
+//		return this.buildSuccess(model, "/member/settings/browseGood", listMaps);
 	}
 	@RequestMapping(value = "/settings/deleteGood")
 	public ModelAndView deleteGood(HttpServletRequest request,
@@ -268,7 +271,9 @@ public class MemberController extends BaseController {
 			ModelMap model){
 		Visitor v=this.session.getSessionVisitor(request);
 		goodMgr.modifyGoodStatu(v.getUserid(), goodId, GoodConstant.GOOD_STATU_DELETE);
-		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
+		//return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
+		return this.buildSuccessByRedirectAndParam(("/viewMemberInfo"), model, "memberId", v.getUserid());
+		//return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
 	}
 	@RequestMapping(value = "/settings/preBuyGood")
 	public String preBuyGood(HttpServletRequest request,
@@ -277,6 +282,8 @@ public class MemberController extends BaseController {
 			ModelMap model){
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
 		listMaps.add(new MatchMap("goodId", goodId));
+//		return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
+//		return this.buildSuccessByRedirectAndParam(("/member/settings/browseGood"), model, "memberId", v.getUserid());
 		return this.buildSuccess(model, "/member/settings/buyGood", listMaps);
 	}
 	@RequestMapping(value = "/settings/buyGood")
@@ -289,7 +296,9 @@ public class MemberController extends BaseController {
 		Visitor v=this.session.getSessionVisitor(request);
 		goodMgr.modifyGoodStatu(v.getUserid(), goodId, GoodConstant.GOOD_STATU_BUY);
 		goodMgr.modifyGoodBuyerName(v.getUserid(), goodId, buyerName);
-		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
+		//return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseGood");
+		//return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
+		return this.buildSuccessByRedirectAndParam(("/viewMemberInfo"), model, "memberId", v.getUserid());
 	}
 	@RequestMapping(value = "/addGoodMessage")
 	public ModelAndView addGoodMessage(HttpServletRequest request,
@@ -442,21 +451,22 @@ public class MemberController extends BaseController {
 			ModelMap model){
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
 		Visitor v=this.session.getSessionVisitor(request);
-		Notification notification=evaluateMgr.findNotificationByMemberId(v.getUserid());
-		LOG.info("EvaluateIds =="+ ObjToStringUtil.objToString(notification));
-		evaluateMgr.clearNoti(v.getUserid());
-		if(notification!=null&&notification.getEvaluateIds().length()>0&&notification.getEvaluateIds()!=""){
-			LOG.info("EvaluateIds =="+ notification.getEvaluateIds());
-			List<String> ids=StringUtils.splitToList(notification.getEvaluateIds(), "\\|");
-			List<Integer> evaluateIds=new ArrayList<Integer>();
-			for(int i=0;i<ids.size();i++){
-				evaluateIds.add(Integer.valueOf(ids.get(i)));
-			}
-			MatchMap evaluates=new MatchMap("evaluates", evaluateMgr.findEvaluateByids(evaluateIds));
-			listMaps.add(evaluates);
-		}
-	     v.setMessageSum(0);
-	     session.setAttributeAsVisitor(request, v);
+		//Notification notification=evaluateMgr.findNotificationByMemberId(v.getUserid());
+//		LOG.info("EvaluateIds =="+ ObjToStringUtil.objToString(notification));
+		//evaluateMgr.clearNoti(v.getUserid());
+//		if(notification!=null&&notification.getEvaluateIds().length()>0&&notification.getEvaluateIds()!=""){
+//			LOG.info("EvaluateIds =="+ notification.getEvaluateIds());
+//			List<String> ids=StringUtils.splitToList(notification.getEvaluateIds(), "\\|");
+//			List<Integer> evaluateIds=new ArrayList<Integer>();
+//			for(int i=0;i<ids.size();i++){
+//				evaluateIds.add(Integer.valueOf(ids.get(i)));
+//			}
+//		   //MatchMap evaluates=new MatchMap("evaluates", evaluateMgr.findEvaluateByids(evaluateIds));
+//			MatchMap evaluates=new MatchMap("evaluates", evaluateMgr.findEvaluateByEvaluateProductMemberId(v.getUserid()));
+//			listMaps.add(evaluates);
+//		}
+		MatchMap evaluates=new MatchMap("evaluates", evaluateMgr.findEvaluateByEvaluateProductMemberId(v.getUserid()));
+		listMaps.add(evaluates);
 		return this.buildSuccess(model, "/member/settings/browseEvaluate", listMaps);
 	}
 	
@@ -501,25 +511,52 @@ public class MemberController extends BaseController {
 			    LOG.info(visitor.getUserid()+ " modify reply content =="+content);
 				Evaluate e= evaluateMgr.addEvaluate(visitor.getUserid(), evaluateProductType, evaluateProductId,evaluateProductMemberId, content, remark);
 				if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY&&e!=null){
-			    	Party party=partyDao.get(evaluateProductId);
-			    	evaluateMgr.additionNotification(party.getMemberId(),e.getId());
-			    	Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
-			    	visitor.setMessageSum(notification.getCount());
+			    	visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(visitor.getUserid()));
 					session.setAttributeAsVisitor(request, visitor);
 					return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", evaluateProductId);
 					
 			    }
 				if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD&&e!=null){
-					Good good=goodMgr.getGoodByGoodId(evaluateProductId);
-			    	evaluateMgr.additionNotification(good.getMemberId(),e.getId());
-			    	Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
-			    	visitor.setMessageSum(notification.getCount());
+			    	visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(visitor.getUserid()));
 					session.setAttributeAsVisitor(request, visitor);
 					return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", evaluateProductId);
 			    }
 		}
 		return null;
 	}
+//	@RequestMapping(value = "/subEvalute")
+//	public ModelAndView subEvalute(HttpServletRequest request,
+//			HttpServletResponse response,
+//			@RequestParam(value="evaluateProductType") Integer evaluateProductType,
+//			@RequestParam(value="evaluateProductId") Integer evaluateProductId,
+//			@RequestParam(value="evaluateProductMemberId") Integer evaluateProductMemberId,
+//			@RequestParam(value="content") String content,
+//			@RequestParam(value="remark",required=false) String remark,
+//			ModelMap model){
+//		Visitor visitor=this.session.getSessionVisitor(request);
+//		if(visitor!=null){
+//			LOG.info(visitor.getUserid()+ " modify reply content =="+content);
+//			Evaluate e= evaluateMgr.addEvaluate(visitor.getUserid(), evaluateProductType, evaluateProductId,evaluateProductMemberId, content, remark);
+//			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY&&e!=null){
+//				Party party=partyDao.get(evaluateProductId);
+//				evaluateMgr.additionNotification(party.getMemberId(),e.getId());
+//				Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
+//				visitor.setMessageSum(notification.getCount());
+//				session.setAttributeAsVisitor(request, visitor);
+//				return this.buildSuccessByRedirectAndParam("/web/partyDetail", model, "partyId", evaluateProductId);
+//				
+//			}
+//			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD&&e!=null){
+//				Good good=goodMgr.getGoodByGoodId(evaluateProductId);
+//				evaluateMgr.additionNotification(good.getMemberId(),e.getId());
+//				Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
+//				visitor.setMessageSum(notification.getCount());
+//				session.setAttributeAsVisitor(request, visitor);
+//				return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", evaluateProductId);
+//			}
+//		}
+//		return null;
+//	}
 	@RequestMapping(value = "/subEvaluteComment")
 	public ModelAndView subEvaluteComment(HttpServletRequest request,
 			HttpServletResponse response,
@@ -535,9 +572,7 @@ public class MemberController extends BaseController {
 		    EvaluateComment e= evaluateMgr.addEvaluateComment(visitor.getUserid(), evaluateId, content);
 			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY&&e!=null){
 				if(memberId!=null){
-					evaluateMgr.additionNotification(memberId,e.getId());
-					Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
-			    	visitor.setMessageSum(notification.getCount());
+			    	visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(memberId));
 					session.setAttributeAsVisitor(request, visitor);
 				}
 				List<MatchMap> matchs=new ArrayList<MatchMap>();
@@ -547,9 +582,7 @@ public class MemberController extends BaseController {
 		    }
 			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD&&e!=null){
 				if(memberId!=null){
-					evaluateMgr.additionNotification(memberId,e.getId());
-					Notification notification=evaluateMgr.findNotificationByMemberId(visitor.getUserid());
-			    	visitor.setMessageSum(notification.getCount());
+					visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(memberId));
 					session.setAttributeAsVisitor(request, visitor);
 				}
 				return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", evaluateProductId);
@@ -711,10 +744,13 @@ public class MemberController extends BaseController {
 			}
 			LOG.info("上传成功！");
 			memberDao.modifyPhoto(v.getUserid(), saveUrl + newFileName);
-			return this.buildSuccessByRedirectOnlyUrl("/member/settings/avatar");
+			//return this.buildSuccessByRedirectOnlyUrl("/member/settings/avatar");
+			//return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
+			return this.buildSuccessByRedirectAndParam("/viewMemberInfo", model, "memberId", v.getUserid());
 		}
 
-		return this.buildSuccessByRedirectOnlyUrl("/member/settings/avatar");
+		//return this.buildSuccessByRedirectOnlyUrl("/member/settings/avatar");
+		return this.buildSuccessByRedirectAndParam("/viewMemberInfo", model, "memberId", v.getUserid());
 	}
 	
 	@RequestMapping(value = "/settings/modifyMemberInfo")
@@ -734,7 +770,9 @@ public class MemberController extends BaseController {
 		member.setDescription(description);
 		member.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		memberDao.update(member);
-		return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
+		//return this.buildSuccessByRedirectOnlyUrl("/member/settings/settings");
+		//return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
+		return this.buildSuccessByRedirectAndParam("/viewMemberInfo", model, "memberId", v.getUserid());
 	}
 	@RequestMapping(value = "/joinParty")
 	public ModelAndView joinParty(HttpServletRequest request,

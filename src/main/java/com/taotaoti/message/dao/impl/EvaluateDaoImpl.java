@@ -12,6 +12,7 @@ import com.taotaoti.common.generic.dao.operator.Match;
 import com.taotaoti.common.generic.dao.operator.Order;
 import com.taotaoti.message.bo.Evaluate;
 import com.taotaoti.message.bo.EvaluateColumns;
+import com.taotaoti.message.constant.EvaluateConstant;
 import com.taotaoti.message.dao.EvaluateDao;
 
 @Repository
@@ -21,7 +22,6 @@ public class EvaluateDaoImpl extends AbstractDao<Integer, Evaluate> implements E
 
 	@Override
 	public Evaluate findOne(int evaluateId) {
-		// TODO Auto-generated method stub
 		return this.get(evaluateId);
 	}
 
@@ -77,6 +77,11 @@ public class EvaluateDaoImpl extends AbstractDao<Integer, Evaluate> implements E
 		orders.add(order(EvaluateColumns.createTime, false));
 		matchs.add(match(EvaluateColumns.memberId, memberId));
 		return this.find(matchs,orders);
+	}
+
+	@Override
+	public int count(int evaluateProductMemberId,int statu) {
+		return this.count(match(EvaluateColumns.evaluateProductMemberId, evaluateProductMemberId),match(EvaluateColumns.statu, statu));
 	}
 	
 }

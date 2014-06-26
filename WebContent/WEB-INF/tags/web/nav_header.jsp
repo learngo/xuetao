@@ -20,11 +20,12 @@
 			  </a>
 			  </li>
 			</ul>
+
 			 <div class="top_about">
                  <ul >
                     <c:if test="${sessionScope.UserConstant_VISITOR == null}">
                      <li>
-                       <a href="#loginModal" data-toggle="modal">
+                       <a href="<c:url value="/preRegister"/>">
                         <span class="glyphiconText">Login /</span>
                        </a>
                        <a href="<c:url value="/preRegister"/>">
@@ -35,11 +36,14 @@
                     <c:if test="${sessionScope.UserConstant_VISITOR != null}">
 	                  <li class="nav_photo">
 		                   <a href="<c:url value="/viewMemberInfo"/>?memberId=${sessionScope.UserConstant_VISITOR.userid }">
-		                     <span class="phtoto"><img class="avatar" src="http://tp4.sinaimg.cn/2042952831/180/5648174935/1"></span>
+		                     <span class="phtoto"><img class="avatar" src="<c:url value="/"/>${sessionScope.UserConstant_VISITOR.photo}"></span>
 		                   </a>
 	                   </li>
                       <li>  
-                      <a href="<c:url value="/member/settings/settings"/>" class="setting">
+                      <!-- 
+                         <a href="<c:url value="/member/settings/settings"/>" class="setting">
+                       -->
+                       <a href="<c:url value="/viewMemberInfo"/>?memberId=${sessionScope.UserConstant_VISITOR.userid }" class="setting">
                          <span class="glyphiconText">${sessionScope.UserConstant_VISITOR.username }</span>
                       </a>
                       </li>
@@ -52,63 +56,15 @@
 					</c:if>
 				</ul>
              </div>
+        <div id="seachbar" class="seachbar">
+            <input name="searchInput" type="text" placeholder="Search places"/>
+        </div>
          </div>
  </div>
- 
- 
- 
- <!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
- 		<div class="modal-dialog panel-primary login-panel">
-          <div class="modal-content">
-	         <div class="modal-body login-panel">
-			          <form class="form-horizontal login-panel-left" action='<c:url value="/memberLogin"/>' method="post">
-							<div class="form-group">
-								<h3>Sign in</h3>
-							</div>
-							<div class="form-group">
-								<label class="col-lg-2 control-label">email：</label>
-								<div class="col-lg-10">
-									<input type="text" class="form-control" placeholder="email" name="email" required="required"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-lg-2 control-label">password：</label>
-								<div class="col-lg-10">
-									<input type="password" class="form-control"
-										placeholder="password"  name="password" required="required"/>
-								</div>
-							</div>
-							<div class="form-group tc">
-								<button type="submit" class="btn btn-info btn-lg"> Login </button>
-							</div>
-					   </form>
-					   <div class="login-panel-middle"></div> 
-			          <form class="form-horizontal login-panel-right" action='<c:url value="/memberLogin"/>' method="post">
-							<div class="form-group">
-							</div>
-							<div class="form-group">
-							</div>
-							<div class="form-group">
-							</div>
-							<div class="form-group">
-							</div>
-							<div class="form-group">
-								<button type="button" class="btn btn-info btn-lg" data-dismiss="modal">facebook Login </button>
-							</div>
-							<div class="form-group">
-							
-							</div>
-							
-					   </form> 
-				 </div>
-	<!-- 
-		      <div class="modal-footer">
-	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
-	              <button type="submit" class="btn btn-primary" >login</button>
-            </div>
-     -->
-       </div><!-- /.modal-content //-->
-    </div><!-- /.modal-dialog //-->
-</div><!-- /.modal -->
-			
+    <script>
+    $(function(){
+        $('#seachbar').click(function(){
+            $(this).animate({width:255});
+        });
+    });
+    </script>

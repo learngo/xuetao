@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-	<div class="col-md-9 content">
+	<div class="col-md-12">
 		<div class="row">
 			<div class="panel panel-default panel-col">
 			     <div class="panel-heading">Partys</div>
@@ -66,8 +66,3 @@
 
 
 
-
-
-<script>
-	$('#tooltip-right').tooltip();
-</script>

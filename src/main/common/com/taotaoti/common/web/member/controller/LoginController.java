@@ -202,8 +202,7 @@ public class LoginController extends BaseController {
         visitor.setMajor(member.getMajor());
         visitor.setJoinSum(member.getPartyJoinSum());
         visitor.setPoint(member.getPoints());
-        Notification e= evaluateMgr.findNotificationByMemberId(member.getId());
-        visitor.setMessageSum(e.getCount());
+        visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(member.getId()));
         School school=schoolDao.get(member.getSchoolId());
         if(school!=null){
         	visitor.setSchoolName(school.getName());

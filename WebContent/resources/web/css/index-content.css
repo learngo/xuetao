@@ -200,3 +200,4 @@ padding: 0px 10px;
 .contact_box .dy_button{float:left;  width:205px; height:50px; padding-left:10px; position:relative;}
 .contact_box .button_dy{background:url(../images/button_dy.png) top; width:205px; height:50px;border:0px; cursor:pointer;}
 .contact_box .button_dy:hover{background:url(../images/button_dy.png) bottom; width:205px; height:50px;border:0px; cursor:pointer;}
+.carousel-indicators{bottom: 80px;}

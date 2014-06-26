@@ -14,48 +14,75 @@
     text-decoration: none;
 }
 .content{
-	border-left: 1px solid #d9e2e2;
+	/*border-left: 1px solid #d9e2e2;*/
+    margin-left: 50px;
+    width: 722px;
+    padding: 0;
+}
+.comment-box-outer{
+    position: relative;
+}
+.goods-detail-comment textarea{
+    border: 1px solid #999;
+    border-radius: 5px;
+    height: 124px;
+    padding: 18px 30px;
+    font-size: 18px;
+    background-color: #eee;
+    width: 100%;
+}
+.comment-tip{
+    position: absolute;top:18px;left:30px;color: #999;font-size: 18px;z-index: -1;
 }
 .party_content_title{
 margin-top: 10px;
-margin-left: 30px;
-margin-bottom: 20px;
+margin-bottom: 38px;
 display: block;
 }
+.party_content_title .btn-success{
+    background: #bedb39;border-color: #bedb39;margin: 10px 0 0 20px;
+}
+.party_content_title .btn-primary,.btn-submit{background-color:#2bbfbd;border-color: #2bbfbd;margin: 10px 0 0 20px; }
+.btn-submit,.btn-submit:hover{color:#fff;margin:20px;}
 .party_info{
 margin-top: 10px;
-margin-left: 30px;
 margin-bottom: 20px;
 display: block;
 }
-.container .goods-detail-desc .goods-detail-comment .box-hd .title{
-margin: 0 0 0 30px;
-}
-
 
 .party_content_title .photo{
 }
 .party_content_title .name{
-    margin-left: 30px;
+margin-left: 10px;
 line-height: 51px;
 height: 30px;
+font-size: 30px;
 }
-
+.party_content_title .name a{color: #787878;}
 
 .party_content{
 background: #ffffff;
-padding-top: 21px;
 border-radius: 5px;
-padding-left: 0px;
+width: 722px;margin: 0 0 0 50px;padding: 38px 30px 0 30px;
 }
 
 .party_title{
-	margin-left: 18px;
 	font-size: 18px;
+    color: #9e9e9e;
+}
+.info-title{
+    display: block;color: #2bbfbd;font-size: 16px;margin-bottom: 12px;
+}
+.party_info p,.good_info p{font-size: 16px;}
+.party_info .text-primary,.good_info .text-primary,.party_info .media-body{
+    margin-bottom: 30px;color: #000;
+}
+.party-members{
+    padding: 0 0 0 40px;
 }
 ul.party_join_member{
 clear: both;
-margin-left: 0px;
+margin:45px 0 0 0;
 padding-left: 0px;
 }
 ul.party_join_member li{
@@ -68,12 +95,22 @@ display: block;
 margin-right: 18px;
 }
 ul.party_join_member li span.member_info{
-margin-top: 10px;
 height: 80px;
 overflow: hidden;
 display: block;
 }
 ul.party_join_member li span.member_info .name{
-	margin-top: 10px;
-	margin-bottom: 10px;
+     margin-bottom: 10px;
+     font-size: 18px;color: #9e9e9e;
+ }
+ul.party_join_member li span.member_info .schoolName{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;color: #9e9e9e;
 }
+/*good*/
+.good_content{
+    width: 980px;
+}
+.good-pics{width: 100%;padding: 0;margin: -10px 0 60px 0;}
+.good-pics li{margin-bottom: 20px;}

@@ -2,6 +2,8 @@ package com.taotaoti.good.service.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,6 +24,8 @@ import com.taotaoti.good.service.GoodMgr;
 import com.taotaoti.good.vo.GoodCommentView;
 import com.taotaoti.good.vo.GoodCommentViewUtil;
 import com.taotaoti.good.vo.GoodView;
+import com.taotaoti.member.bo.Member;
+import com.taotaoti.member.dao.MemberDao;
 @Component
 public class GoodMgrImpl implements GoodMgr {
     
@@ -35,10 +39,11 @@ public class GoodMgrImpl implements GoodMgr {
 	public GoodCommentSubDao goodCommentSubDao;
 	@Resource
 	public AppCache appCache;
+	@Resource
+	public MemberDao memberDao;
 
 	@Override
 	public List<GoodView> findGoodByMemberId(int memberId, int curPage, int pageSize) {
-		// TODO Auto-generated method stub
 		List<GoodView> goodViews=new ArrayList<GoodView>();
 		List<Good> goods=goodDao.findGoodByMemberId(memberId, curPage, pageSize);
 		for(Good good:goods){
@@ -179,6 +184,32 @@ public class GoodMgrImpl implements GoodMgr {
 	@Override
 	public Good getGoodByGoodId(int goodId) {
 		return this.goodDao.get(goodId);
+	}
+	@Override
+	public List<Good> findGoodsByCaregoryId(int curPage, int pageSize, int caregoryId) {
+		List<Good> goods;
+		if(caregoryId!=0){
+			goods=goodDao.findIndexGood(curPage, pageSize, caregoryId);
+		}else{
+			goods=goodDao.findIndexGood(curPage, pageSize);
+		}
+		
+		HashMap<Integer, Member> memberIds=new HashMap<Integer, Member>(); 
+		if(goods!=null){
+			for(Good good:goods){
+				memberIds.put(good.getMemberId(),null);
+			}
+		}
+		Collection c=memberIds.keySet();
+		List<Member>  members=memberDao.findByMemberIds(c);
+		for(Member member:members){
+			memberIds.put(member.getId(),member);
+		}
+		for(int i=0;i<goods.size();i++){
+		   Good good=goods.get(i);
+		   goods.get(i).setMemberPhoto(memberIds.get(good.getMemberId()).getPhoto());
+		}
+		return goods;
 	}
 	
 

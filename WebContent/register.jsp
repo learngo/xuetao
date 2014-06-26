@@ -4,14 +4,14 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/prettyPhoto.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/web/css/contact.css"/>" />
 <div class="container">
-  <div class="row contact mt20">
-	  <div class="col-lg-6">
-       <form class="login-form" action="index.htm">
-			<h3 class="form-title">Login to your account</h3>
+  <div class="row  mt20">
+	  <div class="fl">
+       <form class="login-form" action="<c:url value="/memberLogin"/>" method="post">
+			<h3 class="form-title">Login</h3>
 			<div class="form-group">
 				<div class="input-icon">
 					<i class="fa fa-user"></i>
-					<input class="form-control placeholder-no-fix" type="text" placeholder="Username" name="username"/>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="email" name="email"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -22,22 +22,26 @@
 			</div>
 			<div class="form-actions">
 				<label class="checkbox">
-				<input type="checkbox" name="remember" value="1"/> Remember me
+				    <input type="checkbox" name="remember" value="1"/> Remember me
 				</label>
-				<button type="submit" class="btn button_color pull-right">
-				Login <i class="m-icon-swapright m-icon-white"></i>
-				</button>            
+                <a href="###" class="fpwd">Foget the password</a>
 			</div>
+            <div>
+                <button type="submit" class="btn">
+                Login <i class="m-icon-swapright m-icon-white"></i>
+                </button>
+            </div>
 		</form>
     </div>
-    <div class="col-lg-6 fr">
-         <form class="form-horizontal" action="<c:url value="/register"/>" method="post" enctype="multipart/form-data">
-          <div id="output" class="alert tc"> register member </div>
+    <div class="middle-line"></div>
+    <div class="fr">
+         <form class="form-horizontal register-form" action="<c:url value="/register"/>" method="post" enctype="multipart/form-data">
+          <div id="output" class="alert tc"> Register Member </div>
              <div class="form-meta clearfix">
           			<div class="form-group">
 						<label class="col-lg-2 control-label">school：</label>
 						<div class="col-lg-10">
-							<select name="schoolId" style="max-width: 220px;">
+							<select name="schoolId">
 									 <c:if test="${schools!=null }">
 							          <c:forEach var="school" varStatus="status" items="${schools}">
 									     <option value="${ school.id}" style="max-width: 220px;">${school.name}</option>
@@ -86,25 +90,26 @@
 					<div class="form-group">
 						<label class="col-lg-2 control-label">photo：</label>
 						<div class="col-lg-10">
-							<input type="file" class="form-control"
-								placeholder="file"  name="file" />
+                            <div class="form-file">
+                                <a href="javascript:;" class="form-file-bg">PHOTO</a>
+                                <input type="file"  placeholder="file"  name="file" />
+                                <span class="fileName"></span>
+                            </div>
 						</div>
 					</div>
 					
 					<div class="form-group">
 			            <label class="col-lg-2 control-label"></label>
-						<div class="col-lg-10">
 							<div class="checkbox">
-			              <label>
-			                <input type="checkbox" value="1" name="checkBox" checked="checked">
-			                By clicking Sign up you agree to the Terms of Use and Privacy Policy.
-			              </label>
-			            </div>
-						</div>
+                              <label>
+                                <input type="checkbox" value="1" name="checkBox" checked="checked">
+                                &nbsp;&nbsp;&nbsp;By clicking Sign up you agree to the Terms of Use and Privacy Policy.
+                              </label>
+                            </div>
 			          </div>
 					
 				<div class="modal-footer">
-	              <button type="submit" class="btn btn-primary" >Submit</button>
+	              <button type="submit" class="btn btn-primary" >OK</button>
             	</div>
             </div>
         </form>

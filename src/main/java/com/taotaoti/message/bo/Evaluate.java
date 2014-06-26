@@ -14,6 +14,9 @@ public class Evaluate extends BaseObject<Integer>{
 	private Integer memberId;
 	@Column(value="ignore")
 	private String memberName;
+	@Column(value="ignore")
+	private String memberPhoto;
+	
 	@Column(value=EvaluateColumns.evaluateProductType)
 	private Integer evaluateProductType;
 	@Column(value=EvaluateColumns.evaluateProductId)
@@ -148,6 +151,18 @@ public class Evaluate extends BaseObject<Integer>{
 
 	public void setEvaluateProductMemberId(Integer evaluateProductMemberId) {
 		this.evaluateProductMemberId = evaluateProductMemberId;
+	}
+
+	public String getMemberPhoto() {
+		return memberPhoto;
+	}
+
+	public void setMemberPhoto(String memberPhoto) {
+		this.memberPhoto = memberPhoto;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	

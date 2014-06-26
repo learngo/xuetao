@@ -28,14 +28,12 @@ public class PartyDaoImpl extends AbstractDao<Integer, Party> implements PartyDa
 
 	@Override
 	public int counts() {
-		// TODO Auto-generated method stub
 		return this.count(match(PartyColumns.state, not(PartyConstant.PARTY_STATU_DELETE)));
 	}
 
 	@Override
 	public List<Party> findIndexPary(int curPage,
 			 int pageSize) {
-		// TODO Auto-generated method stub
 		List<Match> matchs=new ArrayList<Match>();
 		List<Order> orders=new ArrayList<Order>();
 		orders.add(order(PartyColumns.state, true));

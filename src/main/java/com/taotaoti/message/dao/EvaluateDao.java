@@ -14,7 +14,7 @@ public interface EvaluateDao extends BaseDao<Integer, Evaluate> {
 	public List<Evaluate> findByEvaluateProductMemberId(int evaluateProductMemberId);
 	public List<Evaluate> findByMemberId(int memberId);
 	//public List<Evaluate> findBySql(int e);
-	
+	public int count(int evaluateProductMemberId,int statu);
 	public int modifyReplyCount(int replyCount,int evaluateId);
 	public int modifyStatu(int statu,int evaluateId);
 }

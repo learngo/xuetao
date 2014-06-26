@@ -1,6 +1,7 @@
 package com.taotaoti.member.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -86,5 +87,10 @@ public class MemberDaoImpl extends AbstractDao<Integer, Member> implements Membe
 	@Override
 	public Member findMemberByEmail(String email) {
 		return this.findOne(match(Columns.MemberColumns.email, email));
+	}
+	@Override
+	public List<Member> findByMemberIds(Collection<Integer> ids) {
+		// TODO Auto-generated method stub
+		return this.get(ids);
 	}
 }

@@ -42,6 +42,8 @@ public class Party extends BaseObject<Integer>{
 	@Column(value=PartyColumns.joinMemberIds)
 	private String joinMemberIds;
 	
+	@Column(value="ignore")
+	private String memberPhoto;
 	
 	
 
@@ -289,6 +291,20 @@ public class Party extends BaseObject<Integer>{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+
+
+
+	public String getMemberPhoto() {
+		return memberPhoto;
+	}
+
+
+
+
+	public void setMemberPhoto(String memberPhoto) {
+		this.memberPhoto = memberPhoto;
 	}
 
 

@@ -9,7 +9,6 @@ public class AcountInfo extends Member {
 	private String[] authArr = new String[]{};
 	private String[] roleArr = new String[]{};
 	private String schoolName;
-	
 	public AcountInfo() {
      super();
 	}
@@ -34,8 +33,7 @@ public class AcountInfo extends Member {
 		this.setReputation(member.getReputation());
 		this.setSuccessSum(member.getSuccessSum());
 		this.setPartyJoinSum(member.getPartyJoinSum());
-		
-		
+		this.setPhoto(member.getPhoto());
 	}
 	public String[] getAuthArr() {
 		return authArr;

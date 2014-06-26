@@ -1,11 +1,15 @@
 @CHARSET "UTF-8";
 #header {
-	position: relative;
 	width: 100%;
 	background: url("../../../resources/images/nav_bg.jpg") repeat-x;
 	height: 60px;
 	overflow: hidden;
 }
+.index-header{
+    position: absolute;left:0;bottom:0;
+    z-index: 1;
+}
+#header .container{padding: 0px 50px;}
 #header .nav{
 	float: left;
 }
@@ -15,7 +19,7 @@
 	display: block;
 	color: white;
 }
-#header .nav>li >a,#header .nav>li >a:hover {
+#header .nav>li >a {
 	float: left;
 	padding: 0px;
 	margin: 0px;
@@ -23,7 +27,10 @@
 	height: 60px;
 	color: #c4c4c4;
 	font-size: 16px;
-
+    background: transparent
+}
+#header .nav>li >a:hover,#header .nav .active a{
+    color:#349999;
 }
 #header .glyphicon{
 	top: 0px;
@@ -31,11 +38,9 @@
 }
 #header .glyphiconText{
 	float: left;
-	padding-top: 22px;
+	padding-top: 18px;
 }
-#header .nav>li >a:hover {
-	background: url("../../../resources/images/active_bg.jpg") repeat-x;
-}
+
 .homeIcon{
 	background: url("../../../resources/images/logo.png") no-repeat;
 	width: 171px;
@@ -50,7 +55,7 @@
 	margin-top: 20px;
     margin-left: 35px;
 }
-.nav>li>a:hover>.photoIcon{
+.nav>li>a:hover>.photoIcon,#header .nav .active .photoIcon{
 	background: url("../../../resources/images/photo.png") no-repeat;
 }
 .loveIcon{
@@ -60,7 +65,7 @@
 	margin-top: 20px;
     margin-left: 35px;
 }
-#header .nav>li >a:hover  span.loveIcon{
+#header .nav>li >a:hover  span.loveIcon,#header .nav .active .loveIcon{
 	background: url("../../../resources/images/love_gree.png") no-repeat;
 }
 .messageIcon{
@@ -84,7 +89,7 @@
 width: 58px;
 height: 58px;
 border-radius: 50%;
-padding: 3px;
+border: 3px solid #FFFFFF;
 }
 .top_nav{
 	margin-left:20px;

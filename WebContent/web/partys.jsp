@@ -3,27 +3,71 @@
 <link rel="stylesheet" href="<c:url value="/resources/web/css/common-content.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/web/css/buy.css"/>" />
 
-<div class="good_bg">
-<div class="container">
-   <span class="good_bg_title">
-   Maybe you don't need ,is looking for thers
-   </span>
-   <span class="good_bg_total_sum">
-        <p class="good_bg_total_sum_icon"></p>
-        <p class=""> All the goods</p>
-        <p >(1473)</p>
-   </span>
-   <span class="good_bg_total_money">
-        <p class="good_bg_total_money_icon"></p>
-        <p class=""> All the goods</p>
-        <p >(1473)</p>
-   </span>
- </div>
+<div class="party-carousel">
+    <div id="carousel-example-generic" class="carousel slide">
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="good_bg party_bg">
+                    <div class="container">
+                        <div class="party-wrap">
+                            <div class="party-title">
+                                <span class="icon-location"></span>
+                                <span class="party_bg_title"> Travel experiences to share about Portugal Obidos</span>
+                            </div>
+                            <span class="good_bg_total_money">
+                                <p class="party-icon-sum"></p>
+                                <p class="">Sum in Party</p>
+                                <p >(${totalSum })</p>
+                            </span>
+                            <span class="good_bg_total_sum">
+                                <p class="party-icon-time"></p>
+                                <p>Start time</p>
+                                <p class="month">December 1</p>
+                                <p class="time">8:00</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="good_bg party_bg">
+                    <div class="container">
+                        <div class="party-wrap">
+                            <div class="party-title">
+                                <span class="icon-location"></span>
+                                <span class="party_bg_title"> Travel experiences to share about Portugal Obidos</span>
+                            </div>
+                            <span class="good_bg_total_money">
+                                <p class="party-icon-sum"></p>
+                                <p class="">Sum in Party</p>
+                                 <p >(${totalSum })</p>
+                            </span>
+                            <span class="good_bg_total_sum">
+                                <p class="party-icon-time"></p>
+                                <p>Start time</p>
+                                <p class="month">December 1</p>
+                                <p class="time">8:00</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 <div class="container">
 <div class="row">
 		<div class="works">
-
+            <ul class="party-type">
+                <li class="active"><a href="<c:url value="/web/partys"/>">All</a></li>
+            </ul>
 			<ul>
 				<c:if test="${partys!= null}">
 					<c:forEach var="party" varStatus="status" items="${partys}">
@@ -46,12 +90,12 @@
 									</c:if>
 									
 									</p>
-								</span> 
-								<span class="work_price"> 
-								<span class="work_price_sum">
-										${party.joinSum}</span>
 								</span>
+							    <span class="party_users">${party.joinSum}</span>
 							</div>
+                            <div class="user">
+                                <img src="${party.memberPhoto}" class="avatar"/>
+                            </div>
 						</li>
 					</c:forEach>
 				</c:if>
@@ -65,30 +109,23 @@
 	</div>
 
 
-
-    <div class="col-md-12">
-		<div class="row">
-			<ul class="pager">
-			    <c:if test="${isPre==1 }">
-				<li class="previous"><a href="<c:url value="/web/partys"/>?curPage=${curPage-1}&pageSize=12">&larr; 上一页</a></li>
-				</c:if>
-				<c:if test="${isNext==1 }">
-				<li class="next"><a href="<c:url value="/web/partys"/>?curPage=${curPage+1}&pageSize=12"">下一页 &rarr;</a></li>
-				</c:if>
-		   </ul>
-		</div>
-
-
-      
+    <div class="pagebar">
+	     <c:if test="${commPage!=null}">
+	     ${commPage}
+	    </c:if>
     </div>
     
-
+    
 </div>
 
 
 
 
 <script>
+$(document).ready(function(){
+    $('.carousel').carousel();
+    $('.nav .party').addClass('active');
+});
 $('#tooltip-right').tooltip();
 </script>
  

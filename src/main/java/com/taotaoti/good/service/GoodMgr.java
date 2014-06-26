@@ -15,6 +15,7 @@ public interface GoodMgr {
 	public Good submitGood(int caregoryId,String name,String title,String description,String logo,int memberId,int level,int price) ;
 	public GoodView getGoodViewByGoodId(int memberId,int goodId);
 	public Good getGoodByGoodId(int goodId);
+	public List<Good> findGoodsByCaregoryId(int curPage, int pageSize, int caregoryId);
 	public boolean modifyGoodStatu(int goodId,int goodStatu);
 	public boolean modifyGoodStatu(int memberId,int goodId,int goodStatu);
 	public boolean modifyGoodBuyerName(int memberId,int goodId,String buyerName);

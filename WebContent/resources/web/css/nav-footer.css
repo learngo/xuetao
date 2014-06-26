@@ -1,13 +1,15 @@
 @CHARSET "UTF-8";
 .bottom_box {
-	background: #E9E8E8;
+	background: #fff;
 	position: relative;
 	margin-bottom: 0px;
+    height:205px;
+    border-top:1px solid #efefef;
 }
 
 .bottom {
 	margin: 0 auto;
-	padding-top: 10px;
+	padding-top: 90px;
 }
 
 .bottom_left {
@@ -40,7 +42,7 @@
 
 .bottom_right p {
 	text-align: right;
-	color: #999999;
+	color: #9c9a9c;
 	font-size: 14px;
 	line-height: 28px;
 	clear: both;

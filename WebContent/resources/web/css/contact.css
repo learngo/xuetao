@@ -10,16 +10,31 @@
 }
 .contact form label {
 	display: block;
-	color: #2f2f2f;
+	color: #333;
+    font-size: 18px;
+    font-weight: normal;
+    margin: 30px 0 20px 30px;
 }
 .contact form input[type=text] {
-	padding: .5em;
-	width: 100%;
+	width: 330px;
+    border:1px solid #999999;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    padding: 0 30px;
+    height:44px;line-height: 44px;font-size: 18px;
 }
+.contact form .btn-success{
+    background-color: #2bbfbd;border-color: #2bbfbd;margin: 30px 20px;
+}
+.container .contact{margin: 0 0 0 50px;width: 980px;}
 .contact form textarea {
 	width: 100%;
-	padding: .5em;
-	height: 10em;
+    border:1px solid #999999;
+    border-radius: 5px;
+    font-size: 18px;
+    height: 124px;
+    padding: 18px 30px;
+    background-color: #eee;
 }
 .contact form .wpcf7-response-output {
 	margin-bottom: 1em;
@@ -57,3 +72,45 @@
 .bordered-list li.last {
 	border-bottom: 0px;
 }
+.comments{
+    padding-right: 50px;padding-left: 10px;overflow: hidden;
+}
+.comments ul li{
+    margin-bottom: 40px;overflow: hidden;
+}
+.comments-avatar{
+    float: left;
+}
+.comments-content{
+    width:894px;
+    float: right;
+    background-color: #d9e7e7;
+    position: relative;
+    padding: 22px 30px;
+    border-radius: 5px;
+}
+.comments-content:before{
+    content: " ";
+    position: absolute;left:-13px;top:20px;
+    width: 13px;height: 21px;
+    background: url("../images/comment-coner.png") 0 0 no-repeat;
+}
+.comments h2{font-size: 20px;font-weight: normal;}
+.comments span{margin-right: 20px;}
+.comments p{word-wrap: break-word;font-size: 14px;margin-top: 16px;}
+.comments .btn-reply{color:#006ab3;font-size: 14px; display:block;margin: 20px 0 50px 0;}
+.comments .btn-reply:hover{text-decoration: underline;}
+.comments .btn-reply.disable{color: #a2a5a5;}
+.comments textarea{
+    background-color: #eee;
+    border: 1px solid #999999;
+    border-radius: 5px;
+    font-size: 18px;
+    height: 124px;
+    padding: 18px 30px;
+    width: 100%;
+}
+.comments-answer{
+    border-top: 1px solid #999;margin-top: 55px;
+}
+.comments .btn-submit{width:80px;height:40px;font-size: 20px;}

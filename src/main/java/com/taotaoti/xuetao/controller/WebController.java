@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.taotaoti.category.dao.CategoryDao;
 import com.taotaoti.common.controller.BaseController;
 import com.taotaoti.common.redis.RedisCacheManager;
+import com.taotaoti.common.utils.HttpUtils;
 import com.taotaoti.common.utils.StringUtils;
 import com.taotaoti.common.vo.JsonObject;
 import com.taotaoti.common.vo.MatchMap;
@@ -43,6 +44,9 @@ import com.taotaoti.message.constant.EvaluateConstant;
 import com.taotaoti.message.service.EvaluateMgr;
 import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.dao.PartyDao;
+import com.taotaoti.party.service.PartyMgr;
+import com.taotaoti.school.bo.School;
+import com.taotaoti.school.dao.SchoolDao;
 
 @Controller
 public class WebController extends BaseController {
@@ -57,9 +61,12 @@ public class WebController extends BaseController {
 	private GoodPicDao goodPicDao;
 	@Resource
 	private CategoryDao categoryDao;
-	
+	@Resource
+	private SchoolDao schoolDao;
 	@Resource
 	private GoodMgr goodMgr;
+	@Resource
+	private PartyMgr partyMgr;
 	@Resource
 	private GoodCommentDao goodCommentDao;
 	@Resource
@@ -99,22 +106,17 @@ public class WebController extends BaseController {
 			@RequestParam(value="pageSize",required=false) Integer pageSize,
 			ModelMap model){
         List<MatchMap> listMaps=new ArrayList<MatchMap>();
-	 	if(curPage==null||curPage<0) {
-	 		curPage=0;
-	 		listMaps.add(new MatchMap("isPre", 0));
+	 	if(curPage==null||curPage<=1) {
+	 		curPage=1;
 	 	}
 	 	if(pageSize==null) pageSize=12;
-	 	List<Party> partyList= partyDao.findIndexPary(curPage,pageSize);
+	 	List<Party> partyList= partyMgr.findIndexPary(curPage-1,pageSize);
         MatchMap partys=new MatchMap("partys", partyList);
-    	if(curPage>0){
-    		listMaps.add(new MatchMap("isPre", 1));
-    	}
-    	
-    	if(partyList.size()<12)
-    		listMaps.add(new MatchMap("isNext", 0));
-    	else
-    		listMaps.add(new MatchMap("isNext", 1));
-    	
+        Integer totalSum=partyDao.counts();
+    	CommonPage commonPage=new CommonPage(curPage, pageSize, totalSum, 5);
+    	String url=HttpUtils.getBasePath(request)+"/web/partys";
+    	listMaps.add(new MatchMap("commPage", commonPage.getToolBar(url)));
+    	listMaps.add(new MatchMap("totalSum", totalSum));
 		listMaps.add(partys);
 		return this.buildSuccess(model, "/web/partys", listMaps);
 	}
@@ -126,30 +128,32 @@ public class WebController extends BaseController {
 			@RequestParam(value="categoryId",required=false) Integer categoryId,
 			ModelMap model){
         List<MatchMap> listMaps=new ArrayList<MatchMap>();
-        if(curPage==null||curPage<0) {
-	 		curPage=0;
-	 		listMaps.add(new MatchMap("isPre", 0));
+        if(curPage==null||curPage<=0) {
+	 		curPage=1;
 	 	}
-	 	if(pageSize==null) pageSize=12;
+	 	if(pageSize==null) pageSize=11;
 	 	List<Good> goodlist;
 	 	if(categoryId==null){
-	 		goodlist=goodDao.findIndexGood(curPage,pageSize);
+	 		
+	 		goodlist=goodMgr.findGoodsByCaregoryId(curPage-1, pageSize, 0);
 			MatchMap goods=new MatchMap("goods", goodlist);
 	        listMaps.add(goods);
-	         
+	        int totalSum=goodDao.counts();
+			CommonPage commonPage=new CommonPage(curPage, pageSize, totalSum, 5);
+	    	String url=HttpUtils.getBasePath(request)+"/web/goods";
+	    	listMaps.add(new MatchMap("commPage", commonPage.getToolBar(url)));
+	    	listMaps.add(new MatchMap("totalSum", totalSum));
 		}else{
-			goodlist=goodDao.findIndexGood(curPage,pageSize,categoryId);
+			goodlist=goodMgr.findGoodsByCaregoryId(curPage-1,pageSize,categoryId);
 			MatchMap goods=new MatchMap("goods", goodlist);
 			listMaps.add(goods);
 			listMaps.add(new MatchMap("categoryId",categoryId));
+			int totalSum=goodDao.countsBycategoryId(categoryId);
+			CommonPage commonPage=new CommonPage(curPage, pageSize, totalSum, 5);
+	    	String url=HttpUtils.getBasePath(request)+"/web/goods?categoryId="+categoryId;
+	    	listMaps.add(new MatchMap("commPage", commonPage.getToolBar(url)));
+	    	listMaps.add(new MatchMap("totalSum", totalSum));
 		}
-	 	
-	 	if(goodlist.size()<12)
-    		listMaps.add(new MatchMap("isNext", 0));
-    	else
-    		listMaps.add(new MatchMap("isNext", 1));
-    	
-	 	
 		MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
 		listMaps.add(categorys);
 		return this.buildSuccess(model, "/web/goods", listMaps);
@@ -383,50 +387,6 @@ public class WebController extends BaseController {
 		listMaps.add(evaluateComments);
 		return this.buildSuccess(model, "/web/leaveMessage", listMaps);
 	}
-//	@RequestMapping(value = "/web/leaveMessage")
-//	public String levelMessage(HttpServletRequest request,
-//			HttpServletResponse response,
-//			@RequestParam(value="partyId") Integer partyId,
-//			@RequestParam(value="curPage",required=false) Integer curPage,
-//			@RequestParam(value="pageSize",required=false) Integer pageSize,
-//			ModelMap model){
-//		List<MatchMap> listMaps=new ArrayList<MatchMap>();
-//		Party party=partyDao.get(partyId);
-//		MatchMap partyMatch=new MatchMap("party", party);
-//		MatchMap memberMatch=new MatchMap("member", memberMgr.getAcountInfoByMemberId(party.getMemberId()));
-//		listMaps.add(partyMatch);
-//		listMaps.add(memberMatch);
-//		ArrayList<AcountInfo> listAcountInfos=new ArrayList<AcountInfo>();
-//		if(party!=null){
-//			String []ids=party.getJoinMemberIds().split(",");
-//			if(ids.length>0){
-//				for(int i=0;i<ids.length;i++){
-//				    if(ids[i]!=""&&!StringUtils.isEmpty(ids[i])){
-//						int memberId=Integer.valueOf(ids[i]);
-//						listAcountInfos.add(memberMgr.getAcountInfoByMemberId(memberId));
-//				    }
-//				}
-//			}
-//		}
-//		listMaps.add(new MatchMap("acountInfos", listAcountInfos));
-//		
-//		 if(curPage==null||curPage<0) {
-//		 		curPage=0;
-//		 		listMaps.add(new MatchMap("isPre", 0));
-//		 	}
-//		if(pageSize==null) pageSize=12;
-//		List<Message> messageList=messageDao.findByProductTypeAndProductId(MessageConstant.MESSAGE_PRODUCT_TYPE_PARTY, partyId, curPage, pageSize);
-//		MatchMap messages=new MatchMap("messages",messageList);
-//		listMaps.add(messages);
-//		LOG.info("Message :"+messageList.size());
-//		if(messageList.size()<12)
-//    		listMaps.add(new MatchMap("isNext", 0));
-//    	else
-//    		listMaps.add(new MatchMap("isNext", 1));
-//		
-//		return this.buildSuccess(model, "/web/leaveMessage", listMaps);
-//	}
-	
 	@RequestMapping(value = "/viewMemberInfo")
 	public String viewMemberInfo(HttpServletRequest request,
 			HttpServletResponse response,
@@ -437,6 +397,16 @@ public class WebController extends BaseController {
 		  listMaps.add(new MatchMap("acountInfos", memberMgr.getAcountInfoByMemberId(memberId)));
 		  listMaps.add(new MatchMap("partys",partyDao.findParyByMemberId(memberId, 0, 10)));
 		  listMaps.add(new MatchMap("goods",goodMgr.findGoodByMemberId(memberId, 0, 10)));
+		  Visitor v=this.session.getSessionVisitor(request);
+		  if(v!=null&&v.getUserid().equals(memberId)){
+			 LOG.info("v=" +v.getUserid());
+			MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
+			listMaps.add(categorys);
+		 	MatchMap member=new MatchMap("member", memberDao.get(v.getUserid()));
+			listMaps.add(member);
+			listMaps.add(new MatchMap("v", v));
+		  }
+		  
 		  return this.buildSuccess(model, "/user", listMaps);
 		 }else
 			return this.buildSuccessOnlyUrl("/index");  
