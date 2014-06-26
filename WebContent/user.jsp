@@ -141,7 +141,7 @@
     <div class="modal fade" id="partyModal"  role="dialog">
         <div class="modal-dialog  user-modal">
             <div class="modal-content">
-                <form class="form-horizontal register-form" action="<c:url value="/register"/>" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal register-form" action="<c:url value="/member/settings/submitParty"/>" method="post" enctype="multipart/form-data">
                     <div class="dialog-title">Add Party</div>
                     <div class="form-meta clearfix">
                         <div class="form-group">
@@ -317,7 +317,7 @@
                         <div class="form-group">
                         <label class="col-lg-2 control-label">Good Name：</label>
                         <div class="col-lg-10">
-                        <input type="text" class="form-control" placeholder="user name"  name="username" required="required"/>
+                        <input type="text" class="form-control"  name="name" required="required"/>
                         </div>
                         </div>
 
@@ -338,9 +338,9 @@
                         <div class="form-group">
                         <label class="col-lg-2 control-label">Color：</label>
                         <div class="col-lg-10">
-                            <label><input type="radio" name="color"/>Brand new</label>
-                            <label><input type="radio" name="color"/>Barely used</label>
-                            <label><input type="radio" name="color"/>Used</label>
+                            <label><input type="radio" name="level" value="1"  required="required"/>Brand new</label>
+                            <label><input type="radio" name="level" value="2"/>Barely used</label>
+                            <label><input type="radio" name="level" value="3"/>Used</label>
                         </div>
                         </div>
 

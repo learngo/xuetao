@@ -29,7 +29,7 @@
               </a>
           </span>
           <span>
-              <a href="#commentParty" data-toggle="modal"class="btn btn-success fr mb20" >MESSAGE</a>
+              <a href="#message" class="btn btn-success fr mb20" >MESSAGE</a>
               <a href="<c:url value="/member/joinParty" />?partyId=${party.id}"  class="btn btn-primary fr">JOIN</a>
           </span>
           </span>
@@ -141,36 +141,3 @@
 
 </div>
 </div>
-
-
-	              <!-- Modal -->
-<div class="modal fade" id="commentParty">
- 		<div class="modal-dialog panel-primary">
-          <div class="modal-content">
-            <div class="modal-header panel-heading">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">reply：${member.name}</h4>
-            </div>
-            <form class="form-horizontal" action="<c:url value="/member/subEvalute"/>">
-				<div class="modal-body">
-					<input  type="hidden" name="evaluateProductType" value="1"/>
-                    <input  type="hidden" name="evaluateProductId" value="${party.id}"/>
-                    <input  type="hidden" name="evaluateProductMemberId" value="${party.memberId}"/>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">replyContent：</label>
-						<div class="col-lg-10">
-						 <textarea class="form-control" name="content" id="message" cols="50" rows="5" required="required" placeholder="reply:  ${member.name}"></textarea>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-	              <button type="button" class="btn btn-default " data-dismiss="modal">cancel</button>
-	              <button type="submit" class="btn btn-primary" >submit</button>
-            	</div>
-          </form>   
-          </div><!-- /.modal-content //-->
-        </div><!-- /.modal-dialog //-->
-</div><!-- /.modal -->
-<script type="text/javascript">
-
-</script>

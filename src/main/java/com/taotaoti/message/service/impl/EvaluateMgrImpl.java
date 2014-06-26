@@ -147,7 +147,10 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 		List<EvaluateComment> evaluateComments= this.evaluateCommentDao.findByEvaluateId(e.getId());
 		if(evaluateComments!=null){
 			for(int j=0;j<evaluateComments.size();j++){
-				evaluateComments.get(j).setMemberName(memberIds.get(evaluateComments.get(j).getMemberId()).getName());
+				Member member=memberIds.get(evaluateComments.get(j).getMemberId());
+				if(member!=null){
+					evaluateComments.get(j).setMemberName(member.getName());
+				}
 			}
 		}
 		evaluates.get(i).setEvaluateComments(evaluateComments);
@@ -234,7 +237,24 @@ public class EvaluateMgrImpl implements EvaluateMgr {
 
 	@Override
 	public List<Evaluate> findEvaluateByEvaluateProductMemberId(int memberId) {
-		return this.evaluateDao.findByEvaluateProductMemberId(memberId);
+		List<Evaluate> evaluates=this.evaluateDao.findByEvaluateProductMemberId(memberId);
+			HashMap<Integer, Member> memberIds=new HashMap<Integer, Member>();
+			for(int i=0;i<evaluates.size();i++){
+				memberIds.put(evaluates.get(i).getMemberId(), null);
+			}
+			List<Member> members=memberDao.get(memberIds.keySet());
+			if(members!=null){
+			for(Member member:members){
+				if(memberIds.containsKey(member.getId())){
+					memberIds.put(member.getId(), member);
+				}
+			}
+			for(int i=0;i<evaluates.size();i++){
+				evaluates.get(i).setMemberName(memberIds.get(evaluates.get(i).getMemberId()).getName());
+				evaluates.get(i).setMemberPhoto(memberIds.get(evaluates.get(i).getMemberId()).getPhoto());
+			}
+		}
+		return evaluates;
 	}
 
 	@Override

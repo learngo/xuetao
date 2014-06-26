@@ -41,6 +41,7 @@ import com.taotaoti.member.vo.AcountInfo;
 import com.taotaoti.message.bo.Evaluate;
 import com.taotaoti.message.bo.EvaluateComment;
 import com.taotaoti.message.constant.EvaluateConstant;
+import com.taotaoti.message.dao.EvaluateDao;
 import com.taotaoti.message.service.EvaluateMgr;
 import com.taotaoti.party.bo.Party;
 import com.taotaoti.party.dao.PartyDao;
@@ -79,6 +80,8 @@ public class WebController extends BaseController {
 	private MemberDao memberDao;
 	@Resource
 	private EvaluateMgr evaluateMgr;
+	@Resource
+	private EvaluateDao evaluateDao;
 	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request,
@@ -162,6 +165,7 @@ public class WebController extends BaseController {
 	public String goodDetail(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="goodId") Integer goodId,
+			@RequestParam(value="evaluateId",required=false) Integer evaluateId,
 			ModelMap model){
 		List<MatchMap> listMaps=new ArrayList<MatchMap>();
 		Good good=goodDao.get(goodId);
@@ -178,13 +182,23 @@ public class WebController extends BaseController {
 		      listMaps.add(new MatchMap("goodComments", goodMgr.findGoodComments(goodId)));
 		      listMaps.add(new MatchMap("evalutes", evaluateMgr.findEvaluate(EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD, goodId)));
 		      listMaps.add(new MatchMap("isManager", 1));
+		     
 			}else{
 				 listMaps.add(new MatchMap("isManager", 0));
 				 listMaps.add(new MatchMap("evalutes", evaluateMgr.findEvaluate(EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD, goodId,visitor.getUserid())));
 		         listMaps.add(new MatchMap("goodComments", goodMgr.findGoodCommentsByMemberId(goodId, visitor.getUserid())));
 			}
+			 if(evaluateId!=null){
+			        Evaluate entity=evaluateMgr.findEvaluate(evaluateId);
+			        entity.setStatu(EvaluateConstant.EVALUATE_STATU_READ);
+					evaluateDao.update(entity);
+					visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(visitor.getUserid()));
+					session.setAttributeAsVisitor(request, visitor);
+		      }
 		}else
 			 listMaps.add(new MatchMap("isManager", 0));
+		
+		
 		return this.buildSuccess(model, "/web/goodDetail", listMaps);
 	}
 	
@@ -315,7 +329,15 @@ public class WebController extends BaseController {
 		MatchMap memberMatch=new MatchMap("member", memberMgr.getAcountInfoByMemberId(party.getMemberId()));
 		listMaps.add(partyMatch);
 		listMaps.add(memberMatch);
-		listMaps.add(new MatchMap("evalute", evaluateMgr.findEvaluate(evaluateId)));
+		Evaluate entity=evaluateMgr.findEvaluate(evaluateId);
+		listMaps.add(new MatchMap("evalute", entity));
+		entity.setStatu(EvaluateConstant.EVALUATE_STATU_READ);
+		evaluateDao.update(entity);
+		Visitor visitor=this.session.getSessionVisitor(request);
+		if(visitor!=null){
+			visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(visitor.getUserid()));
+			session.setAttributeAsVisitor(request, visitor);
+		}
 		return this.buildSuccess(model, "/web/partyCommentDetail", listMaps);
 	}
 	@RequestMapping(value = "/web/goodCommentDetail")
@@ -402,6 +424,8 @@ public class WebController extends BaseController {
 			 LOG.info("v=" +v.getUserid());
 			MatchMap categorys=new MatchMap("categorys", categoryDao.findAll());
 			listMaps.add(categorys);
+			MatchMap schooles=new MatchMap("schooles",schoolDao.findAll());
+			listMaps.add(schooles);
 		 	MatchMap member=new MatchMap("member", memberDao.get(v.getUserid()));
 			listMaps.add(member);
 			listMaps.add(new MatchMap("v", v));

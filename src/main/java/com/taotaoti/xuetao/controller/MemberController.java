@@ -24,6 +24,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,6 +38,7 @@ import com.taotaoti.common.utils.FileUtils;
 import com.taotaoti.common.utils.MD5;
 import com.taotaoti.common.utils.ObjToStringUtil;
 import com.taotaoti.common.utils.StringUtils;
+import com.taotaoti.common.vo.JsonObject;
 import com.taotaoti.common.vo.MatchMap;
 import com.taotaoti.common.vo.Visitor;
 import com.taotaoti.common.web.session.SessionProvider;
@@ -165,6 +167,7 @@ public class MemberController extends BaseController {
 			Good good,
 			ModelMap model){
 		Visitor v=this.session.getSessionVisitor(request);
+		if(v!=null){
 		String ctxPath = request.getSession().getServletContext().getRealPath("/")
 				+ File.separator + "resources"+ File.separator +"upload"+ File.separator +"good"+ File.separator;
 		File dirPath = new File(ctxPath);
@@ -197,6 +200,7 @@ public class MemberController extends BaseController {
 		if(good.getPrice()==null)
 			return this.buildErrorByRedirectAndParam("/member/settings/addGood",model,"price is null!");
 		
+		LOG.info("good"+ObjToStringUtil.objToString(good));
 		Good goodOk=goodMgr.submitGood(good.getCategoryId(),good.getName(),good.getTitle(), good.getDescription(), good.getLogo(),v.getUserid(),good.getLevel(),good.getPrice());
 		
 		MultipartFile file1 = multipartRequest.getFile("file1");
@@ -243,8 +247,9 @@ public class MemberController extends BaseController {
 			}
 		}
 		}
+		}
 		//return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
-		return this.buildSuccessByRedirectAndParam(("/member/settings/browseGood"), model, "memberId", v.getUserid());
+		return this.buildSuccessByRedirectAndParam(("/viewMemberInfo"), model, "memberId", v.getUserid());
 	}
 	@RequestMapping(value = "/settings/browseGood")
 	public String browseGood(HttpServletRequest request,
@@ -351,7 +356,8 @@ public class MemberController extends BaseController {
 	
 	
 	@RequestMapping(value = "/settings/submitParty")
-	public ModelAndView addParty(HttpServletRequest request,
+	@ResponseBody
+	public ModelAndView submitParty(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="schoolId",required=true) Integer schoolId,
 			@RequestParam(value="title",required=true) String title,
@@ -360,6 +366,7 @@ public class MemberController extends BaseController {
 			@RequestParam(value="endTime",required=true) String end,
 			@RequestParam(value="address",required=false) String address,
 			ModelMap model){
+		LOG.info("submitParty"+schoolId);
 		String icon="";
 		Visitor v=this.session.getSessionVisitor(request);
 		// 转型为MultipartHttpRequest
@@ -411,7 +418,7 @@ public class MemberController extends BaseController {
 		partyMgr.submitParty(v.getUserid(), icon, title, description, startTime, endTime,address);
 		AcountInfo a=memberMgr.getAcountInfoByMemberId(visitor.getUserid());
 		memberDao.modifyCreatePartySum(v.getUserid(), a.getPartyCreateSum()+1);
-		
+		//return this.buildSuccess(model, "/viewMemberInfo", "memberId", v.getUserid());
 		return this.buildSuccessByRedirectOnlyUrl("/member/settings/browseParty");
 	}
 	@RequestMapping(value = "/settings/browseParty")
@@ -586,6 +593,42 @@ public class MemberController extends BaseController {
 					session.setAttributeAsVisitor(request, visitor);
 				}
 				return this.buildSuccessByRedirectAndParam("/web/goodDetail", model, "goodId", evaluateProductId);
+			}
+	}
+		
+		return null;
+	}
+	@RequestMapping(value = "/subEvaluteComment.json")
+	@ResponseBody
+	public JsonObject subEvaluteCommentJson(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="evaluateId") Integer evaluateId,
+			@RequestParam(value="content") String content,
+			ModelMap model){
+		Integer memberId = null;
+		Integer evaluateProductType = null;
+		Visitor visitor=this.session.getSessionVisitor(request);
+		if(visitor!=null){
+		    LOG.info(visitor.getUserid()+ " modify reply content =="+content);
+		    Evaluate evaluate=evaluateMgr.findEvaluate(evaluateId);
+		    if(evaluate!=null){
+		    	memberId=evaluate.getMemberId();
+		    	evaluateProductType=evaluate.getEvaluateProductType();
+		    }
+		    EvaluateComment e= evaluateMgr.addEvaluateComment(visitor.getUserid(), evaluateId, content);
+			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_PARTY&&e!=null){
+				if(memberId!=null){
+			    	visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(memberId));
+					session.setAttributeAsVisitor(request, visitor);
+				}
+				return this.buildSuccess();
+		    }
+			if(evaluateProductType==EvaluateConstant.EVALUATE_PRODUCT_TYPE_GOOD&&e!=null){
+				if(memberId!=null){
+					visitor.setMessageSum(evaluateMgr.countNoReadEvaluateByEvaluateProductMemberId(memberId));
+					session.setAttributeAsVisitor(request, visitor);
+				}
+				return this.buildSuccess();
 			}
 	}
 		

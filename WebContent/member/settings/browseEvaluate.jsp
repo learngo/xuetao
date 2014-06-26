@@ -6,12 +6,13 @@
 			<div class="panel panel-default panel-col">
 			     <div class="panel-heading">Partys</div>
 			     <div class="panel-body">
-					<table class="table table-striped table-hover">
+					<table class="table  table-hover">
         <thead>
           <tr>
-            <th>id</th>
-            <th>用户Id</th>
-            <th>产品线</th>
+            <th></th>
+            <th>姓名</th>
+            <th>内容</th>
+            <th>类别</th>
             <th>时间</th>
              <th>查看详情</th>
           </tr>
@@ -19,14 +20,20 @@
         <tbody>
         <c:if test="${evaluates!=null }">
             <c:forEach var="evaluate" varStatus="status" items="${evaluates}">
-           <tr>
-            <td>${evaluate.id }</td>
+            
+           <tr <c:if test="${evaluate.statu==0 }">class="warning"</c:if> />
+            <td>
+              <span class="photo"><img class="avatar bg_white" src="<c:url value="/${evaluate.memberPhoto}"/>"></span>
+            </td>
+            <td>
+            ${evaluate.memberName}
+            </td>
             <td>
             ${evaluate.content }
             </td>
             <td>
             <c:if test="${evaluate.evaluateProductType==2}">
-               <a href="<c:url value="/web/goodDetail?goodId=${evaluate.evaluateProductId}"/>">Good</a>
+               <a href="<c:url value="/web/goodDetail?goodId=${evaluate.evaluateProductId}&evaluateId=${evaluate.id}"/>">Good</a>
               </c:if>
              
               <c:if test="${evaluate.evaluateProductType==1}">
@@ -39,7 +46,7 @@
             </td>
             <td>
               <c:if test="${evaluate.evaluateProductType==2}">
-               <a href="<c:url value="/web/goodCommentDetail?goodId=${evaluate.evaluateProductId}&evaluateId=${evaluate.id } "/>">reply</a>
+               <a href="<c:url value="/web/goodDetail?goodId=${evaluate.evaluateProductId}&evaluateId=${evaluate.id}"/>">reply</a>
               </c:if>
              
               <c:if test="${evaluate.evaluateProductType==1}">

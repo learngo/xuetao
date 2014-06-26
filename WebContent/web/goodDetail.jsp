@@ -30,7 +30,7 @@
                     </a>
                 </span>
                 <span>
-                    <a href="#commentParty" data-toggle="modal"class="btn btn-success fr mb20" >LEAVE U CONTACT</a>
+                    <a href="#commentId" class="btn btn-success fr mb20" >LEAVE U CONTACT</a>
                 </span>
             </span>
 
@@ -73,7 +73,7 @@
             </div>
       </div>
 
-        <div class="contact">
+        <div class="contact" id="commentId">
               <div class="wpcf7 mt20">
                     <form action="<c:url value="/member/subEvalute"/>" method="post" class="wpcf7-form">
                        <div class="form-meta clearfix">
@@ -92,13 +92,13 @@
               </div>
       </div>
 
-      <div class="comments">
+      <div class="comments" >
         <ul>
               <c:if test="${evalutes!=null}">
                    <c:forEach items="${evalutes }" var="evalute">
                        <li>
 			                <div class="comments-avatar">
-			                <img class="avatar" src="<c:url value="/"/>${evalute.memberPhoto}">
+			                <img class="avatar" src="<c:url value="/"/>${evalute.memberPhoto}" evaluateId="${evalute.id}">
 			                </div>
 			                <div class="comments-content">
 			                <h2>
@@ -155,9 +155,28 @@ $(function(){
         b.find('.btn-submit').bind('click',function(){
             var box=$(this).closest('.comments-msg-box');
             var value=box.find('textarea').val();
-            
-            alert(value);
-            
+            var evaluateId=$(this).parent().closest('li').find('.avatar').attr('evaluateId') ;
+            var params = {
+            	  evaluateId:evaluateId,
+           		  content:value
+           	};
+          $.ajax({
+	          url : Init.webUrl+'/member/subEvaluteComment.json',
+	          type : "post",
+	          data : params,
+	          contentType : "application/json;charset=utf-8",
+	          contentType : "application/x-www-form-urlencoded;charset=utf-8",
+	          contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	          dataType : "json",
+	          success : function(resultData) {
+	        	 // window.location.href=Init.webUrl+'/web/goodDetail?goodId='+${good.id};
+	        	  if(resultData.status==0){
+          			window.location.href=Init.webUrl+'/web/goodDetail?goodId='+${good.goodId};
+	          		}else{
+	          			bootbox.alert("更新失败！"+resultData.msg);  
+	          		}
+	          }
+          });
             
             box.remove();
             a.removeClass('disable');

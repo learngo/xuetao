@@ -65,9 +65,11 @@
 <div class="container">
 <div class="row">
 		<div class="works">
+		<!-- 
             <ul class="party-type">
                 <li class="active"><a href="<c:url value="/web/partys"/>">All</a></li>
             </ul>
+         -->
 			<ul>
 				<c:if test="${partys!= null}">
 					<c:forEach var="party" varStatus="status" items="${partys}">

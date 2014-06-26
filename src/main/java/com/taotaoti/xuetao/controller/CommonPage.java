@@ -132,7 +132,8 @@ public class CommonPage {
         String tempUrl=url+"pageSize="+pageRowCount+"&curPage="+getFirst();
         stringBuffer.append("<li ><a href='"+tempUrl+"'>首页</a></li>");
         tempUrl=url+"pageSize="+pageRowCount+"&curPage="+curPage;
-        if(curPage-1<=getFirst()){
+        
+        if(curPage-1<=0){
         	tempUrl=url+"pageSize="+pageRowCount+"&curPage="+getFirst();
         	stringBuffer.append("<li class='disabled'><a href='"+tempUrl+"'>&laquo;</a></li>");
         }else{
@@ -168,7 +169,7 @@ public class CommonPage {
     	 
     	 
     	 
-    	 if(curPage+1>=getLast()) {
+    	 if(curPage+1>getLast()) {
          	tempUrl=url+"pageSize="+pageRowCount+"&curPage="+getLast();
          	stringBuffer.append("<li class='disabled'><a href='"+tempUrl+"'>&raquo;</a></li>");
          }else{
